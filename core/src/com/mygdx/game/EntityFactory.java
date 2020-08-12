@@ -8,9 +8,6 @@ import com.mygdx.game.components.CollectableComponent.Type;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.HarmOnContactComponent;
 import com.mygdx.game.components.ImageComponent;
-import com.mygdx.game.components.JumpingComponent;
-import com.mygdx.game.components.KillByJumpingOnComponent;
-import com.mygdx.game.components.MobComponent;
 import com.mygdx.game.components.MoveOffScreenComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
@@ -45,10 +42,6 @@ public class EntityFactory {
 		e.addComponent(mc);
 		PlayersAvatarComponent uic = new PlayersAvatarComponent(player, controller);
 		e.addComponent(uic);
-		JumpingComponent jc = new JumpingComponent();
-		e.addComponent(jc);
-		KillByJumpingOnComponent kbj = new KillByJumpingOnComponent();
-		e.addComponent(kbj);
 		CanCollectComponent ccc = new CanCollectComponent();
 		e.addComponent(ccc);
 		WalkingAnimationComponent wac = new WalkingAnimationComponent(.2f);
@@ -180,75 +173,6 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createMob1(int x, int y) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "Mob");
-
-		ImageComponent imageData = new ImageComponent("grey_box.png", 1, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
-		e.addComponent(imageData);
-		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
-		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, true, false, false); // Needs collideAsPlatform to be killed
-		e.addComponent(cc);
-		MovementComponent mc = new MovementComponent(true);
-		e.addComponent(mc);
-		MobComponent mob = new MobComponent(45, true);
-		e.addComponent(mob);
-		WalkingAnimationComponent wac = new WalkingAnimationComponent(.2f);
-		e.addComponent(wac);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(false);
-		e.addComponent(mdc);
-
-		game.animFrameHelper.createMob1Frames(e, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
-		return e;
-	}
-
-
-	public AbstractEntity createMob_Cannonball(int x, int y) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "Cannonball");
-
-		ImageComponent imageData = new ImageComponent("grey_box.png", 1, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
-		e.addComponent(imageData);
-		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
-		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, true, false, false); // Needs collideAsPlatform to be killed
-		e.addComponent(cc);
-		MovementComponent mc = new MovementComponent(true);
-		e.addComponent(mc);
-		MobComponent mob = new MobComponent(65, false);
-		e.addComponent(mob);
-		//PreventsEndOfLevelComponent beolc = new PreventsEndOfLevelComponent();
-		//e.addComponent(beolc);
-		WalkingAnimationComponent wac = new WalkingAnimationComponent(.1f);
-		e.addComponent(wac);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(false);
-		e.addComponent(mdc);
-
-		game.animFrameHelper.createCannonballFrames(e, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
-		return e;
-	}
-
-
-	public AbstractEntity createFallingMob(AbstractEntity mob) {
-		PositionComponent pos = (PositionComponent)mob.getComponent(PositionComponent.class);
-		ImageComponent img = (ImageComponent)mob.getComponent(ImageComponent.class);	
-
-		return this.createFallingGraphic(mob.toString(), pos.rect.left, pos.rect.bottom, img.sprite, pos.rect.width(), pos.rect.height());
-	}
-
-
-	public AbstractEntity createFallingGraphic(String name, float x, float y, Sprite image, float w, float h) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "Falling" + name);
-
-		ImageComponent imageData = new ImageComponent(image, 1);
-		e.addComponent(imageData);
-		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
-		e.addComponent(pos);
-		MoveOffScreenComponent moc = new MoveOffScreenComponent(0, -Settings.PLAYER_SPEED*5);
-		e.addComponent(moc);
-		return e;
-	}
-
-
 	public AbstractEntity createCoin(int x, int y) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Coin");
 
@@ -287,23 +211,6 @@ public class EntityFactory {
 		PositionComponent pos2 = PositionComponent.ByBottomLeft(pos.rect.left, pos.rect.bottom, pos.rect.width(), pos.rect.height());
 		e.addComponent(pos2);
 		MoveOffScreenComponent moc = new MoveOffScreenComponent(Settings.PLAYER_SPEED*2, Settings.PLAYER_SPEED*2);
-		e.addComponent(moc);
-
-		return e;
-	}	
-
-
-	public AbstractEntity createDeadPlayer(AbstractEntity player) {
-		PositionComponent pos = (PositionComponent)player.getComponent(PositionComponent.class);
-		ImageComponent img = (ImageComponent)player.getComponent(ImageComponent.class);
-		
-		AbstractEntity e = new AbstractEntity(game.ecs, "DeadPlayer");
-
-		ImageComponent imageData = new ImageComponent(img.sprite, 1);
-		e.addComponent(imageData);
-		PositionComponent pos2 = PositionComponent.ByBottomLeft(pos.rect.left, pos.rect.bottom, pos.rect.width(), pos.rect.height());
-		e.addComponent(pos2);
-		MoveOffScreenComponent moc = new MoveOffScreenComponent(0, -Settings.PLAYER_SPEED*5);
 		e.addComponent(moc);
 
 		return e;

@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.controllers.Controller;
@@ -31,12 +30,11 @@ import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.PlayerMovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
 import com.mygdx.game.systems.ProcessPlayersSystem;
-import com.mygdx.game.systems.ScrollPlayAreaSystem;
 import com.mygdx.game.systems.WalkingAnimationSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.libgdx.GenericGame;
+import com.scs.libgdx.Generic2DGame;
 
-public final class MyGdxGame extends GenericGame implements InputProcessor, ControllerListener {
+public final class MyGdxGame extends Generic2DGame implements InputProcessor, ControllerListener {
 
 	public BasicECS ecs;
 
@@ -63,7 +61,6 @@ public final class MyGdxGame extends GenericGame implements InputProcessor, Cont
 	private MoveToOffScreenSystem moveToOffScreenSystem;
 	private DrawInGameGuiSystem drawInGameGuiSystem;
 	private ProcessPlayersSystem processPlayersSystem;
-	private ScrollPlayAreaSystem scrollPlayAreaSystem;
 	private DrawPreGameGuiSystem drawPreGameGuiSystem;
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
 
@@ -100,7 +97,6 @@ public final class MyGdxGame extends GenericGame implements InputProcessor, Cont
 		this.moveToOffScreenSystem = new MoveToOffScreenSystem(ecs);
 		this.drawInGameGuiSystem = new DrawInGameGuiSystem(this, batch);
 		this.processPlayersSystem = new ProcessPlayersSystem(this);
-		this.scrollPlayAreaSystem = new ScrollPlayAreaSystem(this, ecs);
 		this.drawPreGameGuiSystem = new DrawPreGameGuiSystem(this, batch);
 		this.drawPostGameGuiSystem = new DrawPostGameGuiSystem(this, batch);
 
@@ -221,7 +217,6 @@ public final class MyGdxGame extends GenericGame implements InputProcessor, Cont
 				this.moveToOffScreenSystem.process();
 				this.playerMovementSystem.process();
 				this.mobAiSystem.process();
-				this.scrollPlayAreaSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
 				this.movementSystem.process();
 				this.animSystem.process();			

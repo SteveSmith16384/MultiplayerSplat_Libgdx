@@ -63,46 +63,6 @@ public class AnimationFramesHelper {
 	}
 
 
-	public void createMob1Frames(AbstractEntity mob, float w, float h) {
-		int NUM_FRAMES = 6;
-		WalkingAnimationComponent wac = (WalkingAnimationComponent)mob.getComponent(WalkingAnimationComponent.class);
-		wac.framesLeft = new Sprite[NUM_FRAMES];
-		wac.framesRight = new Sprite[NUM_FRAMES];
-
-		Texture texture = getTexture("mob1_frames.png");
-		TextureAtlas atlas = new TextureAtlas();
-		for (int i=0 ; i<NUM_FRAMES ; i++) {
-			atlas.addRegion("frame"+i, texture, i*16, 0, 16, 13);
-			wac.framesLeft[i] = atlas.createSprite("frame"+i);
-			wac.framesLeft[i].setSize(w, h);
-			wac.framesRight[i] = atlas.createSprite("frame"+i);
-			wac.framesRight[i].setSize(w, h);
-			wac.framesRight[i].flip(true, false);
-		}
-		wac.idleFrame = wac.framesLeft[0];
-	}
-	
-	
-	public void createCannonballFrames(AbstractEntity mob, float w, float h) {
-		int NUM_FRAMES = 10;
-		WalkingAnimationComponent wac = (WalkingAnimationComponent)mob.getComponent(WalkingAnimationComponent.class);
-		wac.framesLeft = new Sprite[NUM_FRAMES];
-		wac.framesRight = new Sprite[NUM_FRAMES];
-
-		Texture texture = getTexture("cannonbobmouth.png");
-		TextureAtlas atlas = new TextureAtlas();
-		for (int i=0 ; i<NUM_FRAMES ; i++) {
-			atlas.addRegion("frame"+i, texture, i*16, 0, 16, 16);
-			wac.framesLeft[i] = atlas.createSprite("frame"+i);
-			wac.framesLeft[i].setSize(w, h);
-			wac.framesRight[i] = atlas.createSprite("frame"+i);
-			wac.framesRight[i].setSize(w, h);
-			wac.framesRight[i].flip(true, false);
-		}
-		wac.idleFrame = wac.framesLeft[0];
-	}
-	
-	
 	private Texture getTexture(String filename) {
 		if (textures.containsKey(filename)) {
 			return textures.get(filename);

@@ -2,7 +2,6 @@ package com.mygdx.game.systems;
 
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
-import com.mygdx.game.components.JumpingComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.scs.basicecs.AbstractEntity;
@@ -31,17 +30,12 @@ public class PlayerMovementSystem extends AbstractSystem {
 			} else if (uic.moveRight) {
 				mc.offX = Settings.PLAYER_SPEED;
 			}
-
-			if (uic.jump) {
-				JumpingComponent jc = (JumpingComponent)player.getComponent(JumpingComponent.class);
-				if (jc.canJump) {
-					game.sfx.play("BonusCube.ogg");
-					mc.offY = Settings.JUMP_FORCE;
-					jc.canJump = false;
-				} else {
-					//MyGdxGame.p("Cannot jump!");
-				}
+			if (uic.moveUp) {
+				mc.offY = -Settings.PLAYER_SPEED;
+			} else if (uic.moveDown) {
+				mc.offY = Settings.PLAYER_SPEED;
 			}
+
 		}
 	}
 

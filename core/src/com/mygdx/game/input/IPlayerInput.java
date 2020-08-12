@@ -6,6 +6,7 @@ public interface IPlayerInput {
 	
 	boolean isRightPressed();
 	
-	boolean isJumpPressed();
+	boolean isUpPressed();
 	
+	boolean isDownPressed();
 }

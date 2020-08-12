@@ -6,7 +6,6 @@ import com.mygdx.game.components.CanBeHarmedComponent;
 import com.mygdx.game.components.CanCollectComponent;
 import com.mygdx.game.components.CollectableComponent;
 import com.mygdx.game.components.HarmOnContactComponent;
-import com.mygdx.game.components.KillByJumpingOnComponent;
 import com.mygdx.game.components.MobComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.models.CollisionResults;
@@ -29,24 +28,6 @@ public class ProcessCollisionSystem {//implements ISystem {
 		{
 			MobComponent mob = (MobComponent)results.collidedWith.getComponent(MobComponent.class);
 			if (mob != null) {
-				// Player jumping on mob
-				if (results.fromAbove) {
-					KillByJumpingOnComponent kbj = (KillByJumpingOnComponent)mover.getComponent(KillByJumpingOnComponent.class);
-					if (kbj != null) {
-						results.collidedWith.remove();
-						game.sfx.play("Laser.ogg");
-						AbstractEntity fall = game.entityFactory.createFallingMob(results.collidedWith);
-						game.ecs.addEntity(fall);
-
-						// Give player points
-						PlayersAvatarComponent uic = (PlayersAvatarComponent)mover.getComponent(PlayersAvatarComponent.class);
-						if (uic != null) {
-							uic.player.score += 200;
-						}
-
-						return;
-					}
-				}
 				PlayersAvatarComponent dbm = (PlayersAvatarComponent)mover.getComponent(PlayersAvatarComponent.class);
 				if (dbm != null) {
 					this.playerKilled(mover, dbm.timeStarted);
@@ -118,7 +99,6 @@ public class ProcessCollisionSystem {//implements ISystem {
 		game.sfx.play("Falling.mp3");
 
 		avatar.remove();
-		game.ecs.addEntity(game.entityFactory.createDeadPlayer(avatar));
 
 		PlayersAvatarComponent uic = (PlayersAvatarComponent)avatar.getComponent(PlayersAvatarComponent.class);
 		PlayerData player = uic.player;

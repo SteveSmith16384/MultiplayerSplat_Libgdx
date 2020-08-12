@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Settings;
 import com.mygdx.game.SoundEffects;
 
-public abstract class GenericGame extends ApplicationAdapter implements InputProcessor, ControllerListener {
+public abstract class Generic2DGame extends ApplicationAdapter implements InputProcessor, ControllerListener {
 
 	public OrthographicCamera camera;
 	private Viewport viewport;
@@ -34,7 +34,7 @@ public abstract class GenericGame extends ApplicationAdapter implements InputPro
 	protected boolean paused = false;
 	public boolean toggleFullscreen = true, currently_fullscreen = false;
 
-	public GenericGame(boolean set_fullscreen) {
+	public Generic2DGame(boolean set_fullscreen) {
 		currently_fullscreen = !set_fullscreen;
 	}
 	
@@ -90,6 +90,8 @@ public abstract class GenericGame extends ApplicationAdapter implements InputPro
 
 	@Override
 	public void dispose() {
+		super.dispose();
+		
 		batch.dispose();
 		this.sfx.dispose();
 	}

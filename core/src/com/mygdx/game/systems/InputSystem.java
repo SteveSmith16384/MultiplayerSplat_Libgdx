@@ -52,19 +52,6 @@ public class InputSystem extends AbstractSystem {
 				}
 			}
 
-			// See if players want to join
-			/*if (Settings.CONTROLLER_MODE_1) {
-				for (PlayerData player : game.players.values()) {
-					if (player.isInGame() == false) {
-						if (player.controller != null) {
-							if (player.controller.getButton(1)) {
-								MyGdxGame.p("Controller player joined!");
-								player.setInGame(true);
-							}
-						}
-					}
-				}
-			}*/
 		} else if (game.gameStage == 0) {
 			super.process();
 		}
@@ -76,7 +63,8 @@ public class InputSystem extends AbstractSystem {
 		PlayersAvatarComponent pac = (PlayersAvatarComponent)entity.getComponent(PlayersAvatarComponent.class);
 		pac.moveLeft = pac.controller.isLeftPressed();
 		pac.moveRight = pac.controller.isRightPressed();
-		pac.jump = pac.controller.isJumpPressed();
+		pac.moveUp = pac.controller.isUpPressed();
+		pac.moveDown = pac.controller.isDownPressed();
 	}
 
 

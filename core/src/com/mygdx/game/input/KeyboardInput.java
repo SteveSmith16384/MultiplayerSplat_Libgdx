@@ -1,5 +1,6 @@
 package com.mygdx.game.input;
 
+import com.badlogic.gdx.Input.Keys;
 import com.mygdx.game.systems.InputSystem;
 
 public class KeyboardInput implements IPlayerInput {
@@ -23,8 +24,15 @@ public class KeyboardInput implements IPlayerInput {
 
 	
 	@Override
-	public boolean isJumpPressed() {
-		return this.inputSystem.key[51] || this.inputSystem.key[62]; // w or space
+	public boolean isUpPressed() {
+		return this.inputSystem.key[Keys.UP];
 	}
 
+	
+	@Override
+	public boolean isDownPressed() {
+		return this.inputSystem.key[Keys.DOWN];
+	}
+
+	
 }

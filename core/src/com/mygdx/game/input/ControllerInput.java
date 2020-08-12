@@ -24,8 +24,15 @@ public class ControllerInput implements IPlayerInput {
 
 	
 	@Override
-	public boolean isJumpPressed() {
-		return this.controller.getButton(1);
+	public boolean isUpPressed() {
+		return controller.getAxis(Settings.AXIS) < -0.5f; // todo  check
 	}
 
+	
+	@Override
+	public boolean isDownPressed() {
+		return controller.getAxis(Settings.AXIS) > 0.5f; // todo  check
+	}
+
+	
 }
