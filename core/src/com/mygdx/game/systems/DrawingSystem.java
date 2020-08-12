@@ -91,12 +91,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 			AbstractEntity entity = it.next();
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 
-			if (posData.edge != null) {
-				shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-				shapeRenderer.setColor(Color.RED);
-				shapeRenderer.line(posData.edge.x1, posData.edge.y1, posData.edge.x2, posData.edge.y2);
-				shapeRenderer.end();
-			}
 			if (posData.rect != null) {
 				shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 				shapeRenderer.setColor(Color.GREEN);

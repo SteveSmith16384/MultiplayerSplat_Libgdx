@@ -40,30 +40,19 @@ public class CollisionSystem extends AbstractSystem {
 				if (cc != null) {
 					PositionComponent pos = (PositionComponent)e.getComponent(PositionComponent.class);
 					if (pos != null) {
-						if (pos.edge != null) {
-							// Edges are always solid
-							if (pos.edge.intersectsRect(moverPos.rect)) {
-								if (offX != 0) {
-									return handleEdge(mover, e, moverPos, pos, offX);
-								} else {
-									return new CollisionResults(e, true, cc.blocksMovement);
+						if (moverPos.rect.intersects(pos.rect)) {
+							if (cc.fluidPlatform) { // Check this first so we can kill baddies by jumping on them
+								if (offY < 0) { // Going down
+									if (moverPos.prevPos.intersects(pos.rect) == false) { // Didn't collide previously, so we have hit
+										return new CollisionResults(e, true, true);
+									}									
 								}
-							}
-						} else {
-							if (moverPos.rect.intersects(pos.rect)) {
-								if (cc.fluidPlatform) { // Check this first so we can kill baddies by jumping on them
-									if (offY < 0) { // Going down
-										if (moverPos.prevPos.intersects(pos.rect) == false) { // Didn't collide previously, so we have hit
-											return new CollisionResults(e, true, true);
-										}									
-									}
-								} else if (cc.isLadder) {
-									if (offY < 0) {
-										return new CollisionResults(e, false, cc.blocksMovement);
-									}
-								} else if (cc.alwaysCollides) {
+							} else if (cc.isLadder) {
+								if (offY < 0) {
 									return new CollisionResults(e, false, cc.blocksMovement);
 								}
+							} else if (cc.alwaysCollides) {
+								return new CollisionResults(e, false, cc.blocksMovement);
 							}
 						}
 					}
@@ -71,22 +60,6 @@ public class CollisionSystem extends AbstractSystem {
 			}
 		}
 		return null;
-	}
-
-
-	private CollisionResults handleEdge(AbstractEntity mover, AbstractEntity edge, PositionComponent moverPos, PositionComponent edgePos, float offX) {
-		// Move player or mob up
-		//int max = (int)Math.abs(offX);
-		//MyGdxGame.p("Testing up to " + max);
-		for (int i=0 ; i<3 ; i++) {
-			if (edgePos.edge.intersectsRect(moverPos.rect) == false) {
-				MyGdxGame.p("Moved after " + i);
-				return null;
-				//return new CollisionResults(edge, true, true);
-			}
-			moverPos.rect.move(0, 1);
-		}
-		return new CollisionResults(edge, true, true); // Will move us back
 	}
 
 

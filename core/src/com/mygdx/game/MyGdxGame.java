@@ -235,9 +235,6 @@ public final class MyGdxGame extends GenericGame implements InputProcessor, Cont
 			camera.update();
 
 			batch.begin();
-			if (Gdx.app.getType() != ApplicationType.WebGL) {
-				post.begin();
-			}
 			this.drawingSystem.process();
 			if (this.gameStage == -1) {
 				this.drawPreGameGuiSystem.process();
@@ -248,9 +245,6 @@ public final class MyGdxGame extends GenericGame implements InputProcessor, Cont
 				this.drawInGameGuiSystem.process();
 			}
 			batch.end();
-			if (Gdx.app.getType() != ApplicationType.WebGL) {
-				post.end();
-			}
 
 			if (Settings.SHOW_OUTLINES) {
 				batch.begin();
@@ -301,6 +295,7 @@ public final class MyGdxGame extends GenericGame implements InputProcessor, Cont
 		}
 		this.drawingSystem.dispose();
 		this.animFrameHelper.dispose();
+		ecs.dispose();
 	}
 
 

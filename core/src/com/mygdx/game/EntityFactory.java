@@ -180,20 +180,6 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createEdge(int x1, int y1, float x2, float y2) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "Edge");
-
-		PositionComponent pos = PositionComponent.FromEdge(x1, y1, x2, y2);
-		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(false, false, true, false);
-		e.addComponent(cc);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(true);
-		e.addComponent(mdc);
-
-		return e;
-	}
-
-
 	public AbstractEntity createMob1(int x, int y) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Mob");
 

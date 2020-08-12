@@ -5,10 +5,9 @@ import java.util.List;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.PostProcessing;
 import com.mygdx.game.Settings;
 import com.mygdx.game.SoundEffects;
 
@@ -36,8 +34,6 @@ public abstract class GenericGame extends ApplicationAdapter implements InputPro
 	protected boolean paused = false;
 	public boolean toggleFullscreen = true, currently_fullscreen = false;
 
-	protected PostProcessing post;
-
 	public GenericGame(boolean set_fullscreen) {
 		currently_fullscreen = !set_fullscreen;
 	}
@@ -53,10 +49,6 @@ public abstract class GenericGame extends ApplicationAdapter implements InputPro
 		Gdx.input.setInputProcessor(this);
 
 		Controllers.addListener(this);
-
-		if (Gdx.app.getType() != ApplicationType.WebGL) {
-			post = new PostProcessing();
-		}
 	}
 
 
@@ -67,9 +59,6 @@ public abstract class GenericGame extends ApplicationAdapter implements InputPro
 			return;
 		}
 		
-		if (Gdx.app.getType() != ApplicationType.WebGL) {
-			post.update(Gdx.graphics.getDeltaTime());
-		}
 
 		if (this.toggleFullscreen) {
 			this.toggleFullscreen = false;
@@ -101,9 +90,6 @@ public abstract class GenericGame extends ApplicationAdapter implements InputPro
 
 	@Override
 	public void dispose() {
-		if (Gdx.app.getType() != ApplicationType.WebGL) {
-			post.dispose();
-		}
 		batch.dispose();
 		this.sfx.dispose();
 	}
