@@ -15,8 +15,9 @@ public class ScrollPlayAreaSystem implements ISystem {
 
 	@Override
 	public void process() {
-		game.screen_cam_x += 10f * Gdx.graphics.getDeltaTime();
-		game.screen_cam_y += 10f * Gdx.graphics.getDeltaTime();
+		//todo
+		//game.screen_cam_x += 10f * Gdx.graphics.getDeltaTime();
+		//game.screen_cam_y += 10f * Gdx.graphics.getDeltaTime();
 	}
 
 

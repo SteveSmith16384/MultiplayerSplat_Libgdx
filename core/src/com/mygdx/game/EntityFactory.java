@@ -51,7 +51,7 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createWall(int x, int y, float w, float h) {
+	public AbstractEntity createWall(float x, float y, float w, float h) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Wall");
 
 		if (Settings.SHOW_GREY_BOXES) {

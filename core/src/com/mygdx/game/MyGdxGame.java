@@ -49,7 +49,6 @@ public final class MyGdxGame extends Generic2DGame {
 	public CollisionSystem collisionSystem;
 	private MovementSystem movementSystem;
 	private AnimationCycleSystem animSystem;
-	//private PlayerMovementSystem playerMovementSystem;
 	public ProcessCollisionSystem processCollisionSystem;
 	public CollectorSystem collectorSystem;
 	private WalkingAnimationSystem walkingAnimationSystem;
@@ -228,25 +227,6 @@ public final class MyGdxGame extends Generic2DGame {
 		}
 	}
 
-/*
-	private void checkNewOrRemovedControllers() {
-		for (Controller c : this.controllersAdded) {
-			this.addPlayerForController(new ControllerInput(c));
-		}
-		this.controllersAdded.clear();
-
-		for (Controller c : this.controllersRemoved) {
-			for (PlayerData player : players.values()) {
-				if (player.controller == c) {
-					player.avatar.remove();
-					player.quit = true;
-					break;
-				}
-			}
-		}
-		this.controllersAdded.clear();
-	}
-*/
 
 	public void drawFont(Batch batch, String text, float x, float y) {
 		font.draw(batch, text, x, y);
@@ -277,29 +257,6 @@ public final class MyGdxGame extends Generic2DGame {
 		ecs.addAndRemoveEntities();
 	}
 
-/*
-	public PlayerData getKeyboardPlayer() {
-		for (PlayerData player : players.values()) {
-			if (player.controller instanceof KeyboardInput) {
-				return player;
-			}
-		}
-		return null;
-	}
-
-/*
-	public PlayerData getControllerPlayer(Controller c) {
-		for (PlayerData player : players.values()) {
-			if (player.controller instanceof ControllerInput) {
-				ControllerInput ci = (ControllerInput)player.controller;
-				if (ci.controller == c) {
-					return player;
-				}
-			}
-		}
-		return null;
-	}
-*/
 
 	@Override
 	public void connected(Controller controller) {
