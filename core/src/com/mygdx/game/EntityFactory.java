@@ -5,7 +5,6 @@ import com.mygdx.game.components.AnimationCycleComponent;
 import com.mygdx.game.components.CanCollectComponent;
 import com.mygdx.game.components.CollectableComponent;
 import com.mygdx.game.components.CollectableComponent.Type;
-import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.HarmOnContactComponent;
 import com.mygdx.game.components.ImageComponent;
@@ -15,8 +14,8 @@ import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.components.PositionComponent;
 import com.mygdx.game.components.ScrollsAroundComponent;
 import com.mygdx.game.components.WalkingAnimationComponent;
+import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.IPlayerInput;
-import com.scs.awt.Rect;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.libgdx.Ninepatch;
 
@@ -36,7 +35,7 @@ public class EntityFactory {
 		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, false, true, false);
+		CollisionComponent cc = new CollisionComponent(true, true);
 		e.addComponent(cc);
 		e.addComponent(new MovementComponent());
 		PlayersAvatarComponent uic = new PlayersAvatarComponent(player, controller);
@@ -60,7 +59,7 @@ public class EntityFactory {
 		}
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, false, true, false);
+		CollisionComponent cc = new CollisionComponent(true, true);
 		e.addComponent(cc);
 		ScrollsAroundComponent mdc = new ScrollsAroundComponent(true);
 		e.addComponent(mdc);
@@ -78,7 +77,7 @@ public class EntityFactory {
 		}
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, false, true, false);
+		CollisionComponent cc = new CollisionComponent(true, true);
 		e.addComponent(cc);
 		HarmOnContactComponent hoc = new HarmOnContactComponent();
 		e.addComponent(hoc);
@@ -117,61 +116,6 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createLadderArea(int x, int y, float w, float h) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "Ladder");
-
-		if (Settings.SHOW_GREY_BOXES) {
-			ImageComponent imageData = new ImageComponent("grey_box.png", 0, w, h);
-			e.addComponent(imageData);
-		}
-		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
-		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, false, true, true);
-		e.addComponent(cc);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(true);
-		e.addComponent(mdc);
-
-		return e;
-	}
-
-
-	public AbstractEntity createFluidPlatform(int x, int y, float w) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "FluidPlatform");
-
-		if (Settings.SHOW_GREY_BOXES) {
-			ImageComponent imageData = new ImageComponent("grey_box.png", 0, w, Settings.PLAYER_SIZE);
-			e.addComponent(imageData);
-		}
-		PositionComponent pos = PositionComponent.ByTopLeft(x, y, w, Settings.PLAYER_SIZE);
-		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(false, true, false, false);
-		e.addComponent(cc);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(true);
-		e.addComponent(mdc);
-
-		return e;
-	}
-
-
-	public AbstractEntity createPlatformType1(int x, int y, int w, int h) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "PlatformImage1");
-
-		Ninepatch ninepatch = new Ninepatch("platform1.png", new Rect(1, 8, 1, 3));
-		
-		ImageComponent imageData = new ImageComponent(ninepatch.getImage(w, h), -1);
-		e.addComponent(imageData);
-		
-		PositionComponent pos = PositionComponent.ByTopLeft(x, y, w, Settings.PLAYER_SIZE);
-		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(false, true, false, false);
-		e.addComponent(cc);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(true);
-		e.addComponent(mdc);
-
-		return e;
-	}
-
-
 	public AbstractEntity createCoin(int x, int y) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Coin");
 
@@ -184,7 +128,7 @@ public class EntityFactory {
 		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.COLLECTABLE_SIZE, Settings.COLLECTABLE_SIZE);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, false, false, false);
+		CollisionComponent cc = new CollisionComponent(true, false);
 		e.addComponent(cc);
 		CollectableComponent col = new CollectableComponent(Type.Coin);
 		e.addComponent(col);

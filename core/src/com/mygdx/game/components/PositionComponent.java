@@ -14,13 +14,6 @@ public class PositionComponent {
 	}
 
 
-	public static PositionComponent ByTopLeft(float x, float y, float w, float h) {
-		PositionComponent pos = new PositionComponent();
-		pos.rect = new RectF(x, y, x+(w), y-h);
-		return pos;
-	}
-
-	
 	private PositionComponent() {
 		prevPos = new RectF();
 	}

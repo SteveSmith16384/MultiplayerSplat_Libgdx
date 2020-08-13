@@ -2,7 +2,6 @@ package com.mygdx.game.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.mygdx.game.systems.InputSystem;
 
 public class KeyboardInput implements IPlayerInput {
 

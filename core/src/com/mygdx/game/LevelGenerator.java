@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 
 public class LevelGenerator {

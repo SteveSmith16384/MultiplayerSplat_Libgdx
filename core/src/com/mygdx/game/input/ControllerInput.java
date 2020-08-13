@@ -13,25 +13,25 @@ public class ControllerInput implements IPlayerInput {
 
 	@Override
 	public boolean isLeftPressed() {
-		return controller.getAxis(Settings.AXIS) < -0.5f;
+		return controller.getAxis(0) < -0.5f;
 	}
 
 	
 	@Override
 	public boolean isRightPressed() {
-		return controller.getAxis(Settings.AXIS) > 0.5f;
+		return controller.getAxis(0) > 0.5f;
 	}
 
 	
 	@Override
 	public boolean isUpPressed() {
-		return controller.getAxis(Settings.AXIS) < -0.5f; // todo  check
+		return controller.getAxis(1) < -0.5f; // todo  check
 	}
 
 	
 	@Override
 	public boolean isDownPressed() {
-		return controller.getAxis(Settings.AXIS) > 0.5f; // todo  check
+		return controller.getAxis(1) > 0.5f; // todo  check
 	}
 
 	

@@ -6,7 +6,6 @@ import com.mygdx.game.components.CanBeHarmedComponent;
 import com.mygdx.game.components.CanCollectComponent;
 import com.mygdx.game.components.CollectableComponent;
 import com.mygdx.game.components.HarmOnContactComponent;
-import com.mygdx.game.components.MobComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.datamodels.CollisionResults;
 import com.mygdx.game.datamodels.PlayerData;
@@ -24,31 +23,6 @@ public class ProcessCollisionSystem {//implements ISystem {
 
 
 	public void processCollision(AbstractEntity mover, CollisionResults results) {
-		// Player moving into mob
-		{
-			MobComponent mob = (MobComponent)results.collidedWith.getComponent(MobComponent.class);
-			if (mob != null) {
-				PlayersAvatarComponent dbm = (PlayersAvatarComponent)mover.getComponent(PlayersAvatarComponent.class);
-				if (dbm != null) {
-					this.playerKilled(mover, dbm.timeStarted);
-					return;
-
-				}
-			}
-		}
-
-		// Mob moving into player
-		{
-			MobComponent mob = (MobComponent)mover.getComponent(MobComponent.class);
-			if (mob != null) {
-				PlayersAvatarComponent dbm = (PlayersAvatarComponent)results.collidedWith.getComponent(PlayersAvatarComponent.class);
-				if (dbm != null) {
-					this.playerKilled(results.collidedWith, dbm.timeStarted);
-					return;
-				}
-			}
-		}
-
 		// Generic harm
 		{
 			CanBeHarmedComponent cbh = (CanBeHarmedComponent)mover.getComponent(CanBeHarmedComponent.class);

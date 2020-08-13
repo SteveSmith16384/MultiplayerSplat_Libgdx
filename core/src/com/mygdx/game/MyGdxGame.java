@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.game.datamodels.GameData;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.helpers.AnimationFramesHelper;
+import com.mygdx.game.input.ControllerInput;
 import com.mygdx.game.input.IPlayerInput;
 import com.mygdx.game.systems.AnimationCycleSystem;
 import com.mygdx.game.systems.CollectorSystem;
@@ -303,12 +304,14 @@ public final class MyGdxGame extends Generic2DGame {
 
 	@Override
 	public void connected(Controller controller) {
+		addPlayerForController(new ControllerInput(controller));
 		p(this.controllerManager.getInGameControllers().size() + " controllers");
 	}
 
 
 	@Override
 	public void disconnected(Controller controller) {
+		// todo - remove player
 		p(this.controllerManager.getInGameControllers().size() + " controllers");
 	}
 

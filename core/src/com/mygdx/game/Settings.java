@@ -16,7 +16,6 @@ public final class Settings {
 	public static final int LOGICAL_WIDTH_PIXELS = 800;
 	public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
 	
-	public static final int AXIS = 0;
 	public static final float PLAYER_SPEED = 120;//50;
 	public static final float MAX_MOVEMENT = 20;//50;//150; // After adjusting for FPS
 	public static final int PLATFORM_SPACING = (int)(Settings.LOGICAL_HEIGHT_PIXELS * 0.20f);

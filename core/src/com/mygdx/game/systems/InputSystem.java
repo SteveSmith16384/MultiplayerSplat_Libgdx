@@ -49,7 +49,6 @@ public class InputSystem extends AbstractSystem {
 					game.players.put(ki, new PlayerData(ki)); // Create keyboard player by default (they might not actually join though!)
 
 					MyGdxGame.p("Keyboard player joined");
-					//player.setInGame(true);
 				}
 			}
 
