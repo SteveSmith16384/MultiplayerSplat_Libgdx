@@ -12,21 +12,25 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Settings;
 import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.PositionComponent;
+import com.mygdx.game.components.ScrollsAroundComponent;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 
 public class DrawingSystem extends AbstractSystem implements Comparator<AbstractEntity> {
 
+	private MyGdxGame game;
 	private SpriteBatch batch;
 	private HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	private ShapeRenderer shapeRenderer;
 
-	public DrawingSystem(BasicECS ecs, SpriteBatch _batch) {
+	public DrawingSystem(MyGdxGame _game, BasicECS ecs, SpriteBatch _batch) {
 		super(ecs, ImageComponent.class);
 
+		game = _game;
 		batch = _batch;
 
 		shapeRenderer = new ShapeRenderer();
@@ -65,7 +69,14 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		}
 		
 		// Draw the sprite
-		imageData.sprite.setPosition(posData.rect.getX(), posData.rect.getY());
+		ScrollsAroundComponent scroll = (ScrollsAroundComponent)entity.getComponent(ScrollsAroundComponent.class);
+		if (scroll == null) {
+			imageData.sprite.setPosition(posData.rect.getX(), posData.rect.getY());
+		} else {
+			float x = posData.rect.getX()-(game.screen_cam_x) + (Settings.LOGICAL_WIDTH_PIXELS/2);
+			float y = posData.rect.getY()-(game.screen_cam_y) + (Settings.LOGICAL_HEIGHT_PIXELS/2);
+			imageData.sprite.setPosition(x, y);
+		}
 		imageData.sprite.draw(batch);
 	}
 

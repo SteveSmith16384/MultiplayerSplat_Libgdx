@@ -24,6 +24,7 @@ import com.mygdx.game.systems.MoveToOffScreenSystem;
 import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
 import com.mygdx.game.systems.ProcessPlayersSystem;
+import com.mygdx.game.systems.ScrollPlayAreaSystem;
 import com.mygdx.game.systems.WalkingAnimationSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.libgdx.Generic2DGame;
@@ -58,6 +59,8 @@ public final class MyGdxGame extends Generic2DGame {
 	private DrawPreGameGuiSystem drawPreGameGuiSystem;
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
 
+	public float screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2; // Centre of current point
+	public float screen_cam_y = Settings.LOGICAL_HEIGHT_PIXELS/2;
 
 	public MyGdxGame() {
 		super(Settings.RELEASE_MODE);
@@ -77,11 +80,10 @@ public final class MyGdxGame extends Generic2DGame {
 
 		// Systems
 		this.inputSystem = new InputSystem(this, ecs);
-		drawingSystem = new DrawingSystem(ecs, batch);
+		drawingSystem = new DrawingSystem(this, ecs, batch);
 		collisionSystem = new CollisionSystem(ecs);
 		movementSystem = new MovementSystem(this, ecs);
 		animSystem = new AnimationCycleSystem(ecs);
-		//this.playerMovementSystem = new PlayerMovementSystem(this, ecs);
 		processCollisionSystem = new ProcessCollisionSystem(this);
 		this.collectorSystem = new CollectorSystem(this);
 		this.walkingAnimationSystem = new WalkingAnimationSystem(ecs);
@@ -90,12 +92,8 @@ public final class MyGdxGame extends Generic2DGame {
 		this.processPlayersSystem = new ProcessPlayersSystem(this);
 		this.drawPreGameGuiSystem = new DrawPreGameGuiSystem(this, batch);
 		this.drawPostGameGuiSystem = new DrawPostGameGuiSystem(this, batch);
-/*
-		// Add players for all connected controllers
-		for (Controller controller : Controllers.getControllers()) {
-			this.addPlayerForController(new ControllerInput(controller));
-		}
-*/
+		ecs.addSystem(new ScrollPlayAreaSystem(this));
+
 		startPreGame();
 
 		/*if (!Settings.RELEASE_MODE) {
@@ -199,6 +197,7 @@ public final class MyGdxGame extends Generic2DGame {
 				//this.playerMovementSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
 				this.movementSystem.process();
+				ecs.processSystem(ScrollPlayAreaSystem.class);
 				this.animSystem.process();			
 			}
 

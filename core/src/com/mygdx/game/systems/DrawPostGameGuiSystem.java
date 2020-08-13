@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
+import com.scs.basicecs.ISystem;
 
-public class DrawPostGameGuiSystem {
+public class DrawPostGameGuiSystem implements ISystem {
 
 	private Sprite background;
 	private MyGdxGame game;

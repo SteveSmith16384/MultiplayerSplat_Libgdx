@@ -6,9 +6,10 @@ import com.mygdx.game.Settings;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.IPlayerInput;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.ISystem;
 import com.scs.lang.NumberFunctions;
 
-public class ProcessPlayersSystem {
+public class ProcessPlayersSystem implements ISystem {
 
 	private MyGdxGame game;
 

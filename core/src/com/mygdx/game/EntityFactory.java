@@ -44,6 +44,7 @@ public class EntityFactory {
 		e.addComponent(ccc);
 		WalkingAnimationComponent wac = new WalkingAnimationComponent(.2f);
 		e.addComponent(wac);
+		e.addComponent(new ScrollsAroundComponent());
 
 		game.animFrameHelper.createPlayersFrames(e, player.imageId, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 		return e;
@@ -61,8 +62,7 @@ public class EntityFactory {
 		e.addComponent(pos);
 		CollisionComponent cc = new CollisionComponent(true, true);
 		e.addComponent(cc);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(true);
-		e.addComponent(mdc);
+		e.addComponent(new ScrollsAroundComponent());
 
 		return e;
 	}
@@ -81,8 +81,7 @@ public class EntityFactory {
 		e.addComponent(cc);
 		HarmOnContactComponent hoc = new HarmOnContactComponent();
 		e.addComponent(hoc);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(true);
-		e.addComponent(mdc);
+		e.addComponent(new ScrollsAroundComponent());
 		return e;
 	}
 
@@ -132,8 +131,7 @@ public class EntityFactory {
 		e.addComponent(cc);
 		CollectableComponent col = new CollectableComponent(Type.Coin);
 		e.addComponent(col);
-		ScrollsAroundComponent mdc = new ScrollsAroundComponent(false);
-		e.addComponent(mdc);
+		e.addComponent(new ScrollsAroundComponent());
 		return e;
 	}
 
