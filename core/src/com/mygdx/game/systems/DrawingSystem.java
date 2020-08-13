@@ -95,13 +95,13 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 	public void drawDebug(SpriteBatch batch) {
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 
-		Iterator<AbstractEntity> it = this.getEntityIterator();//ecs.getIterator();
+		Iterator<AbstractEntity> it = this.getEntityIterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 
 			if (posData.rect != null) {
-				shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+				shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 				shapeRenderer.setColor(Color.GREEN);
 				shapeRenderer.rect(posData.rect.left, posData.rect.bottom, posData.rect.width(), posData.rect.height()); 
 				shapeRenderer.end();

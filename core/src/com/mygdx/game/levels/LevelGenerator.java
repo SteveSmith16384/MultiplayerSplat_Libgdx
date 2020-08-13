@@ -8,7 +8,7 @@ import com.scs.basicecs.BasicECS;
 
 public class LevelGenerator implements ILevelData {
 	
-	private static final int MAP_SIZE = 60;
+	private static final int MAP_SIZE = 20;
 
 	private EntityFactory entityFactory;
 	private BasicECS ecs;
@@ -21,9 +21,6 @@ public class LevelGenerator implements ILevelData {
 
 
 	public void createLevel() {
-		//AbstractEntity background = this.entityFactory.createImage("background.jpg", 0, 0, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, -99);
-		//ecs.addEntity(background);
-
 		MazeGen1 mazegen = new MazeGen1(MAP_SIZE, MAP_SIZE, 0);
 		for (int y=0 ; y<MAP_SIZE ; y++) {
 			for (int x=0 ; x<MAP_SIZE ; x++) {

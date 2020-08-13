@@ -195,7 +195,6 @@ public class BasicECS {
 
 	public void dispose() {
 		// Show total processing time for profiling
-		/*
 		for (ISystem sys: this.systems.values()) {
 			if (sys instanceof AbstractSystem) {
 				AbstractSystem system = (AbstractSystem)sys;
@@ -203,7 +202,7 @@ public class BasicECS {
 					System.out.println(system.getClass().getSimpleName() + " = " + system.total_time);
 				}
 			}
-		}*/
+		}
 
 	}
 }
