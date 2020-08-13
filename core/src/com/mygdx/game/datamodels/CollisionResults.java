@@ -7,9 +7,8 @@ public class CollisionResults {
 	public AbstractEntity collidedWith;
 	public boolean moveBack;
 	
-	public CollisionResults(AbstractEntity _collidedWith, boolean _fromAbove, boolean _moveBack) { // todo - remove _fromAbove
+	public CollisionResults(AbstractEntity _collidedWith, boolean _moveBack) {
 		collidedWith = _collidedWith;
-		//fromAbove = _fromAbove;
 		moveBack = _moveBack;
 	}
 

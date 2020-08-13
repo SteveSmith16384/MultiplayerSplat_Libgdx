@@ -20,13 +20,13 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.libgdx.Ninepatch;
 
 public class EntityFactory {
-	
+
 	private MyGdxGame game;
-	
+
 	public EntityFactory(MyGdxGame _game) {
 		game = _game;
 	}
-	
+
 
 	public AbstractEntity createPlayersAvatar(PlayerData player, IPlayerInput controller, float x, float y) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Player");
@@ -54,10 +54,8 @@ public class EntityFactory {
 	public AbstractEntity createWall(float x, float y, float w, float h) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Wall");
 
-		if (Settings.SHOW_GREY_BOXES) {
-			ImageComponent imageData = new ImageComponent("grey_box.png", 0, w, h);
-			e.addComponent(imageData);
-		}
+		ImageComponent imageData = new ImageComponent("colours/black.png", 0, w, h);
+		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
 		e.addComponent(pos);
 		CollisionComponent cc = new CollisionComponent(true, true);
@@ -71,10 +69,8 @@ public class EntityFactory {
 	public AbstractEntity createHarmfulArea(int x, int y, float w, float h) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "HarmfulArea");
 
-		if (Settings.SHOW_GREY_BOXES) {
-			ImageComponent imageData = new ImageComponent("grey_box.png", 0, w, h);
-			e.addComponent(imageData);
-		}
+		ImageComponent imageData = new ImageComponent("todo.png", 0, w, h);
+		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
 		e.addComponent(pos);
 		CollisionComponent cc = new CollisionComponent(true, true);
@@ -88,7 +84,7 @@ public class EntityFactory {
 
 	public AbstractEntity createTestImage(int x, int y, int w, int h, int zOrder) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "TestImage");
-		
+
 		//Texture tex = new Texture("grey_box.png");
 		Ninepatch np = new Ninepatch(null, null);
 		Sprite sprite = np.getImage(w, h);
@@ -115,7 +111,7 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createCoin(int x, int y) {
+	public AbstractEntity createCoin(float x, float y) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Coin");
 
 		AnimationCycleComponent acc = game.animFrameHelper.generateForCoin(Settings.COLLECTABLE_SIZE);
@@ -139,7 +135,7 @@ public class EntityFactory {
 	public AbstractEntity createRisingCoin(AbstractEntity coin) {
 		PositionComponent pos = (PositionComponent)coin.getComponent(PositionComponent.class);
 		ImageComponent img = (ImageComponent)coin.getComponent(ImageComponent.class);
-		
+
 		AbstractEntity e = new AbstractEntity(game.ecs, "RisingCoin");
 
 		ImageComponent imageData;

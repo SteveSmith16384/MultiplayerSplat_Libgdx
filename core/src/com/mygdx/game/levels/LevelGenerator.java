@@ -30,6 +30,9 @@ public class LevelGenerator implements ILevelData {
 				if (mazegen.map[x][y] == false) {
 					AbstractEntity wall = entityFactory.createWall(Settings.MAP_SQ_SIZE*x, Settings.MAP_SQ_SIZE*y, Settings.MAP_SQ_SIZE, Settings.MAP_SQ_SIZE);
 					ecs.addEntity(wall);
+				} else {
+					AbstractEntity wall = entityFactory.createCoin(Settings.MAP_SQ_SIZE*x, Settings.MAP_SQ_SIZE*y);
+					ecs.addEntity(wall);
 				}
 			}
 		}

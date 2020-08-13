@@ -24,7 +24,7 @@ public class AnimationFramesHelper {
 			sprite.setSize(size * (tex.getWidth()/45f), size);
 			acd.frames[i-1] = sprite;
 		}*/
-		Texture texture = getTexture("Coin_16x16_Anim.png");
+		Texture texture = getTexture("sprites/Coin_16x16_Anim.png");
 		TextureAtlas atlas = new TextureAtlas();
 		for (int i=0 ; i<numFrames ; i++) {
 			atlas.addRegion("frame"+i, texture, i*16, 0, 16, 16);

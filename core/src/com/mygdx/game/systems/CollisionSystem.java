@@ -41,7 +41,7 @@ public class CollisionSystem extends AbstractSystem {
 					if (pos != null) {
 						if (moverPos.rect.intersects(pos.rect)) {
 							if (cc.alwaysCollides) {
-								return new CollisionResults(e, false, cc.blocksMovement);
+								return new CollisionResults(e, cc.blocksMovement);
 							}
 						}
 					}

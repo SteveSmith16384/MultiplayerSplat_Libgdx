@@ -8,7 +8,6 @@ public final class Settings {
 	public static final boolean RELEASE_MODE = false || new File("../../debug_mode.tmp").exists() == false;
 	
 	// Debug
-	public static final boolean SHOW_GREY_BOXES = !RELEASE_MODE && true;
 	public static final boolean SHOW_OUTLINES = !RELEASE_MODE && false;
 
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1100 : 1100;

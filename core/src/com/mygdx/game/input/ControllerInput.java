@@ -25,13 +25,13 @@ public class ControllerInput implements IPlayerInput {
 	
 	@Override
 	public boolean isUpPressed() {
-		return controller.getAxis(1) < -0.5f; // todo  check
+		return controller.getAxis(1) < -0.5f;
 	}
 
 	
 	@Override
 	public boolean isDownPressed() {
-		return controller.getAxis(1) > 0.5f; // todo  check
+		return controller.getAxis(1) > 0.5f;
 	}
 
 	
