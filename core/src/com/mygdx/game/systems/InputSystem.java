@@ -4,6 +4,8 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Settings;
+import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.KeyboardInput;
@@ -59,20 +61,23 @@ public class InputSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		PlayersAvatarComponent pac = (PlayersAvatarComponent)entity.getComponent(PlayersAvatarComponent.class);
-		pac.moveLeft = pac.controller.isLeftPressed();
-		pac.moveRight = pac.controller.isRightPressed();
-		pac.moveUp = pac.controller.isUpPressed();
-		pac.moveDown = pac.controller.isDownPressed();
-	}
+		PlayersAvatarComponent uic = (PlayersAvatarComponent)entity.getComponent(PlayersAvatarComponent.class);
+		if (uic != null) {
+			MovementComponent mc = (MovementComponent)entity.getComponent(MovementComponent.class);
 
-	/*
-	public void buttonDown(Controller controller, int buttonCode) {
-		if (game.gameStage == -1) {
-			PlayerData player = game.getControllerPlayer(controller);
-			player.setInGame(true);
+			if (uic.controller.isLeftPressed()) {
+				mc.offX = -Settings.PLAYER_SPEED;
+			} else if (uic.controller.isRightPressed()) {
+				mc.offX = Settings.PLAYER_SPEED;
+			}
+			if (uic.controller.isUpPressed()) {
+				mc.offY = Settings.PLAYER_SPEED;
+			} else if (uic.controller.isDownPressed()) {
+				mc.offY = -Settings.PLAYER_SPEED;
+			}
+
 		}
 	}
-*/
+
 
 }

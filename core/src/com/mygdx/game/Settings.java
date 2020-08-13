@@ -11,7 +11,7 @@ public final class Settings {
 	public static final boolean SHOW_GREY_BOXES = !RELEASE_MODE && false;
 	public static final boolean SHOW_OUTLINES = !RELEASE_MODE && false;
 
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1100 : 512;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1100 : 1100;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 	public static final int LOGICAL_WIDTH_PIXELS = 800;
 	public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);

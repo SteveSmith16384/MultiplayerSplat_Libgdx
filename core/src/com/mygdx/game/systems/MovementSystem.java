@@ -32,7 +32,6 @@ public class MovementSystem extends AbstractSystem {
 				float totalDist = md.offX * Gdx.graphics.getDeltaTime();
 				if (Math.abs(totalDist) > Settings.MAX_MOVEMENT) {
 					totalDist = Settings.MAX_MOVEMENT * Math.signum(totalDist);
-					//MyGdxGame.p("Max movement hit!");					
 				}
 				pos.rect.move(totalDist, 0);
 				CollisionResults results = game.collisionSystem.collided(movingEntity, md.offX, 0);
@@ -59,6 +58,7 @@ public class MovementSystem extends AbstractSystem {
 				}
 				pos.rect.move(0, totalDist);
 				CollisionResults results = game.collisionSystem.collided(movingEntity, 0, md.offY);
+				md.offY = 0;
 				if (results != null) {
 					if (results.moveBack) {
 						pos.rect.set(pos.prevPos); // Move back

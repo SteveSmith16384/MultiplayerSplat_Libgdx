@@ -4,16 +4,13 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.game.datamodels.GameData;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.helpers.AnimationFramesHelper;
-import com.mygdx.game.input.ControllerInput;
 import com.mygdx.game.input.IPlayerInput;
-import com.mygdx.game.input.KeyboardInput;
 import com.mygdx.game.systems.AnimationCycleSystem;
 import com.mygdx.game.systems.CollectorSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -24,7 +21,6 @@ import com.mygdx.game.systems.DrawingSystem;
 import com.mygdx.game.systems.InputSystem;
 import com.mygdx.game.systems.MoveToOffScreenSystem;
 import com.mygdx.game.systems.MovementSystem;
-import com.mygdx.game.systems.PlayerMovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
 import com.mygdx.game.systems.ProcessPlayersSystem;
 import com.mygdx.game.systems.WalkingAnimationSystem;
@@ -51,7 +47,7 @@ public final class MyGdxGame extends Generic2DGame {
 	public CollisionSystem collisionSystem;
 	private MovementSystem movementSystem;
 	private AnimationCycleSystem animSystem;
-	private PlayerMovementSystem playerMovementSystem;
+	//private PlayerMovementSystem playerMovementSystem;
 	public ProcessCollisionSystem processCollisionSystem;
 	public CollectorSystem collectorSystem;
 	private WalkingAnimationSystem walkingAnimationSystem;
@@ -84,7 +80,7 @@ public final class MyGdxGame extends Generic2DGame {
 		collisionSystem = new CollisionSystem(ecs);
 		movementSystem = new MovementSystem(this, ecs);
 		animSystem = new AnimationCycleSystem(ecs);
-		this.playerMovementSystem = new PlayerMovementSystem(this, ecs);
+		//this.playerMovementSystem = new PlayerMovementSystem(this, ecs);
 		processCollisionSystem = new ProcessCollisionSystem(this);
 		this.collectorSystem = new CollectorSystem(this);
 		this.walkingAnimationSystem = new WalkingAnimationSystem(ecs);
@@ -141,6 +137,8 @@ public final class MyGdxGame extends Generic2DGame {
 
 
 	private void startGame() {
+		this.removeAllEntities();
+
 		this.playMusic("music/8BitMetal.wav");
 
 		// Reset all player data
@@ -157,8 +155,6 @@ public final class MyGdxGame extends Generic2DGame {
 		}*/
 
 		gameData = new GameData();
-
-		this.removeAllEntities();
 
 		LevelGenerator levelGenerator = new LevelGenerator(this.entityFactory, ecs);
 		levelGenerator.createLevel1();
@@ -199,7 +195,7 @@ public final class MyGdxGame extends Generic2DGame {
 				// loop through systems
 				this.processPlayersSystem.process();
 				this.moveToOffScreenSystem.process();
-				this.playerMovementSystem.process();
+				//this.playerMovementSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
 				this.movementSystem.process();
 				this.animSystem.process();			

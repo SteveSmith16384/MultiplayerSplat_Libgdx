@@ -1,5 +1,5 @@
 package com.mygdx.game.systems;
-
+/*
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
 import com.mygdx.game.components.MovementComponent;
@@ -31,13 +31,13 @@ public class PlayerMovementSystem extends AbstractSystem {
 				mc.offX = Settings.PLAYER_SPEED;
 			}
 			if (uic.moveUp) {
-				mc.offY = -Settings.PLAYER_SPEED;
-			} else if (uic.moveDown) {
 				mc.offY = Settings.PLAYER_SPEED;
+			} else if (uic.moveDown) {
+				mc.offY = -Settings.PLAYER_SPEED;
 			}
 
 		}
 	}
 
 
-}
+}*/

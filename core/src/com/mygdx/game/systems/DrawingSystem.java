@@ -47,7 +47,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 	//@Override
 	public void processEntity(AbstractEntity entity) {
 		ImageComponent imageData = (ImageComponent)entity.getComponent(ImageComponent.class);
-		//if (imageData != null) {
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (imageData.sprite == null) {
 			// Load sprite for given filename
@@ -68,7 +67,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		// Draw the sprite
 		imageData.sprite.setPosition(posData.rect.getX(), posData.rect.getY());
 		imageData.sprite.draw(batch);
-		//}
 	}
 
 
