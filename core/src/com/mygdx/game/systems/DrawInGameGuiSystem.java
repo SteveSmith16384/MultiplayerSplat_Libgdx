@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
-import com.mygdx.game.models.PlayerData;
+import com.mygdx.game.datamodels.PlayerData;
 
 public class DrawInGameGuiSystem {
 
@@ -22,12 +22,12 @@ public class DrawInGameGuiSystem {
 	public void process() {
 		int num = 0;
 		for (PlayerData player : game.players.values()) {
-			if (player.isInGame()) {
+			//if (player.isInGame()) {
 				int xStart = 20+(num*250);
 				game.drawFont(batch, "Score: " + player.score, xStart, 90);
 				if (player.lives > 0) {
 					if (players[num] == null) {
-						Texture tex = new Texture("player" + player.imageId + "_right1.png");
+						Texture tex = new Texture("sprites/player" + player.imageId + "_right1.png");
 						players[num] = new Sprite(tex);
 						players[num].setSize(Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 					}
@@ -39,7 +39,7 @@ public class DrawInGameGuiSystem {
 					game.drawFont(batch, "GAME OVER!", xStart, 40);
 				}
 				num++;
-			}
+			//}
 		}
 	}
 }

@@ -17,7 +17,7 @@ public class DrawPostGameGuiSystem {
 		game = _game;
 		batch = _batch;
 
-		Texture tex = new Texture("background.jpg");
+		Texture tex = new Texture("colours/black.png");
 		background = new Sprite(tex);
 		background.setSize(Settings.LOGICAL_WIDTH_PIXELS,  Settings.LOGICAL_HEIGHT_PIXELS);
 	}

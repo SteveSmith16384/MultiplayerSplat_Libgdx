@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.PositionComponent;
-import com.mygdx.game.models.CollisionResults;
+import com.mygdx.game.datamodels.CollisionResults;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;

@@ -8,8 +8,8 @@ import com.mygdx.game.components.CollectableComponent;
 import com.mygdx.game.components.HarmOnContactComponent;
 import com.mygdx.game.components.MobComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
-import com.mygdx.game.models.CollisionResults;
-import com.mygdx.game.models.PlayerData;
+import com.mygdx.game.datamodels.CollisionResults;
+import com.mygdx.game.datamodels.PlayerData;
 import com.scs.basicecs.AbstractEntity;
 
 public class ProcessCollisionSystem {//implements ISystem {

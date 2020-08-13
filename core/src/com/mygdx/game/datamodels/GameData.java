@@ -1,4 +1,4 @@
-package com.mygdx.game.models;
+package com.mygdx.game.datamodels;
 
 public class GameData {
 

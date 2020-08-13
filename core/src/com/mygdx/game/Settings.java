@@ -9,7 +9,6 @@ public final class Settings {
 	
 	// Debug
 	public static final boolean SHOW_GREY_BOXES = !RELEASE_MODE && false;
-	public static final boolean TURN_OFF_GRAVITY = !RELEASE_MODE && false;
 	public static final boolean SHOW_OUTLINES = !RELEASE_MODE && false;
 
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1100 : 512;
@@ -29,7 +28,7 @@ public final class Settings {
 	public static final float GRAVITY = 400;
 	public static final int AVATAR_RESPAWN_TIME_SECS = 3;
 	
-	public static final String TITLE = "Collect the Coins";
+	public static final String TITLE = "SPLAT!";
 	
 	private Settings() { }
 

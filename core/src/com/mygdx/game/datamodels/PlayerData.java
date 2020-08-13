@@ -1,4 +1,4 @@
-package com.mygdx.game.models;
+package com.mygdx.game.datamodels;
 
 import com.mygdx.game.input.IPlayerInput;
 import com.scs.basicecs.AbstractEntity;
@@ -8,7 +8,7 @@ public class PlayerData {
 	public static int nextImageId = 1;
 
 	public IPlayerInput controller;
-	private boolean in_game = false;
+	//private boolean in_game = false;
 	public boolean quit = false; // If they've removed their controller; prevent them re-attaching to start again
 	public AbstractEntity avatar;
 	public float timeUntilAvatar;
@@ -21,26 +21,17 @@ public class PlayerData {
 	}
 
 
-	public void setInGame(boolean b) {
-		if (b) {
+	public void init() {
 			/*if (Settings.RELEASE_MODE == false) {
 				if (in_game) {
 					throw new RuntimeException("Player already in game!");
 				}
 			}*/
-			this.in_game = true;
+			//this.in_game = true;
 			this.lives = 3;
 			if (imageId <= 0) {
 				imageId = nextImageId++;
 			}
-		} else {
-			this.in_game = false;
-		}
-	}
-
-
-	public boolean isInGame() {
-		return this.in_game;
 	}
 
 }

@@ -3,19 +3,17 @@ package com.mygdx.game;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.mygdx.game.datamodels.GameData;
+import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.helpers.AnimationFramesHelper;
 import com.mygdx.game.input.ControllerInput;
 import com.mygdx.game.input.IPlayerInput;
 import com.mygdx.game.input.KeyboardInput;
-import com.mygdx.game.models.GameData;
-import com.mygdx.game.models.PlayerData;
 import com.mygdx.game.systems.AnimationCycleSystem;
 import com.mygdx.game.systems.CollectorSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -24,7 +22,6 @@ import com.mygdx.game.systems.DrawPostGameGuiSystem;
 import com.mygdx.game.systems.DrawPreGameGuiSystem;
 import com.mygdx.game.systems.DrawingSystem;
 import com.mygdx.game.systems.InputSystem;
-import com.mygdx.game.systems.MobAISystem;
 import com.mygdx.game.systems.MoveToOffScreenSystem;
 import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.PlayerMovementSystem;
@@ -34,7 +31,7 @@ import com.mygdx.game.systems.WalkingAnimationSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.libgdx.Generic2DGame;
 
-public final class MyGdxGame extends Generic2DGame implements InputProcessor, ControllerListener {
+public final class MyGdxGame extends Generic2DGame {
 
 	public BasicECS ecs;
 
@@ -42,18 +39,18 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 	public EntityFactory entityFactory;
 	public GameData gameData;
 	public AnimationFramesHelper animFrameHelper;
-	public LevelGenerator levelGenerator;
 	public int winnerImageId;
 	public int gameStage = -1; // -1, 0, or 1 for before, during and after game
 	private boolean nextStage = false;
-
+	public HashMap<IPlayerInput, PlayerData> players = new HashMap<IPlayerInput, PlayerData>();
+	public boolean keyboard_joined = false;
+	
 	// Systems
 	public InputSystem inputSystem;
 	private DrawingSystem drawingSystem;
 	public CollisionSystem collisionSystem;
 	private MovementSystem movementSystem;
 	private AnimationCycleSystem animSystem;
-	private MobAISystem mobAiSystem;
 	private PlayerMovementSystem playerMovementSystem;
 	public ProcessCollisionSystem processCollisionSystem;
 	public CollectorSystem collectorSystem;
@@ -64,9 +61,7 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 	private DrawPreGameGuiSystem drawPreGameGuiSystem;
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
 
-	public HashMap<IPlayerInput, PlayerData> players = new HashMap<IPlayerInput, PlayerData>();
 
-	
 	public MyGdxGame() {
 		super(Settings.RELEASE_MODE);
 	}
@@ -89,7 +84,6 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 		collisionSystem = new CollisionSystem(ecs);
 		movementSystem = new MovementSystem(this, ecs);
 		animSystem = new AnimationCycleSystem(ecs);
-		mobAiSystem = new MobAISystem(this, ecs);
 		this.playerMovementSystem = new PlayerMovementSystem(this, ecs);
 		processCollisionSystem = new ProcessCollisionSystem(this);
 		this.collectorSystem = new CollectorSystem(this);
@@ -99,17 +93,12 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 		this.processPlayersSystem = new ProcessPlayersSystem(this);
 		this.drawPreGameGuiSystem = new DrawPreGameGuiSystem(this, batch);
 		this.drawPostGameGuiSystem = new DrawPostGameGuiSystem(this, batch);
-
+/*
 		// Add players for all connected controllers
 		for (Controller controller : Controllers.getControllers()) {
 			this.addPlayerForController(new ControllerInput(controller));
 		}
-
-		KeyboardInput ki = new KeyboardInput(inputSystem);
-		players.put(ki, new PlayerData(ki)); // Create keyboard player by default (they might not actually join though!)
-
-		levelGenerator = new LevelGenerator(this.entityFactory, ecs);
-
+*/
 		startPreGame();
 
 		/*if (!Settings.RELEASE_MODE) {
@@ -133,14 +122,9 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 
 
 	private void startPreGame() {
-		this.playMusic("IntroLoop.wav");
+		this.playMusic("music/IntroLoop.wav");
 
 		this.removeAllEntities();
-
-		// Reset all player data
-		for (PlayerData player : players.values()) {
-			player.setInGame(false);
-		}
 	}
 
 
@@ -157,7 +141,12 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 
 
 	private void startGame() {
-		this.playMusic("8BitMetal.wav");
+		this.playMusic("music/8BitMetal.wav");
+
+		// Reset all player data
+		for (PlayerData player : players.values()) {
+			player.init();
+		}
 
 		/*if (!Settings.RELEASE_MODE) {
 			if (this.players.size() > 0) {
@@ -171,18 +160,13 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 
 		this.removeAllEntities();
 
+		LevelGenerator levelGenerator = new LevelGenerator(this.entityFactory, ecs);
 		levelGenerator.createLevel1();
 	}
 
 
 	private int getNumPlayersInGame() {
-		int count = 0;
-		for (PlayerData player : players.values()) {
-			if (player.isInGame()) {
-				count++;
-			}
-		}
-		return count;
+		return players.size();
 	}
 
 
@@ -207,7 +191,7 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 
 			ecs.addAndRemoveEntities();
 
-			checkNewOrRemovedControllers();
+			//checkNewOrRemovedControllers();
 
 			this.inputSystem.process();
 
@@ -216,7 +200,6 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 				this.processPlayersSystem.process();
 				this.moveToOffScreenSystem.process();
 				this.playerMovementSystem.process();
-				this.mobAiSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
 				this.movementSystem.process();
 				this.animSystem.process();			
@@ -249,7 +232,7 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 		}
 	}
 
-
+/*
 	private void checkNewOrRemovedControllers() {
 		for (Controller c : this.controllersAdded) {
 			this.addPlayerForController(new ControllerInput(c));
@@ -267,7 +250,7 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 		}
 		this.controllersAdded.clear();
 	}
-
+*/
 
 	public void drawFont(Batch batch, String text, float x, float y) {
 		font.draw(batch, text, x, y);
@@ -288,7 +271,6 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 		if (font != null) {
 			font.dispose();
 		}
-		this.drawingSystem.dispose();
 		this.animFrameHelper.dispose();
 		ecs.dispose();
 	}
@@ -299,45 +281,7 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 		ecs.addAndRemoveEntities();
 	}
 
-
-	//#############################
-
-
-	@Override
-	public boolean keyDown(int keycode) {
-		this.inputSystem.keyDown(keycode);
-		return true;
-	}
-
-
-	@Override
-	public boolean keyUp(int keycode) {
-		this.inputSystem.keyUp(keycode);
-		return true;
-	}
-
-
-	@Override
-	public boolean buttonDown(Controller controller, int buttonCode) {
-		this.inputSystem.buttonDown(controller, buttonCode);
-		return false;
-	}
-
-
-	@Override
-	public boolean buttonUp(Controller controller, int buttonCode) {
-		//this.inputSystem.buttonUp(controller, buttonCode);
-		return false;
-	}
-
-
-	@Override
-	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		//this.inputSystem.axisMoved(controller, axisCode, value);
-		return false;
-	}
-
-
+/*
 	public PlayerData getKeyboardPlayer() {
 		for (PlayerData player : players.values()) {
 			if (player.controller instanceof KeyboardInput) {
@@ -347,7 +291,7 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 		return null;
 	}
 
-
+/*
 	public PlayerData getControllerPlayer(Controller c) {
 		for (PlayerData player : players.values()) {
 			if (player.controller instanceof ControllerInput) {
@@ -358,6 +302,18 @@ public final class MyGdxGame extends Generic2DGame implements InputProcessor, Co
 			}
 		}
 		return null;
+	}
+*/
+
+	@Override
+	public void connected(Controller controller) {
+		p(this.controllerManager.getInGameControllers().size() + " controllers");
+	}
+
+
+	@Override
+	public void disconnected(Controller controller) {
+		p(this.controllerManager.getInGameControllers().size() + " controllers");
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.mygdx.game.components;
 
+import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.IPlayerInput;
-import com.mygdx.game.models.PlayerData;
 
 public class PlayersAvatarComponent {
 

@@ -5,7 +5,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PositionComponent;
-import com.mygdx.game.models.CollisionResults;
+import com.mygdx.game.datamodels.CollisionResults;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -62,20 +62,9 @@ public class MovementSystem extends AbstractSystem {
 				if (results != null) {
 					if (results.moveBack) {
 						pos.rect.set(pos.prevPos); // Move back
-						if (md.canFall) {
-							md.offY = 0;
-						}
 					}
 					game.processCollisionSystem.processCollision(movingEntity, results);
 				}
-			}
-			if (md.canFall) {
-				// Gravity
-				if (!Settings.TURN_OFF_GRAVITY) {
-					md.offY -= Settings.GRAVITY * Gdx.graphics.getDeltaTime();
-				}
-			} else {
-				md.offY = 0;
 			}
 		}
 	}
