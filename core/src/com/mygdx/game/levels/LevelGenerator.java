@@ -1,14 +1,18 @@
-package com.mygdx.game;
+package com.mygdx.game.levels;
 
+import com.badlogic.gdx.math.GridPoint2;
+import com.mygdx.game.EntityFactory;
+import com.mygdx.game.Settings;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 
-public class LevelGenerator {
+public class LevelGenerator implements ILevelData {
 	
-	private static final int MAP_SIZE = 20;
+	private static final int MAP_SIZE = 60;
 
 	private EntityFactory entityFactory;
 	private BasicECS ecs;
+	private GridPoint2 start_pos;
 
 	public LevelGenerator(EntityFactory _entityFactory, BasicECS _ecs) {
 		entityFactory = _entityFactory;
@@ -16,7 +20,7 @@ public class LevelGenerator {
 	}
 
 
-	public void createLevel1() {
+	public void createLevel() {
 		//AbstractEntity background = this.entityFactory.createImage("background.jpg", 0, 0, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, -99);
 		//ecs.addEntity(background);
 
@@ -29,6 +33,14 @@ public class LevelGenerator {
 				}
 			}
 		}
+		
+		this.start_pos = mazegen.start_pos;
+	}
+
+
+	@Override
+	public GridPoint2 getStartPosition() {
+		return start_pos;
 	}
 
 }

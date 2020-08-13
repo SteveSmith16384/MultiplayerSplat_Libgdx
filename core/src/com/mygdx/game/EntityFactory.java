@@ -28,7 +28,7 @@ public class EntityFactory {
 	}
 	
 
-	public AbstractEntity createPlayersAvatar(PlayerData player, IPlayerInput controller, int x, int y) {
+	public AbstractEntity createPlayersAvatar(PlayerData player, IPlayerInput controller, float x, float y) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Player");
 
 		ImageComponent imageData = new ImageComponent("grey_box.png", 1, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);

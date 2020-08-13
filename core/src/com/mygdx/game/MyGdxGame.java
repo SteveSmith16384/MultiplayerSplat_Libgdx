@@ -12,6 +12,8 @@ import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.helpers.AnimationFramesHelper;
 import com.mygdx.game.input.ControllerInput;
 import com.mygdx.game.input.IPlayerInput;
+import com.mygdx.game.levels.ILevelData;
+import com.mygdx.game.levels.LevelGenerator;
 import com.mygdx.game.systems.AnimationCycleSystem;
 import com.mygdx.game.systems.CollectorSystem;
 import com.mygdx.game.systems.CollisionSystem;
@@ -42,6 +44,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private boolean nextStage = false;
 	public HashMap<IPlayerInput, PlayerData> players = new HashMap<IPlayerInput, PlayerData>();
 	public boolean keyboard_joined = false;
+	public ILevelData level;
 	
 	// Systems
 	public InputSystem inputSystem;
@@ -71,7 +74,7 @@ public final class MyGdxGame extends Generic2DGame {
 		super.create();
 
 		font = new BitmapFont();
-		font.getData().setScale(3);
+		font.getData().setScale(2);
 
 		ecs = new BasicECS();
 		entityFactory = new EntityFactory(this);
@@ -154,8 +157,8 @@ public final class MyGdxGame extends Generic2DGame {
 
 		gameData = new GameData();
 
-		LevelGenerator levelGenerator = new LevelGenerator(this.entityFactory, ecs);
-		levelGenerator.createLevel1();
+		level = new LevelGenerator(this.entityFactory, ecs);
+		level.createLevel();
 	}
 
 
@@ -184,8 +187,6 @@ public final class MyGdxGame extends Generic2DGame {
 			}
 
 			ecs.addAndRemoveEntities();
-
-			//checkNewOrRemovedControllers();
 
 			this.inputSystem.process();
 
@@ -217,6 +218,9 @@ public final class MyGdxGame extends Generic2DGame {
 				this.drawPostGameGuiSystem.process();
 				this.drawInGameGuiSystem.process();
 			}
+			
+			drawFont(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 20);
+
 			batch.end();
 
 			if (Settings.SHOW_OUTLINES) {

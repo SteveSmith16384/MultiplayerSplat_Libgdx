@@ -1,13 +1,13 @@
 package com.mygdx.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.GridPoint2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.IPlayerInput;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
-import com.scs.lang.NumberFunctions;
 
 public class ProcessPlayersSystem implements ISystem {
 
@@ -54,8 +54,8 @@ public class ProcessPlayersSystem implements ISystem {
 
 
 	private void createPlayersAvatar(PlayerData player, IPlayerInput controller) {
-		int xPos = NumberFunctions.rnd(50,  Settings.LOGICAL_WIDTH_PIXELS-50);
-		AbstractEntity avatar = game.entityFactory.createPlayersAvatar(player, controller, xPos, Settings.LOGICAL_HEIGHT_PIXELS/2);
+		GridPoint2 start_pos = game.level.getStartPosition();
+		AbstractEntity avatar = game.entityFactory.createPlayersAvatar(player, controller, start_pos.x*Settings.MAP_SQ_SIZE, start_pos.y*Settings.MAP_SQ_SIZE);
 		game.ecs.addEntity(avatar);
 
 		player.avatar = avatar;

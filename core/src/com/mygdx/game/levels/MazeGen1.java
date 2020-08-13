@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.levels;
 
 import java.util.LinkedList;
 import java.util.Random;
