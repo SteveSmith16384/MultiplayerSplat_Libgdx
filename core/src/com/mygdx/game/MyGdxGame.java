@@ -78,7 +78,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 		ecs = new BasicECS();
 		entityFactory = new EntityFactory(this);
-		animFrameHelper = new AnimationFramesHelper();
+		animFrameHelper = new AnimationFramesHelper(this);
 
 		// Systems
 		this.inputSystem = new InputSystem(this, ecs);

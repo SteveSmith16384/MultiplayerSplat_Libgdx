@@ -17,7 +17,7 @@ public class Ninepatch {
 	
 	
 	public Sprite getImage(int w, int h) {
-		Texture t1 = new Texture(filename);
+		Texture t1 = new Texture(filename); // todo - use assetmanager!
 		t1.getTextureData().prepare();
 		Pixmap p1 = t1.getTextureData().consumePixmap();
 

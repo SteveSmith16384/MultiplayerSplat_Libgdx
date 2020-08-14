@@ -85,7 +85,7 @@ public class EntityFactory {
 	public AbstractEntity createTestImage(int x, int y, int w, int h, int zOrder) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "TestImage");
 
-		//Texture tex = new Texture("grey_box.png");
+		//Texture tex = game.getTexture("grey_box.png");
 		Ninepatch np = new Ninepatch(null, null);
 		Sprite sprite = np.getImage(w, h);
 		sprite.setSize(w, h);

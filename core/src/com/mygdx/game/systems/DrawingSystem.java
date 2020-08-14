@@ -24,7 +24,7 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 
 	private MyGdxGame game;
 	private SpriteBatch batch;
-	private HashMap<String, Texture> textures = new HashMap<String, Texture>();
+	//private HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	private ShapeRenderer shapeRenderer;
 
 	public DrawingSystem(MyGdxGame _game, BasicECS ecs, SpriteBatch _batch) {
@@ -55,7 +55,7 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		if (imageData.sprite == null) {
 			// Load sprite for given filename
 			//MyGdxGame.p("Creating sprite for " + entity);
-			Texture tex = getTexture(imageData.imageFilename);
+			Texture tex = game.getTexture(imageData.imageFilename);
 			if (imageData.atlasPosition == null) {
 				imageData.sprite = new Sprite(tex);
 			} else {
@@ -80,7 +80,7 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		imageData.sprite.draw(batch);
 	}
 
-
+/*
 	public Texture getTexture(String filename) {
 		if (textures.containsKey(filename)) {
 			return textures.get(filename);
@@ -90,7 +90,7 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		this.textures.put(filename, t);
 		return t;
 	}
-
+*/
 
 	public void drawDebug(SpriteBatch batch) {
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
@@ -111,9 +111,9 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 
 
 	public void dispose() {
-		for(Texture t : this.textures.values()) {
+		/*for(Texture t : this.textures.values()) {
 			t.dispose();
-		}
+		}*/
 		shapeRenderer.dispose();
 	}
 

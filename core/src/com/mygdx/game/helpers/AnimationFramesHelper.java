@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.AnimationCycleComponent;
 import com.mygdx.game.components.WalkingAnimationComponent;
 import com.scs.basicecs.AbstractEntity;
@@ -12,7 +13,13 @@ import com.scs.basicecs.AbstractEntity;
 public class AnimationFramesHelper {
 
 	private HashMap<String, Texture> textures = new HashMap<String, Texture>();
-
+	private MyGdxGame game;
+	
+	public AnimationFramesHelper(MyGdxGame _game) {
+		game = _game;
+	}
+	
+	
 	public AnimationCycleComponent generateForCoin(float size) {
 		int numFrames = 8;
 		AnimationCycleComponent acd = new AnimationCycleComponent(.1f);
@@ -67,7 +74,7 @@ public class AnimationFramesHelper {
 		if (textures.containsKey(filename)) {
 			return textures.get(filename);
 		}
-		Texture t = new Texture(filename);
+		Texture t = game.getTexture(filename);
 		textures.put(filename, t);
 		return t;
 	}

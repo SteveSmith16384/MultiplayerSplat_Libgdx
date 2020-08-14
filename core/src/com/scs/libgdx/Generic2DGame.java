@@ -4,8 +4,10 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -20,12 +22,14 @@ public abstract class Generic2DGame extends ApplicationAdapter implements Contro
 	public SoundEffects sfx = new SoundEffects();
 	protected SpriteBatch batch;
 	protected ControllerManager controllerManager;
+	private AssetManager assetManager;
 	
 	protected boolean paused = false;
 	public boolean toggleFullscreen = true, currently_fullscreen = false;
 
 	public Generic2DGame(boolean set_fullscreen) {
 		currently_fullscreen = !set_fullscreen;
+		this.assetManager = new AssetManager();
 	}
 	
 	
@@ -84,6 +88,7 @@ public abstract class Generic2DGame extends ApplicationAdapter implements Contro
 	public void dispose() {
 		super.dispose();
 		
+		assetManager.dispose();
 		batch.dispose();
 		this.sfx.dispose();
 	}
@@ -132,6 +137,14 @@ public abstract class Generic2DGame extends ApplicationAdapter implements Contro
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+
+	public Texture getTexture(String tex_filename) {
+		assetManager.load(tex_filename, Texture.class);
+		assetManager.finishLoading();
+		Texture tex = assetManager.get(tex_filename);
+		return tex;
 	}
 
 

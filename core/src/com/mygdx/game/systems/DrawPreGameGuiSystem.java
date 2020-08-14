@@ -18,11 +18,11 @@ public class DrawPreGameGuiSystem implements ISystem {
 		game = _game;
 		batch = _batch;
 
-		Texture tex = new Texture("colours/black.png");
+		Texture tex = game.getTexture("colours/black.png");
 		background = new Sprite(tex);
 		background.setSize(Settings.LOGICAL_WIDTH_PIXELS,  Settings.LOGICAL_HEIGHT_PIXELS);
 
-/*		Texture tex2 = new Texture("ctc_logo.png");
+/*		Texture tex2 = game.getTexture("ctc_logo.png");
 		logo = new Sprite(tex2);
 		logo.setSize(Settings.LOGICAL_WIDTH_PIXELS/2, Settings.LOGICAL_HEIGHT_PIXELS/2);
 		logo.setPosition(Settings.LOGICAL_WIDTH_PIXELS/4, Settings.LOGICAL_HEIGHT_PIXELS/2);*/
