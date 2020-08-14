@@ -24,7 +24,7 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 	private MyGdxGame game;
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
-	
+
 	private Vector2 tmpVec2 = new Vector2();
 
 	public DrawingSystem(MyGdxGame _game, BasicECS ecs, SpriteBatch _batch) {
@@ -65,7 +65,7 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 				imageData.sprite.setSize(imageData.w, imageData.h);
 			}
 		}
-		
+
 		// Draw the sprite
 		ScrollsAroundComponent scroll = (ScrollsAroundComponent)entity.getComponent(ScrollsAroundComponent.class);
 		if (scroll == null) {
@@ -90,13 +90,13 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 
 			//if (posData.rect != null) {
-				ScrollsAroundComponent scroll = (ScrollsAroundComponent)entity.getComponent(ScrollsAroundComponent.class);
-				if (scroll == null) {
-					shapeRenderer.rect(posData.rect.left, posData.rect.bottom, posData.rect.width(), posData.rect.height()); 
-				} else {
-					game.getScreenCoords(posData.rect.getX(), posData.rect.getY(), tmpVec2);
-					shapeRenderer.rect(tmpVec2.x, tmpVec2.y, posData.rect.width(), posData.rect.height()); 
-				}
+			ScrollsAroundComponent scroll = (ScrollsAroundComponent)entity.getComponent(ScrollsAroundComponent.class);
+			if (scroll == null) {
+				shapeRenderer.rect(posData.rect.left, posData.rect.bottom, posData.rect.width(), posData.rect.height()); 
+			} else {
+				game.getScreenCoords(posData.rect.getX(), posData.rect.getY(), tmpVec2);
+				shapeRenderer.rect(tmpVec2.x, tmpVec2.y, posData.rect.width(), posData.rect.height()); 
+			}
 
 			//}
 		}

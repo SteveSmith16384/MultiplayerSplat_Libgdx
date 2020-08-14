@@ -16,6 +16,7 @@ import com.mygdx.game.input.ControllerInput;
 import com.mygdx.game.input.IPlayerInput;
 import com.mygdx.game.levels.ILevelData;
 import com.mygdx.game.levels.LevelGenerator;
+import com.mygdx.game.systems.AddAndRemoveMapsquares;
 import com.mygdx.game.systems.AnimationCycleSystem;
 import com.mygdx.game.systems.CheckIfPlayersAreOffScreenSystem;
 import com.mygdx.game.systems.CollectorSystem;
@@ -49,7 +50,7 @@ public final class MyGdxGame extends Generic2DGame {
 	public HashMap<IPlayerInput, PlayerData> players = new HashMap<IPlayerInput, PlayerData>();
 	public boolean keyboard_joined = false;
 	public ILevelData level;
-	
+
 	// Systems
 	public InputSystem inputSystem;
 	private DrawingSystem drawingSystem;
@@ -71,8 +72,8 @@ public final class MyGdxGame extends Generic2DGame {
 	public MyGdxGame() {
 		super(Settings.RELEASE_MODE);
 	}
-	
-	
+
+
 	@Override
 	public void create() {
 		super.create();
@@ -100,7 +101,8 @@ public final class MyGdxGame extends Generic2DGame {
 		this.drawPostGameGuiSystem = new DrawPostGameGuiSystem(this, batch);
 		ecs.addSystem(new ScrollPlayAreaSystem(this));
 		ecs.addSystem(new CheckIfPlayersAreOffScreenSystem(this, ecs));
-		
+		ecs.addSystem(new AddAndRemoveMapsquares(this, ecs));
+
 
 		startPreGame();
 
@@ -163,7 +165,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 		gameData = new GameData();
 
-		level = new LevelGenerator(this.entityFactory, ecs);
+		level = new LevelGenerator(ecs);
 		level.createLevel();
 	}
 
@@ -205,6 +207,7 @@ public final class MyGdxGame extends Generic2DGame {
 				this.movementSystem.process();				
 				ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
 				ecs.processSystem(ScrollPlayAreaSystem.class);
+				ecs.processSystem(AddAndRemoveMapsquares.class);
 				this.animSystem.process();
 			}
 
@@ -225,7 +228,7 @@ public final class MyGdxGame extends Generic2DGame {
 				this.drawPostGameGuiSystem.process();
 				this.drawInGameGuiSystem.process();
 			}
-			
+
 			drawFont(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 20);
 
 			batch.end();
@@ -268,20 +271,20 @@ public final class MyGdxGame extends Generic2DGame {
 		ecs.addAndRemoveEntities();
 	}
 
-	
+
 	public void getScreenCoords(float x, float y, Vector2 out) {
 		out.x = x-(screen_cam_x) + (Settings.LOGICAL_WIDTH_PIXELS/2);
 		out.y = y-(screen_cam_y) + (Settings.LOGICAL_HEIGHT_PIXELS/2);
 	}
-	
+
 
 	// todo - this is not called!
 	public void playerKilled(AbstractEntity avatar) {
-/*todo		long diff = System.currentTimeMillis() - timeStarted;
+		/*todo		long diff = System.currentTimeMillis() - timeStarted;
 		if (diff < 4000) { // Invincible for 4 seconds
 			return;
 		}
-*/
+		 */
 		sfx.play("sfx/Falling.mp3");
 
 		avatar.remove();

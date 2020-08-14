@@ -8,32 +8,25 @@ import com.scs.basicecs.BasicECS;
 
 public class LevelGenerator implements ILevelData {
 	
-	private static final int MAP_SIZE = 20;
-
-	private EntityFactory entityFactory;
 	private BasicECS ecs;
 	private GridPoint2 start_pos;
-
-	public LevelGenerator(EntityFactory _entityFactory, BasicECS _ecs) {
-		entityFactory = _entityFactory;
+	private int[][] map_data;
+	
+	public LevelGenerator(BasicECS _ecs) {
 		ecs = _ecs;
 	}
 
 
 	public void createLevel() {
-		MazeGen1 mazegen = new MazeGen1(MAP_SIZE, MAP_SIZE, 0);
-		for (int y=0 ; y<MAP_SIZE ; y++) {
-			for (int x=0 ; x<MAP_SIZE ; x++) {
-				if (mazegen.map[x][y] == false) {
-					AbstractEntity wall = entityFactory.createWall(Settings.MAP_SQ_SIZE*x, Settings.MAP_SQ_SIZE*y, Settings.MAP_SQ_SIZE, Settings.MAP_SQ_SIZE);
-					ecs.addEntity(wall);
-				} else {
-					AbstractEntity wall = entityFactory.createCoin(Settings.MAP_SQ_SIZE*x, Settings.MAP_SQ_SIZE*y);
-					ecs.addEntity(wall);
-				}
+		map_data = new int[Settings.MAP_SIZE][Settings.MAP_SIZE];
+		MazeGen1 mazegen = new MazeGen1(Settings.MAP_SIZE, Settings.MAP_SIZE, 0);
+
+		for (int y=0 ; y<Settings.MAP_SIZE ; y++) {
+			for (int x=0 ; x<Settings.MAP_SIZE ; x++) {
+				this.map_data[x][y] = mazegen.map[x][y] ? ILevelData.FLOOR : ILevelData.WALL;
 			}
 		}
-		
+
 		this.start_pos = mazegen.start_pos;
 	}
 
@@ -41,6 +34,12 @@ public class LevelGenerator implements ILevelData {
 	@Override
 	public GridPoint2 getStartPosition() {
 		return start_pos;
+	}
+
+
+	@Override
+	public int getSquareType(int x, int y) {
+		return map_data[x][y];
 	}
 
 }

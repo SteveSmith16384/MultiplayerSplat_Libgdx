@@ -15,6 +15,7 @@ public final class Settings {
 	public static final int LOGICAL_WIDTH_PIXELS = 800;
 	public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
 	
+	public static final int MAP_SIZE = 40;
 	public static final float PLAYER_SPEED = 120;//50;
 	public static final float MAX_MOVEMENT = 20;//50;//150; // After adjusting for FPS
 
