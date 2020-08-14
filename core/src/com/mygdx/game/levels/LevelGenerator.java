@@ -23,7 +23,7 @@ public class LevelGenerator implements ILevelData {
 
 		for (int y=0 ; y<Settings.MAP_HEIGHT ; y++) {
 			for (int x=0 ; x<Settings.MAP_WIDTH ; x++) {
-				this.map_data[x][y] = mazegen.map[x][y] ? ILevelData.FLOOR : ILevelData.WALL;
+				this.map_data[x][y] = mazegen.map[x][y] ? ILevelData.COIN : ILevelData.WALL;
 			}
 		}
 
