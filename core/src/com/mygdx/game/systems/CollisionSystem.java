@@ -23,7 +23,7 @@ public class CollisionSystem extends AbstractSystem {
 	}
 
 
-	public CollisionResults collided(AbstractEntity mover, float offX, float offY) {
+	public CollisionResults collided(AbstractEntity mover) {
 		PositionComponent moverPos = (PositionComponent)mover.getComponent(PositionComponent.class);
 		if (moverPos == null) {
 			throw new RuntimeException(mover + " has no " + PositionComponent.class.getSimpleName());

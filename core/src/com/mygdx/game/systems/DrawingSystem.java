@@ -72,8 +72,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 			imageData.sprite.setPosition(posData.rect.getX(), posData.rect.getY());
 		} else {
 			game.getScreenCoords(posData.rect.getX(), posData.rect.getY(), tmpVec2);
-			//float x = posData.rect.getX()-(game.screen_cam_x) + (Settings.LOGICAL_WIDTH_PIXELS/2);
-			//float y = posData.rect.getY()-(game.screen_cam_y) + (Settings.LOGICAL_HEIGHT_PIXELS/2);
 			imageData.sprite.setPosition(tmpVec2.x, tmpVec2.y);
 		}
 		imageData.sprite.draw(batch);
@@ -82,19 +80,27 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 
 	public void drawDebug(SpriteBatch batch) {
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+		shapeRenderer.setColor(Color.GREEN);
+
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
 		Iterator<AbstractEntity> it = this.getEntityIterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 
-			if (posData.rect != null) {
-				shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-				shapeRenderer.setColor(Color.GREEN);
-				shapeRenderer.rect(posData.rect.left, posData.rect.bottom, posData.rect.width(), posData.rect.height()); 
-				shapeRenderer.end();
-			}
+			//if (posData.rect != null) {
+				ScrollsAroundComponent scroll = (ScrollsAroundComponent)entity.getComponent(ScrollsAroundComponent.class);
+				if (scroll == null) {
+					shapeRenderer.rect(posData.rect.left, posData.rect.bottom, posData.rect.width(), posData.rect.height()); 
+				} else {
+					game.getScreenCoords(posData.rect.getX(), posData.rect.getY(), tmpVec2);
+					shapeRenderer.rect(tmpVec2.x, tmpVec2.y, posData.rect.width(), posData.rect.height()); 
+				}
+
+			//}
 		}
+		shapeRenderer.end();
 	}
 
 
