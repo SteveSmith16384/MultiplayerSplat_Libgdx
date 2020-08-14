@@ -149,6 +149,7 @@ public class EntityFactory {
 		e.addComponent(pos2);
 		MoveOffScreenComponent moc = new MoveOffScreenComponent(Settings.PLAYER_SPEED*2, Settings.PLAYER_SPEED*2);
 		e.addComponent(moc);
+		e.addComponent(new ScrollsAroundComponent());
 
 		return e;
 	}	

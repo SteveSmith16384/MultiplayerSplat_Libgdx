@@ -24,12 +24,13 @@ public class DrawPostGameGuiSystem implements ISystem {
 	}
 
 
+	@Override
 	public void process() {
 		background.draw(batch);
 
 		game.drawFont(batch, "WINNER!", 20, Settings.LOGICAL_HEIGHT_PIXELS-40);
 		if (winnerSprite == null) {
-			Texture tex = game.getTexture("player" + game.winnerImageId + "_right1.png");
+			Texture tex = game.getTexture("sprites/player" + game.winnerImageId + "_right1.png");
 			winnerSprite = new Sprite(tex);
 			winnerSprite.setSize(Settings.LOGICAL_WIDTH_PIXELS/4, Settings.LOGICAL_HEIGHT_PIXELS/4);
 			winnerSprite.setPosition(Settings.LOGICAL_WIDTH_PIXELS/2, Settings.LOGICAL_HEIGHT_PIXELS/2);

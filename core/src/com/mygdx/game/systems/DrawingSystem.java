@@ -2,7 +2,6 @@ package com.mygdx.game.systems;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.Color;
@@ -11,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.Settings;
 import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.PositionComponent;
 import com.mygdx.game.components.ScrollsAroundComponent;
@@ -24,8 +23,9 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 
 	private MyGdxGame game;
 	private SpriteBatch batch;
-	//private HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	private ShapeRenderer shapeRenderer;
+	
+	private Vector2 tmpVec2 = new Vector2();
 
 	public DrawingSystem(MyGdxGame _game, BasicECS ecs, SpriteBatch _batch) {
 		super(ecs, ImageComponent.class);
@@ -53,8 +53,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		ImageComponent imageData = (ImageComponent)entity.getComponent(ImageComponent.class);
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (imageData.sprite == null) {
-			// Load sprite for given filename
-			//MyGdxGame.p("Creating sprite for " + entity);
 			Texture tex = game.getTexture(imageData.imageFilename);
 			if (imageData.atlasPosition == null) {
 				imageData.sprite = new Sprite(tex);
@@ -73,24 +71,14 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		if (scroll == null) {
 			imageData.sprite.setPosition(posData.rect.getX(), posData.rect.getY());
 		} else {
-			float x = posData.rect.getX()-(game.screen_cam_x) + (Settings.LOGICAL_WIDTH_PIXELS/2);
-			float y = posData.rect.getY()-(game.screen_cam_y) + (Settings.LOGICAL_HEIGHT_PIXELS/2);
-			imageData.sprite.setPosition(x, y);
+			game.getScreenCoords(posData.rect.getX(), posData.rect.getY(), tmpVec2);
+			//float x = posData.rect.getX()-(game.screen_cam_x) + (Settings.LOGICAL_WIDTH_PIXELS/2);
+			//float y = posData.rect.getY()-(game.screen_cam_y) + (Settings.LOGICAL_HEIGHT_PIXELS/2);
+			imageData.sprite.setPosition(tmpVec2.x, tmpVec2.y);
 		}
 		imageData.sprite.draw(batch);
 	}
 
-/*
-	public Texture getTexture(String filename) {
-		if (textures.containsKey(filename)) {
-			return textures.get(filename);
-		}
-		MyGdxGame.p("Loading new tex: " + filename);
-		Texture t = new Texture(filename);
-		this.textures.put(filename, t);
-		return t;
-	}
-*/
 
 	public void drawDebug(SpriteBatch batch) {
 		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
@@ -111,9 +99,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 
 
 	public void dispose() {
-		/*for(Texture t : this.textures.values()) {
-			t.dispose();
-		}*/
 		shapeRenderer.dispose();
 	}
 

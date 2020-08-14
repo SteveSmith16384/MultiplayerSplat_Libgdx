@@ -22,17 +22,18 @@ public class DrawPreGameGuiSystem implements ISystem {
 		background = new Sprite(tex);
 		background.setSize(Settings.LOGICAL_WIDTH_PIXELS,  Settings.LOGICAL_HEIGHT_PIXELS);
 
-/*		Texture tex2 = game.getTexture("ctc_logo.png");
+		/*		Texture tex2 = game.getTexture("ctc_logo.png");
 		logo = new Sprite(tex2);
 		logo.setSize(Settings.LOGICAL_WIDTH_PIXELS/2, Settings.LOGICAL_HEIGHT_PIXELS/2);
 		logo.setPosition(Settings.LOGICAL_WIDTH_PIXELS/4, Settings.LOGICAL_HEIGHT_PIXELS/2);*/
 	}
 
 
+	@Override
 	public void process() {
 		background.draw(batch);
 		if (logo != null) {
-		logo.draw(batch);
+			logo.draw(batch);
 		}
 
 		//game.drawFont(batch, Controllers.getControllers().size + " controllers found", 20, Settings.LOGICAL_HEIGHT_PIXELS-40);

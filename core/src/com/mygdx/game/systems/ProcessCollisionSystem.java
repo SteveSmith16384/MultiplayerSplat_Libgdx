@@ -61,25 +61,4 @@ public class ProcessCollisionSystem {//implements ISystem {
 	}
 
 
-	public void playerKilled(AbstractEntity avatar, long timeStarted) {
-		long diff = System.currentTimeMillis() - timeStarted;
-		if (diff < 4000) { // Invincible for 4 seconds
-			/*if (!Settings.RELEASE_MODE) {
-				MyGdxGame.p("Player invincible!");
-			}*/
-			return;
-		}
-
-		game.sfx.play("Falling.mp3");
-
-		avatar.remove();
-
-		PlayersAvatarComponent uic = (PlayersAvatarComponent)avatar.getComponent(PlayersAvatarComponent.class);
-		PlayerData player = uic.player;
-		player.avatar = null;
-		player.timeUntilAvatar = Settings.AVATAR_RESPAWN_TIME_SECS;
-		player.lives--;
-
-	}
-
 }

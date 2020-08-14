@@ -37,10 +37,10 @@ public class MovementSystem extends AbstractSystem {
 				CollisionResults results = game.collisionSystem.collided(movingEntity, md.offX, 0);
 				md.offX = 0;
 				if (results != null) {
+					game.processCollisionSystem.processCollision(movingEntity, results);
 					if (results.moveBack) {
 						pos.rect.set(pos.prevPos); // Move back
 					}
-					game.processCollisionSystem.processCollision(movingEntity, results);
 				}
 			}
 			if (md.offY != 0) {
