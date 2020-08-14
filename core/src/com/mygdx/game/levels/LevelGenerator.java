@@ -18,11 +18,11 @@ public class LevelGenerator implements ILevelData {
 
 
 	public void createLevel() {
-		map_data = new int[Settings.MAP_SIZE][Settings.MAP_SIZE];
-		MazeGen1 mazegen = new MazeGen1(Settings.MAP_SIZE, Settings.MAP_SIZE, 0);
+		map_data = new int[Settings.MAP_WIDTH][Settings.MAP_HEIGHT];
+		MazeGen1 mazegen = new MazeGen1(Settings.MAP_WIDTH, Settings.MAP_HEIGHT, 0);
 
-		for (int y=0 ; y<Settings.MAP_SIZE ; y++) {
-			for (int x=0 ; x<Settings.MAP_SIZE ; x++) {
+		for (int y=0 ; y<Settings.MAP_HEIGHT ; y++) {
+			for (int x=0 ; x<Settings.MAP_WIDTH ; x++) {
 				this.map_data[x][y] = mazegen.map[x][y] ? ILevelData.FLOOR : ILevelData.WALL;
 			}
 		}

@@ -66,7 +66,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private DrawPreGameGuiSystem drawPreGameGuiSystem;
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
 
-	public float screen_cam_x = 0;//Settings.LOGICAL_WIDTH_PIXELS/2; // Centre of current point
+	public float screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 	public float screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
 
 	public MyGdxGame() {

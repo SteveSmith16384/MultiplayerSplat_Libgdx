@@ -10,9 +10,12 @@ import com.scs.basicecs.ISystem;
 
 public class AddAndRemoveMapsquares implements ISystem {
 
+	private static final long INTERVAL = 1000;
+
 	private MyGdxGame game;
 	private BasicECS ecs;
 	private AbstractEntity[][] map_ents;
+	private long next_check_time = 0;
 
 	private Vector2 tmpVec2 = new Vector2();
 
@@ -20,15 +23,20 @@ public class AddAndRemoveMapsquares implements ISystem {
 		game = _game;
 		ecs = _ecs;
 
-		map_ents = new AbstractEntity[Settings.MAP_SIZE][Settings.MAP_SIZE];
+		map_ents = new AbstractEntity[Settings.MAP_WIDTH][Settings.MAP_HEIGHT];
 	}
 
 
 	@Override
 	public void process() {
-		// todo - only do this every so often
-		for (int y=0 ; y<Settings.MAP_SIZE ; y++) {
-			for (int x=0 ; x<Settings.MAP_SIZE ; x++) {
+		if (System.currentTimeMillis() < this.next_check_time) {
+			return;
+		}
+
+		next_check_time =System.currentTimeMillis() + INTERVAL;
+
+		for (int y=0 ; y<Settings.MAP_HEIGHT ; y++) {
+			for (int x=0 ; x<Settings.MAP_WIDTH ; x++) {
 				int type = game.level.getSquareType(x, y);
 				if (type != ILevelData.FLOOR) {
 					game.getScreenCoords(x*Settings.MAP_SQ_SIZE, y*Settings.MAP_SQ_SIZE, tmpVec2);
@@ -67,4 +75,5 @@ public class AddAndRemoveMapsquares implements ISystem {
 		}
 
 	}
+
 }
