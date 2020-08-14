@@ -12,17 +12,27 @@ public class DrawInGameGuiSystem {
 	private MyGdxGame game;
 	private SpriteBatch batch;
 	private Sprite[] players = new Sprite[3];
+	private Sprite wall;
+	int w = Settings.LOGICAL_WIDTH_PIXELS / 20;
+	int h = Settings.LOGICAL_WIDTH_PIXELS / 20;
 
 	public DrawInGameGuiSystem(MyGdxGame _game, SpriteBatch _batch) {
 		game = _game;
 		batch = _batch;
+		
+		wall = new Sprite(game.getTexture("sprites/redbricks.png"), w, h);
 	}
 
 
 	public void process() {
 		// Draw brick border
-		for (int x=0 ; x<Settings.LOGICAL_WIDTH_PIXELS ; x++) {
-			
+		for (int x=0 ; x<Settings.LOGICAL_WIDTH_PIXELS ; x+=w) {
+			batch.draw(wall, x, 0);
+			batch.draw(wall, x, Settings.LOGICAL_HEIGHT_PIXELS-h);
+		}
+		for (int y=0 ; y<Settings.LOGICAL_HEIGHT_PIXELS ;y+=h) {
+			batch.draw(wall, 0, y);
+			batch.draw(wall, Settings.LOGICAL_WIDTH_PIXELS-w, y);
 		}
 		
 		
