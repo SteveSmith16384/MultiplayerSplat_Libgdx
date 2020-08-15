@@ -42,7 +42,7 @@ public class AddAndRemoveMapsquares implements ISystem {
 
 		for (int y=0 ; y<Settings.MAP_HEIGHT ; y++) {
 			for (int x=0 ; x<Settings.MAP_WIDTH ; x++) {
-				int type = game.level.getSquareType(x, y);
+				int type = game.level_data.getSquareType(x, y);
 				if (type != ILevelData.EMPTY) {
 					game.getScreenCoords(x*Settings.MAP_SQ_SIZE, y*Settings.MAP_SQ_SIZE, tmpVec2);
 					// Add squares
@@ -63,7 +63,7 @@ public class AddAndRemoveMapsquares implements ISystem {
 							AbstractEntity coin = game.entityFactory.createCoin(Settings.MAP_SQ_SIZE*x, Settings.MAP_SQ_SIZE*y);
 							ecs.addEntity(coin);
 							map_ents[x][y] = coin;
-							game.level.removeSquare(x, y);
+							game.level_data.removeSquare(x, y);
 						} else {
 							throw new RuntimeException("Unknown type: " + type);
 						}

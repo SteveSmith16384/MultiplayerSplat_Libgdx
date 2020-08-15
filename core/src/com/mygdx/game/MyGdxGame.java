@@ -39,7 +39,6 @@ import com.scs.libgdx.Generic2DGame;
 public final class MyGdxGame extends Generic2DGame {
 
 	public BasicECS ecs;
-
 	public BitmapFont font;
 	public EntityFactory entityFactory;
 	public GameData gameData;
@@ -49,7 +48,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private boolean nextStage = false;
 	public HashMap<IPlayerInput, PlayerData> players = new HashMap<IPlayerInput, PlayerData>();
 	public boolean keyboard_joined = false;
-	public ILevelData level;
+	public ILevelData level_data;
 
 	// Systems
 	public InputSystem inputSystem;
@@ -66,6 +65,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private DrawPreGameGuiSystem drawPreGameGuiSystem;
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
 	private AddAndRemoveMapsquares addAndRemoveMapsquares;
+	private ScrollPlayAreaSystem scrollPlayAreaSystem;
 
 	public float screen_cam_x;// = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 	public float screen_cam_y;// = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
@@ -101,10 +101,10 @@ public final class MyGdxGame extends Generic2DGame {
 		this.processPlayersSystem = new ProcessPlayersSystem(this);
 		this.drawPreGameGuiSystem = new DrawPreGameGuiSystem(this, batch);
 		this.drawPostGameGuiSystem = new DrawPostGameGuiSystem(this, batch);
-		ecs.addSystem(new ScrollPlayAreaSystem(this));
+		//ecs.addSystem(new ScrollPlayAreaSystem(this));
 		ecs.addSystem(new CheckIfPlayersAreOffScreenSystem(this, ecs));
-		this.addAndRemoveMapsquares =new AddAndRemoveMapsquares(this, ecs);
-		ecs.addSystem(this.addAndRemoveMapsquares);
+		this.addAndRemoveMapsquares = new AddAndRemoveMapsquares(this, ecs);
+		//ecs.addSystem(this.addAndRemoveMapsquares);
 
 		startPreGame();
 	}
@@ -155,15 +155,16 @@ public final class MyGdxGame extends Generic2DGame {
 
 		gameData = new GameData();
 
-		level = new LevelGenerator(ecs);
-		level.createLevel();
+		level_data = new LevelGenerator(ecs);
+		level_data.createLevel();
 
 		screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 		screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
 		scroll_speed = 20;
-		
-		this.addAndRemoveMapsquares.runNow();
-		//this.processPlayersSystem.runNow();
+
+		this.scrollPlayAreaSystem = new ScrollPlayAreaSystem(this);
+		this.addAndRemoveMapsquares = new AddAndRemoveMapsquares(this, ecs);
+		//this.addAndRemoveMapsquares.runNow();
 	}
 
 
@@ -198,16 +199,12 @@ public final class MyGdxGame extends Generic2DGame {
 			if (this.gameStage == 0) {
 				// loop through systems
 				this.processPlayersSystem.process();
-				if (Settings.DEBUG_PLAYER_STUCK == false) {
-					this.moveToOffScreenSystem.process();
-					this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
-				}
+				this.moveToOffScreenSystem.process();
+				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
 				this.movementSystem.process();				
-				if (Settings.DEBUG_PLAYER_STUCK == false) {
-					ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
-					ecs.processSystem(ScrollPlayAreaSystem.class);
-				}
-				ecs.processSystem(AddAndRemoveMapsquares.class);
+				ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
+				this.scrollPlayAreaSystem.process();
+				this.addAndRemoveMapsquares.process();
 				this.animSystem.process();
 			}
 
@@ -229,8 +226,10 @@ public final class MyGdxGame extends Generic2DGame {
 				this.drawPostGameGuiSystem.process();
 			}
 
-			drawFont(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 20);
-
+			if (Settings.RELEASE_MODE == false) {
+				drawFont(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 20);
+			}
+			
 			batch.end();
 
 			if (Settings.SHOW_OUTLINES) {
@@ -244,11 +243,6 @@ public final class MyGdxGame extends Generic2DGame {
 
 	public void drawFont(Batch batch, String text, float x, float y) {
 		font.draw(batch, text, x, y);
-	}
-
-
-	public void endOfLevel() {
-		//p("End of level!");
 	}
 
 
@@ -279,12 +273,6 @@ public final class MyGdxGame extends Generic2DGame {
 
 
 	public void playerKilled(AbstractEntity avatar) {
-		/*todo		
-		long diff = System.currentTimeMillis() - timeStarted;
-		if (diff < 4000) { // Invincible for 4 seconds
-			return;
-		}
-		 */
 		avatar.remove();
 
 		PlayersAvatarComponent uic = (PlayersAvatarComponent)avatar.getComponent(PlayersAvatarComponent.class);
@@ -315,7 +303,7 @@ public final class MyGdxGame extends Generic2DGame {
 			return;
 		}
 
-		this.scroll_speed += 15f;
+		this.scroll_speed += 5f;
 
 	}
 

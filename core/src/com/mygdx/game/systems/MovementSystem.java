@@ -29,19 +29,6 @@ public class MovementSystem extends AbstractSystem {
 		MovementComponent md = (MovementComponent)movingEntity.getComponent(MovementComponent.class);
 		PositionComponent pos = (PositionComponent)movingEntity.getComponent(PositionComponent.class);
 
-		if (Settings.DEBUG_PLAYER_STUCK) {
-			CollisionResults results = game.collisionSystem.collided(movingEntity);
-			if (results != null && results.moveBack) {
-				MyGdxGame.p("Start Mob pos: " + pos.rect);
-				PositionComponent resultPos = (PositionComponent)results.collidedWith.getComponent(PositionComponent.class);
-				MyGdxGame.p("Collided with: " + resultPos.rect);
-				MyGdxGame.p("Stuck!");
-			}
-		}
-
-		if (Settings.DEBUG_PLAYER_STUCK) {
-			MyGdxGame.p("Mob pos: " + pos.rect);
-		}
 		if (md.offX != 0) {
 			pos.prevPos.set(pos.rect);
 			float totalDist = md.offX * delta;
@@ -53,22 +40,11 @@ public class MovementSystem extends AbstractSystem {
 			if (results != null) {
 				game.processCollisionSystem.processCollision(movingEntity, results);
 				if (results.moveBack) {
-					if (Settings.DEBUG_PLAYER_STUCK) {
-						MyGdxGame.p("New Mob pos: " + pos.rect);
-						PositionComponent resultPos = (PositionComponent)results.collidedWith.getComponent(PositionComponent.class);
-						MyGdxGame.p("Collided with: " + resultPos.rect);
-					}
 					pos.rect.set(pos.prevPos); // Move back
 				}
 			}
 			md.offX = 0;
 
-			if (Settings.DEBUG_PLAYER_STUCK) {
-				results = game.collisionSystem.collided(movingEntity);
-				if (results != null && results.moveBack) {
-					MyGdxGame.p("Stuck!");
-				}
-			}
 		}
 		
 		if (md.offY != 0) {
@@ -82,32 +58,12 @@ public class MovementSystem extends AbstractSystem {
 			CollisionResults results = game.collisionSystem.collided(movingEntity);
 			if (results != null) {
 				if (results.moveBack) {
-					if (Settings.DEBUG_PLAYER_STUCK) {
-						MyGdxGame.p("New Mob pos: " + pos.rect);
-						PositionComponent resultPos = (PositionComponent)results.collidedWith.getComponent(PositionComponent.class);
-						MyGdxGame.p("Collided with: " + resultPos.rect);
-					}
 					pos.rect.set(pos.prevPos); // Move back
 				}
 				game.processCollisionSystem.processCollision(movingEntity, results);
 			}
 			md.offY = 0;
 
-			if (Settings.DEBUG_PLAYER_STUCK) {
-				results = game.collisionSystem.collided(movingEntity);
-				if (results != null && results.moveBack) {
-					MyGdxGame.p("Stuck!");
-				}
-			}
-		}
-
-		if (Settings.DEBUG_PLAYER_STUCK) {
-			MyGdxGame.p("Final Mob pos: " + pos.rect);
-			CollisionResults results = game.collisionSystem.collided(movingEntity);
-			if (results != null && results.moveBack) {
-				MyGdxGame.p("Stuck!");
-			}
-			MyGdxGame.p("==================================");
 		}
 	}
 

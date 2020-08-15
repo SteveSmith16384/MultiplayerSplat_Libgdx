@@ -13,7 +13,7 @@ public class MazeGen1 {
 	private static final char PASSAGE_CHAR = '.';
 	private static final char WALL_CHAR = 'W';
 
-	public boolean map[][]; // wall == false!
+	public boolean is_floor[][]; // wall == false!
 	private int width;
 	private int height;
 	public GridPoint2 start_pos; 
@@ -29,7 +29,7 @@ public class MazeGen1 {
 	public MazeGen1(final int _width, final int _height, int numWallsToRemove) {
 		this.width = _width;
 		this.height = _height;
-		this.map = new boolean[width][height];
+		this.is_floor = new boolean[width][height];
 
 		final Random random = new Random();
 		{
@@ -42,15 +42,15 @@ public class MazeGen1 {
 				final int[] f = frontiers.remove(random.nextInt(frontiers.size()));
 				x = f[2];
 				y = f[3];
-				if (map[x][y] == WALL) {
-					map[f[0]][f[1]] = map[x][y] = PASSAGE;
-					if ( x >= 3 && map[x-2][y] == WALL )
+				if (is_floor[x][y] == WALL) {
+					is_floor[f[0]][f[1]] = is_floor[x][y] = PASSAGE;
+					if ( x >= 3 && is_floor[x-2][y] == WALL )
 						frontiers.add( new int[]{x-1,y,x-2,y} );
-					if ( y >= 3 && map[x][y-2] == WALL )
+					if ( y >= 3 && is_floor[x][y-2] == WALL )
 						frontiers.add( new int[]{x,y-1,x,y-2} );
-					if ( x < width-3 && map[x+2][y] == WALL )
+					if ( x < width-3 && is_floor[x+2][y] == WALL )
 						frontiers.add( new int[]{x+1,y,x+2,y} );
-					if ( y < height-3 && map[x][y+2] == WALL )
+					if ( y < height-3 && is_floor[x][y+2] == WALL )
 						frontiers.add( new int[]{x,y+1,x,y+2} );
 				}
 			}
@@ -63,7 +63,7 @@ public class MazeGen1 {
 					break;
 				}
 				for (int x=0 ; x<width ; x++) {
-					if (this.start_pos == null && map[x][z] != WALL) {
+					if (this.start_pos == null && is_floor[x][z] != WALL) {
 						start_pos = new GridPoint2(x, z);
 						break;
 					}
@@ -76,7 +76,7 @@ public class MazeGen1 {
 					break;
 				}
 				for (int x=width/2 ; x<width ; x++) {
-					if (this.middle_pos == null && map[x][z] != WALL) {
+					if (this.middle_pos == null && is_floor[x][z] != WALL) {
 						middle_pos = new GridPoint2(x, z);
 						break;
 					}
@@ -89,7 +89,7 @@ public class MazeGen1 {
 					break;
 				}
 				for (int x=width-1 ; x>=0; x--) {
-					if (this.end_pos == null && map[x][z] != WALL) {
+					if (this.end_pos == null && is_floor[x][z] != WALL) {
 						end_pos = new GridPoint2(x, z);
 						break;
 					}
@@ -101,10 +101,10 @@ public class MazeGen1 {
 		while (numWallsToRemove > 0) {
 			int mx = 1+random.nextInt(width-2);
 			int my = 1+random.nextInt(height-2);
-			if (map[mx][my] == WALL) {
+			if (is_floor[mx][my] == WALL) {
 				// check adjacent squares are empty to avoid lone squares (which cause problems when selecting a dest for A*)
-				if (map[mx+1][my] == PASSAGE || map[mx-1][my] == PASSAGE || map[mx][my+1] == PASSAGE || map[mx][my-1] == PASSAGE) {
-					map[mx][my] = PASSAGE;
+				if (is_floor[mx+1][my] == PASSAGE || is_floor[mx-1][my] == PASSAGE || is_floor[mx][my+1] == PASSAGE || is_floor[mx][my-1] == PASSAGE) {
+					is_floor[mx][my] = PASSAGE;
 					numWallsToRemove--;
 				}
 			}
@@ -119,7 +119,7 @@ public class MazeGen1 {
 		final StringBuffer b = new StringBuffer();
 		for ( int y = height-1; y >= 0; y-- ){ // Draw top-up
 			for ( int x = 0; x < width; x++ ) {
-				b.append( map[x][y] == WALL ? WALL_CHAR : PASSAGE_CHAR );
+				b.append( is_floor[x][y] == WALL ? WALL_CHAR : PASSAGE_CHAR );
 			}
 			b.append('\n');
 		}

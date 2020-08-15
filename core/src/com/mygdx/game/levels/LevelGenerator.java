@@ -24,7 +24,7 @@ public class LevelGenerator implements ILevelData {
 				if (y == 1 && x>0 && x<Settings.MAP_WIDTH-1) {
 					this.map_data[x][y] = ILevelData.EMPTY; // Clear space for start pos
 				} else {
-					this.map_data[x][y] = mazegen.map[x][y] ? ILevelData.COIN : ILevelData.WALL;
+					this.map_data[x][y] = mazegen.is_floor[x][y] ? ILevelData.COIN : ILevelData.WALL;
 				}
 			}
 		}
