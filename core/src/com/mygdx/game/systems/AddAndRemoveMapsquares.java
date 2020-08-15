@@ -44,7 +44,7 @@ public class AddAndRemoveMapsquares implements ISystem {
 					if (map_ents[x][y] == null) {
 						if (tmpVec2.x < 0 || tmpVec2.x > Settings.LOGICAL_WIDTH_PIXELS) {
 							continue;
-						} else if (tmpVec2.y < 0 || tmpVec2.y > Settings.LOGICAL_HEIGHT_PIXELS-DrawInGameGuiSystem.WALL_WIDTH) {
+						} else if (tmpVec2.y < 0 || tmpVec2.y > Settings.LOGICAL_HEIGHT_PIXELS) {//-DrawInGameGuiSystem.WALL_WIDTH) {
 							continue;
 						}
 

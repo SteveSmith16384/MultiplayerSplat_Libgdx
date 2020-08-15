@@ -155,14 +155,6 @@ public final class MyGdxGame extends Generic2DGame {
 			player.init();
 		}
 
-		/*if (!Settings.RELEASE_MODE) {
-			if (this.players.size() > 0) {
-				if (this.players.get(0).isInGame() == false) {
-					this.players.get(0).setInGame(true); // Auto-add keyboard player
-				}
-			}
-		}*/
-
 		gameData = new GameData();
 
 		level = new LevelGenerator(ecs);
@@ -201,12 +193,15 @@ public final class MyGdxGame extends Generic2DGame {
 			if (this.gameStage == 0) {
 				// loop through systems
 				this.processPlayersSystem.process();
+				if (Settings.DEBUG_PLAYER_STUCK == false) {
 				this.moveToOffScreenSystem.process();
-				//this.playerMovementSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
+				}
 				this.movementSystem.process();				
+				if (Settings.DEBUG_PLAYER_STUCK == false) {
 				ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
 				ecs.processSystem(ScrollPlayAreaSystem.class);
+				}
 				ecs.processSystem(AddAndRemoveMapsquares.class);
 				this.animSystem.process();
 			}
@@ -225,8 +220,8 @@ public final class MyGdxGame extends Generic2DGame {
 			} else if (this.gameStage == 0) {
 				this.drawInGameGuiSystem.process();
 			} else if (this.gameStage == 1) {
-				this.drawPostGameGuiSystem.process();
 				this.drawInGameGuiSystem.process();
+				this.drawPostGameGuiSystem.process();
 			}
 
 			drawFont(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 20);

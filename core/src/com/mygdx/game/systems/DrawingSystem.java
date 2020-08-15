@@ -89,7 +89,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 			AbstractEntity entity = it.next();
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 
-			//if (posData.rect != null) {
 			ScrollsAroundComponent scroll = (ScrollsAroundComponent)entity.getComponent(ScrollsAroundComponent.class);
 			if (scroll == null) {
 				shapeRenderer.rect(posData.rect.left, posData.rect.bottom, posData.rect.width(), posData.rect.height()); 
@@ -97,8 +96,6 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 				game.getScreenCoords(posData.rect.getX(), posData.rect.getY(), tmpVec2);
 				shapeRenderer.rect(tmpVec2.x, tmpVec2.y, posData.rect.width(), posData.rect.height()); 
 			}
-
-			//}
 		}
 		shapeRenderer.end();
 	}

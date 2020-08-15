@@ -24,28 +24,29 @@ public class CollisionSystem extends AbstractSystem {
 
 
 	public CollisionResults collided(AbstractEntity mover) {
+		//List<AbstractEntity> ret = new ArrayList<AbstractEntity>();
+		AbstractEntity collided_with = null;
+		boolean block_movement = false;
+		
 		PositionComponent moverPos = (PositionComponent)mover.getComponent(PositionComponent.class);
-		if (moverPos == null) {
-			throw new RuntimeException(mover + " has no " + PositionComponent.class.getSimpleName());
-		}
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
 			if (e != mover) {
 				CollisionComponent cc = (CollisionComponent)e.getComponent(CollisionComponent.class);
-				//if (cc != null) {
 				PositionComponent pos = (PositionComponent)e.getComponent(PositionComponent.class);
-				//if (pos != null) {
 				if (moverPos.rect.intersects(pos.rect)) {
-					if (cc.alwaysCollides) {
-						return new CollisionResults(e, cc.blocksMovement);
-					}
+					//return new CollisionResults(e, cc.blocksMovement);
+					collided_with = e;
+					block_movement = block_movement || cc.blocksMovement;
 				}
-				//}
-				//}
 			}
 		}
-		return null;
+		if (collided_with != null) {
+			return new CollisionResults(collided_with, block_movement);
+		} else {
+			return null;
+		}
 	}
 
 

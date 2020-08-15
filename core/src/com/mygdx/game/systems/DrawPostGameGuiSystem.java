@@ -9,7 +9,7 @@ import com.scs.basicecs.ISystem;
 
 public class DrawPostGameGuiSystem implements ISystem {
 
-	private Sprite background;
+	//private Sprite background;
 	private MyGdxGame game;
 	private SpriteBatch batch;
 	private Sprite winnerSprite;
@@ -18,15 +18,15 @@ public class DrawPostGameGuiSystem implements ISystem {
 		game = _game;
 		batch = _batch;
 
-		Texture tex = game.getTexture("colours/black.png");
-		background = new Sprite(tex);
-		background.setSize(Settings.LOGICAL_WIDTH_PIXELS,  Settings.LOGICAL_HEIGHT_PIXELS);
+		//Texture tex = game.getTexture("colours/black.png");
+		//background = new Sprite(tex);
+		//background.setSize(Settings.LOGICAL_WIDTH_PIXELS,  Settings.LOGICAL_HEIGHT_PIXELS);
 	}
 
 
 	@Override
 	public void process() {
-		background.draw(batch);
+		//background.draw(batch);
 
 		game.drawFont(batch, "WINNER!", 20, Settings.LOGICAL_HEIGHT_PIXELS-40);
 		if (winnerSprite == null) {

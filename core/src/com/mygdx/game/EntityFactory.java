@@ -35,7 +35,7 @@ public class EntityFactory {
 		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, true);
+		CollisionComponent cc = new CollisionComponent(false);
 		e.addComponent(cc);
 		e.addComponent(new MovementComponent());
 		PlayersAvatarComponent uic = new PlayersAvatarComponent(player, controller);
@@ -58,7 +58,7 @@ public class EntityFactory {
 		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, true);
+		CollisionComponent cc = new CollisionComponent(true);
 		e.addComponent(cc);
 		e.addComponent(new ScrollsAroundComponent());
 
@@ -73,7 +73,7 @@ public class EntityFactory {
 		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, true);
+		CollisionComponent cc = new CollisionComponent(false);
 		e.addComponent(cc);
 		HarmOnContactComponent hoc = new HarmOnContactComponent();
 		e.addComponent(hoc);
@@ -123,7 +123,7 @@ public class EntityFactory {
 		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.COLLECTABLE_SIZE, Settings.COLLECTABLE_SIZE);
 		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(true, false);
+		CollisionComponent cc = new CollisionComponent(false);
 		e.addComponent(cc);
 		CollectableComponent col = new CollectableComponent(Type.Coin);
 		e.addComponent(col);

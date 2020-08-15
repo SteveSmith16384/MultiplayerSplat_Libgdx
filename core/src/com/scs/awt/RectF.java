@@ -112,7 +112,7 @@ public class RectF {
 	
 	@Override
 	public String toString() {
-		return "RectF:" + left + "," + top + ", " + right + "," + bottom;
+		return "RectF:" + left + ", " + top + ", " + right + ", " + bottom;
 	}
 	
 	
