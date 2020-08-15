@@ -21,23 +21,21 @@ public class AnimationCycleSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AnimationCycleComponent data = (AnimationCycleComponent)entity.getComponent(AnimationCycleComponent.class);
-		if (data != null) {
-			data.timeUntilNextFrame -= Gdx.graphics.getDeltaTime();
+		data.timeUntilNextFrame -= Gdx.graphics.getDeltaTime();
 
-			if (data.timeUntilNextFrame <= 0) {
-				data.currentFrame++;
-				if (data.currentFrame >= data.frames.length) {
-					data.currentFrame = 0;
-				}
-				ImageComponent image = (ImageComponent)entity.getComponent(ImageComponent.class);
-				image.sprite = data.frames[data.currentFrame];
-				
-				if (image.sprite == null) {
-					throw new RuntimeException("Null sprite");
-				}
-
-				data.timeUntilNextFrame = data.interval;
+		if (data.timeUntilNextFrame <= 0) {
+			data.currentFrame++;
+			if (data.currentFrame >= data.frames.length) {
+				data.currentFrame = 0;
 			}
+			ImageComponent image = (ImageComponent)entity.getComponent(ImageComponent.class);
+			image.sprite = data.frames[data.currentFrame];
+
+			if (image.sprite == null) {
+				throw new RuntimeException("Null sprite");
+			}
+
+			data.timeUntilNextFrame = data.interval;
 		}
 	}
 

@@ -12,5 +12,7 @@ public interface ILevelData {
 	
 	int getSquareType(int x, int y);
 	
+	void removeSquare(int x, int y); // Prevent re-adding powerups etc
+	
 	GridPoint2 getStartPosition(int idx);
 }

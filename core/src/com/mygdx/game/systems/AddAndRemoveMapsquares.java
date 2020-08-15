@@ -63,6 +63,7 @@ public class AddAndRemoveMapsquares implements ISystem {
 							AbstractEntity coin = game.entityFactory.createCoin(Settings.MAP_SQ_SIZE*x, Settings.MAP_SQ_SIZE*y);
 							ecs.addEntity(coin);
 							map_ents[x][y] = coin;
+							game.level.removeSquare(x, y);
 						} else {
 							throw new RuntimeException("Unknown type: " + type);
 						}

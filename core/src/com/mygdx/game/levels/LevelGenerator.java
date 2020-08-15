@@ -47,4 +47,10 @@ public class LevelGenerator implements ILevelData {
 		return map_data[x][y];
 	}
 
+
+	@Override
+	public void removeSquare(int x, int y) {
+		map_data[x][y] = ILevelData.EMPTY;
+	}
+
 }
