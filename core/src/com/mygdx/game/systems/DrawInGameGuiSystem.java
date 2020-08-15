@@ -45,7 +45,7 @@ public class DrawInGameGuiSystem implements ISystem {
 			game.drawFont(batch, "Score: " + player.score, xStart, 90);
 			if (player.lives > 0) {
 				if (players[num] == null) {
-					Texture tex = game.getTexture("sprites/player" + player.imageId + "_right1.png");
+					Texture tex = game.getTexture("sprites/player" + player.playerIdx + "_right1.png");
 					players[num] = new Sprite(tex);
 					players[num].setSize(Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 				}

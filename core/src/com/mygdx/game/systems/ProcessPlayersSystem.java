@@ -2,15 +2,11 @@ package com.mygdx.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
-import com.mygdx.game.components.PlayersAvatarComponent;
-import com.mygdx.game.components.PositionComponent;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.IPlayerInput;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 
 public class ProcessPlayersSystem implements ISystem {
@@ -38,23 +34,6 @@ public class ProcessPlayersSystem implements ISystem {
 			}
 		}
 		
-		// Check for winner
-		int winner = -1;
-		int highestScore = -1;
-
-		for (PlayerData player : game.players.values()) {
-			if (player.lives <= 0) {
-				if (player.score > highestScore) {
-					highestScore = player.score;
-					winner = player.imageId;
-				}
-			} else {
-				return;
-			}
-		}
-
-		game.setWinner(winner);
-
 	}
 
 

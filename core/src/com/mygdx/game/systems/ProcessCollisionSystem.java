@@ -1,14 +1,11 @@
 package com.mygdx.game.systems;
 
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.Settings;
 import com.mygdx.game.components.CanBeHarmedComponent;
 import com.mygdx.game.components.CanCollectComponent;
 import com.mygdx.game.components.CollectableComponent;
 import com.mygdx.game.components.HarmOnContactComponent;
-import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.datamodels.CollisionResults;
-import com.mygdx.game.datamodels.PlayerData;
 import com.scs.basicecs.AbstractEntity;
 
 public class ProcessCollisionSystem {//implements ISystem {

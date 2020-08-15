@@ -1,9 +1,7 @@
 package com.mygdx.game.levels;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.mygdx.game.EntityFactory;
 import com.mygdx.game.Settings;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 
 public class LevelGenerator implements ILevelData {

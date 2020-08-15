@@ -66,9 +66,9 @@ public final class MyGdxGame extends Generic2DGame {
 	private DrawPreGameGuiSystem drawPreGameGuiSystem;
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
 
-	public float screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
-	public float screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
-	public float scroll_speed = 20;
+	public float screen_cam_x;// = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
+	public float screen_cam_y;// = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
+	public float scroll_speed;// = 20;
 
 	public MyGdxGame() {
 		super(Settings.RELEASE_MODE);
@@ -104,12 +104,7 @@ public final class MyGdxGame extends Generic2DGame {
 		ecs.addSystem(new CheckIfPlayersAreOffScreenSystem(this, ecs));
 		ecs.addSystem(new AddAndRemoveMapsquares(this, ecs));
 
-
 		startPreGame();
-
-		/*if (!Settings.RELEASE_MODE) {
-			this.nextStage = true; // Auto-start game
-		}*/
 	}
 
 
@@ -140,9 +135,9 @@ public final class MyGdxGame extends Generic2DGame {
 	}
 
 
-	public void setWinner(int imageId) {
+	public void setWinner(int id) {
 		this.nextStage = true;
-		this.winnerImageId = imageId;
+		this.winnerImageId = id;
 	}
 
 
@@ -160,6 +155,10 @@ public final class MyGdxGame extends Generic2DGame {
 
 		level = new LevelGenerator(ecs);
 		level.createLevel();
+
+		screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
+		screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
+		scroll_speed = 20;
 	}
 
 
@@ -195,13 +194,13 @@ public final class MyGdxGame extends Generic2DGame {
 				// loop through systems
 				this.processPlayersSystem.process();
 				if (Settings.DEBUG_PLAYER_STUCK == false) {
-				this.moveToOffScreenSystem.process();
-				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
+					this.moveToOffScreenSystem.process();
+					this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
 				}
 				this.movementSystem.process();				
 				if (Settings.DEBUG_PLAYER_STUCK == false) {
-				ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
-				ecs.processSystem(ScrollPlayAreaSystem.class);
+					ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
+					ecs.processSystem(ScrollPlayAreaSystem.class);
 				}
 				ecs.processSystem(AddAndRemoveMapsquares.class);
 				this.animSystem.process();
@@ -283,15 +282,32 @@ public final class MyGdxGame extends Generic2DGame {
 		 */
 		avatar.remove();
 
-		sfx.play("sfx/Falling.mp3");
-		
-		this.scroll_speed += 5f;
-
 		PlayersAvatarComponent uic = (PlayersAvatarComponent)avatar.getComponent(PlayersAvatarComponent.class);
 		PlayerData player = uic.player;
 		player.avatar = null;
 		player.timeUntilAvatar = Settings.AVATAR_RESPAWN_TIME_SECS;
 		player.lives--;
+
+		sfx.play("sfx/Falling.mp3");
+
+		// Check for winner
+		int winner = -1;
+		int highestScore = -1;
+
+		for (PlayerData p : players.values()) {
+			if (p.lives <= 0) {
+				if (p.score > highestScore) {
+					highestScore = p.score;
+					winner = p.playerIdx;
+				}
+			}
+		}
+		if (winner >= 0) {
+			setWinner(winner);
+			return;
+		}
+
+		this.scroll_speed += 5f;
 
 	}
 

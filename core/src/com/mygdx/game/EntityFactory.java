@@ -46,7 +46,7 @@ public class EntityFactory {
 		e.addComponent(wac);
 		e.addComponent(new ScrollsAroundComponent());
 
-		game.animFrameHelper.createPlayersFrames(e, player.imageId, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
+		game.animFrameHelper.createPlayersFrames(e, player.playerIdx, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 		return e;
 	}
 

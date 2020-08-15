@@ -62,6 +62,11 @@ public class AddAndRemoveMapsquares implements ISystem {
 							throw new RuntimeException("Unknown type: " + type);
 						}
 					} else {
+						if (map_ents[x][y].isMarkedForRemoval()) {
+							map_ents[x][y].remove();
+							map_ents[x][y] = null;
+							continue;
+						}
 						// Remove ents
 						if (tmpVec2.x > -Settings.MAP_SQ_SIZE*2 && tmpVec2.x < Settings.LOGICAL_WIDTH_PIXELS+(Settings.MAP_SQ_SIZE*2) &&
 								tmpVec2.y > -Settings.MAP_SQ_SIZE*2 && tmpVec2.y < Settings.LOGICAL_HEIGHT_PIXELS+(Settings.MAP_SQ_SIZE*2)) {
