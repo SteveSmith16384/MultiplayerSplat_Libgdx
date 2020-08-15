@@ -42,7 +42,7 @@ public abstract class Generic2DGame extends ApplicationAdapter implements Contro
 		batch = new SpriteBatch();
 		//Gdx.input.setInputProcessor(this);
 
-		controllerManager = new ControllerManager(this, 4);
+		controllerManager = new ControllerManager(this);
 
 	}
 

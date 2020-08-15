@@ -12,5 +12,5 @@ public interface ILevelData {
 	
 	int getSquareType(int x, int y);
 	
-	GridPoint2 getStartPosition();
+	GridPoint2 getStartPosition(int idx);
 }

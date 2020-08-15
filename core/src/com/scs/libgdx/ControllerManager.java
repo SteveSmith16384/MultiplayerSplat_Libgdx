@@ -15,14 +15,12 @@ public class ControllerManager implements ControllerListener {
 	private List<Controller> inGameControllers = new ArrayList<Controller>();
 	private Array<Controller> allControllers = new Array<Controller>();
 
-	private int max_controllers;
+	private int max_controllers_;
 	private long lastCheckTime;
 	private ControllerConnectionListener listener;
 
-	public ControllerManager(ControllerConnectionListener _listener, int _max_controllers) {
+	public ControllerManager(ControllerConnectionListener _listener) {
 		listener = _listener;
-
-		max_controllers = _max_controllers;
 
 		Controllers.addListener(this);
 	}
@@ -69,7 +67,7 @@ public class ControllerManager implements ControllerListener {
 			this.allControllers.removeValue(controller, true);
 		}
 		this.inGameControllers.remove(controller);
-		
+
 		this.listener.disconnected(controller);
 
 	}
@@ -79,15 +77,10 @@ public class ControllerManager implements ControllerListener {
 	public boolean buttonDown(Controller controller, int buttonCode) {
 		if (buttonCode == 1) { // Button X
 			synchronized (inGameControllers) {
-				if (this.inGameControllers.size() < this.max_controllers) {
-					if (this.inGameControllers.contains(controller) == false) {
-						this.inGameControllers.add(controller);
-						//BillBoardFPS_Main.audio.play("sfx/Plug-in.wav");
-						this.listener.connected(controller);
-					}
-				} else {
-					System.err.println("maximum controllers reached");
-					//BillBoardFPS_Main.audio.play("sfx/Plug-out.wav");
+				if (this.inGameControllers.contains(controller) == false) {
+					this.inGameControllers.add(controller);
+					//BillBoardFPS_Main.audio.play("sfx/Plug-in.wav");
+					this.listener.connected(controller);
 				}
 			}
 		}

@@ -59,7 +59,7 @@ public class ProcessPlayersSystem implements ISystem {
 
 
 	private void createPlayersAvatar(PlayerData player, IPlayerInput controller) {
-		GridPoint2 start_pos = game.level.getStartPosition();
+		GridPoint2 start_pos = game.level.getStartPosition(player.playerIdx);
 		AbstractEntity avatar = game.entityFactory.createPlayersAvatar(player, controller, start_pos.x*Settings.MAP_SQ_SIZE, start_pos.y*Settings.MAP_SQ_SIZE);
 		game.ecs.addEntity(avatar);
 

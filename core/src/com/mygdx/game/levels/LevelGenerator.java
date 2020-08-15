@@ -7,11 +7,11 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 
 public class LevelGenerator implements ILevelData {
-	
+
 	private BasicECS ecs;
-	private GridPoint2 start_pos;
+	private GridPoint2[] start_pos;
 	private int[][] map_data;
-	
+
 	public LevelGenerator(BasicECS _ecs) {
 		ecs = _ecs;
 	}
@@ -23,17 +23,24 @@ public class LevelGenerator implements ILevelData {
 
 		for (int y=0 ; y<Settings.MAP_HEIGHT ; y++) {
 			for (int x=0 ; x<Settings.MAP_WIDTH ; x++) {
-				this.map_data[x][y] = mazegen.map[x][y] ? ILevelData.COIN : ILevelData.WALL;
+				if (y == 1 && x>1 && x<Settings.MAP_WIDTH-1) {
+					this.map_data[x][y] = ILevelData.EMPTY; // Clear space for start pos
+				} else {
+					this.map_data[x][y] = mazegen.map[x][y] ? ILevelData.COIN : ILevelData.WALL;
+				}
 			}
 		}
 
-		this.start_pos = mazegen.start_pos;
+		this.start_pos = new GridPoint2[Settings.MAX_PLAYERS];
+		for (int i=0 ; i<Settings.MAX_PLAYERS ; i++) {
+			start_pos[i] = new GridPoint2(i*3+1, 1);
+		}
 	}
 
 
 	@Override
-	public GridPoint2 getStartPosition() {
-		return start_pos;
+	public GridPoint2 getStartPosition(int idx) {
+		return start_pos[idx];
 	}
 
 

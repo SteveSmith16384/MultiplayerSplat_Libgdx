@@ -68,7 +68,7 @@ public class AddAndRemoveMapsquares implements ISystem {
 							continue;
 						}
 
-						MyGdxGame.p("Removing map for " + x + ",  " + y);
+						//MyGdxGame.p("Removing map for " + x + ",  " + y);
 
 						map_ents[x][y].remove();
 						map_ents[x][y] = null;

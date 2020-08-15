@@ -5,10 +5,12 @@ import com.scs.basicecs.AbstractEntity;
 
 public class PlayerData {
 
+	public static int next_player_id = 0;
+	
 	public static int nextImageId = 1;
 
 	public IPlayerInput controller;
-	//private boolean in_game = false;
+	public int playerIdx;
 	public boolean quit = false; // If they've removed their controller; prevent them re-attaching to start again
 	public AbstractEntity avatar;
 	public float timeUntilAvatar;
@@ -18,6 +20,9 @@ public class PlayerData {
 
 	public PlayerData(IPlayerInput _controller) {
 		this.controller = _controller;
+		
+		playerIdx = next_player_id;
+		next_player_id++;
 	}
 
 
