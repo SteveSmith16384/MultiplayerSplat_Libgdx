@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -132,7 +133,6 @@ public final class MyGdxGame extends Generic2DGame {
 		if (this.players.containsKey(controller) == false) {
 			PlayerData data = new PlayerData(controller);
 			this.players.put(controller, data);
-			//p("player created");
 		}
 	}
 
@@ -260,6 +260,12 @@ public final class MyGdxGame extends Generic2DGame {
 
 
 	public void drawFont(Batch batch, String text, float x, float y) {
+		font.setColor(Color.BLACK);
+		font.draw(batch, text, x+2, y);
+		font.draw(batch, text, x-2, y);
+		font.draw(batch, text, x, y+2);
+		font.draw(batch, text, x, y-2);
+		font.setColor(Color.WHITE);
 		font.draw(batch, text, x, y);
 	}
 

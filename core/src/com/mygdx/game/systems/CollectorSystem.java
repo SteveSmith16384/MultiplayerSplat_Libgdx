@@ -23,7 +23,7 @@ public class CollectorSystem {
 			PlayersAvatarComponent uic = (PlayersAvatarComponent)collector.getComponent(PlayersAvatarComponent.class);
 			game.sfx.play("sfx/Retro_Game_Sounds_SFX_01.ogg");
 			if (uic != null) {
-				uic.player.score += 100;
+				uic.player.score += 1;
 			}
 			game.ecs.addEntity(game.entityFactory.createRisingCoin(coin));
 			break;
