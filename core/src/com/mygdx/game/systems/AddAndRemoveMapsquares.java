@@ -27,13 +27,18 @@ public class AddAndRemoveMapsquares implements ISystem {
 	}
 
 
+	public void runNow() {
+		this.next_check_time = 0;
+	}
+	
+	
 	@Override
 	public void process() {
 		if (System.currentTimeMillis() < this.next_check_time) {
 			return;
 		}
 
-		next_check_time =System.currentTimeMillis() + INTERVAL;
+		next_check_time = System.currentTimeMillis() + INTERVAL;
 
 		for (int y=0 ; y<Settings.MAP_HEIGHT ; y++) {
 			for (int x=0 ; x<Settings.MAP_WIDTH ; x++) {

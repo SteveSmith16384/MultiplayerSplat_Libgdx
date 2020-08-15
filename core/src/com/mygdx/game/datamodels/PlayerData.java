@@ -14,7 +14,7 @@ public class PlayerData {
 	public float timeUntilAvatar;
 	public int score;
 	public int lives;
-	public int playerIdx;
+	public int playerIdx = -1;
 
 	public PlayerData(IPlayerInput _controller) {
 		this.controller = _controller;
@@ -24,9 +24,10 @@ public class PlayerData {
 	public void init() {
 		this.lives = Settings.START_LIVES;
 		this.score = 0;
-		if (playerIdx <= 0) {
+		if (playerIdx < 0) {
 			playerIdx = nextPlayerId++;
 		}
+		timeUntilAvatar = 0;
 	}
 
 }

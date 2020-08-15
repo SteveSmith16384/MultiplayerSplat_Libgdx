@@ -65,6 +65,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private ProcessPlayersSystem processPlayersSystem;
 	private DrawPreGameGuiSystem drawPreGameGuiSystem;
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
+	private AddAndRemoveMapsquares addAndRemoveMapsquares;
 
 	public float screen_cam_x;// = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 	public float screen_cam_y;// = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
@@ -102,7 +103,8 @@ public final class MyGdxGame extends Generic2DGame {
 		this.drawPostGameGuiSystem = new DrawPostGameGuiSystem(this, batch);
 		ecs.addSystem(new ScrollPlayAreaSystem(this));
 		ecs.addSystem(new CheckIfPlayersAreOffScreenSystem(this, ecs));
-		ecs.addSystem(new AddAndRemoveMapsquares(this, ecs));
+		this.addAndRemoveMapsquares =new AddAndRemoveMapsquares(this, ecs);
+		ecs.addSystem(this.addAndRemoveMapsquares);
 
 		startPreGame();
 	}
@@ -159,6 +161,9 @@ public final class MyGdxGame extends Generic2DGame {
 		screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 		screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
 		scroll_speed = 20;
+		
+		this.addAndRemoveMapsquares.runNow();
+		//this.processPlayersSystem.runNow();
 	}
 
 
@@ -293,21 +298,24 @@ public final class MyGdxGame extends Generic2DGame {
 		// Check for winner
 		int winner = -1;
 		int highestScore = -1;
-
+		boolean all_died = true;
 		for (PlayerData p : players.values()) {
 			if (p.lives <= 0) {
 				if (p.score > highestScore) {
 					highestScore = p.score;
 					winner = p.playerIdx;
 				}
+			} else {
+				all_died = false;
+				break;
 			}
 		}
-		if (winner >= 0) {
+		if (all_died) {
 			setWinner(winner);
 			return;
 		}
 
-		this.scroll_speed += 5f;
+		this.scroll_speed += 15f;
 
 	}
 
