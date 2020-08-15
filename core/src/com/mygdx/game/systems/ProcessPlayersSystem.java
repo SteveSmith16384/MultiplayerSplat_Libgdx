@@ -24,7 +24,7 @@ public class ProcessPlayersSystem implements ISystem {
 		for (PlayerData player : game.players.values()) {
 			if (player.quit == false) {
 				if (player.lives > 0) {
-					if (player.avatar == null) {
+					if (player.avatar == null || player.avatar.isMarkedForRemoval()) {
 						player.timeUntilAvatar -= Gdx.graphics.getDeltaTime();
 						if (player.timeUntilAvatar <= 0) {
 							createPlayersAvatar(player, player.controller);

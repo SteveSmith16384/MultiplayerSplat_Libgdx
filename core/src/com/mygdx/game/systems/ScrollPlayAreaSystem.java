@@ -2,6 +2,7 @@ package com.mygdx.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Settings;
 import com.scs.basicecs.ISystem;
 
 public class ScrollPlayAreaSystem implements ISystem {
@@ -18,6 +19,12 @@ public class ScrollPlayAreaSystem implements ISystem {
 
 	@Override
 	public void process() {
+		// Have we reached the top?
+		if (game.screen_cam_y > (Settings.MAP_HEIGHT * Settings.MAP_SQ_SIZE)-(Settings.LOGICAL_HEIGHT_PIXELS/3)) {
+			game.endOfLevel();
+			return;
+		}
+		
 		if (System.currentTimeMillis() > this.next_Speed_up) {
 			game.scroll_speed += 1;
 			this.next_Speed_up = System.currentTimeMillis() + SPEED_UP_INTERVAL;

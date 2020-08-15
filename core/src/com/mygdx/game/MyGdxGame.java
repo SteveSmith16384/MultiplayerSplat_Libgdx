@@ -70,9 +70,10 @@ public final class MyGdxGame extends Generic2DGame {
 	private AddAndRemoveMapsquares addAndRemoveMapsquares;
 	private ScrollPlayAreaSystem scrollPlayAreaSystem;
 
-	public float screen_cam_x;// = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
-	public float screen_cam_y;// = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
-	public float scroll_speed;// = 20;
+	 // Centre of current point
+	public float screen_cam_x;
+	public float screen_cam_y;
+	public float scroll_speed;
 
 	public MyGdxGame() {
 		super(Settings.RELEASE_MODE);
@@ -84,8 +85,6 @@ public final class MyGdxGame extends Generic2DGame {
 		super.create();
 
 		this.generateFonts();
-		//font = new BitmapFont();
-		//font.getData().setScale(2);
 
 		ecs = new BasicECS();
 		entityFactory = new EntityFactory(this);
@@ -143,7 +142,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 
 	private void startPreGame() {
-		this.playMusic("music/IntroLoop.wav");
+		this.playMusic("music/retro.mp3");
 
 		this.removeAllEntities();
 	}
@@ -162,9 +161,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 
 	private void startGame() {
-		this.removeAllEntities();
-
-		this.playMusic("music/8BitMetal.wav");
+		this.playMusic("music/stage 1_remixed_by_cent.ogg");
 
 		// Reset all player data
 		for (PlayerData player : players.values()) {
@@ -173,16 +170,24 @@ public final class MyGdxGame extends Generic2DGame {
 
 		gameData = new GameData();
 
+		this.startLevel();
+	}
+	
+	
+	private void startLevel() {
+		this.removeAllEntities();
+		
+		this.gameData.level++;
+
 		level_data = new LevelGenerator(ecs);
 		level_data.createLevel();
 
 		screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 		screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
-		scroll_speed = 20;
+		scroll_speed = 15 + (gameData.level*5);
 
 		this.scrollPlayAreaSystem = new ScrollPlayAreaSystem(this);
 		this.addAndRemoveMapsquares = new AddAndRemoveMapsquares(this, ecs);
-		//this.addAndRemoveMapsquares.runNow();
 	}
 
 
@@ -270,6 +275,11 @@ public final class MyGdxGame extends Generic2DGame {
 	}
 
 
+	public void endOfLevel() {
+		startLevel();
+	}
+	
+	
 	@Override
 	public void dispose() {
 		super.dispose();
