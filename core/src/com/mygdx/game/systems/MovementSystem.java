@@ -23,7 +23,7 @@ public class MovementSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity movingEntity) {
-		MyGdxGame.p("Moving " + movingEntity);
+		//MyGdxGame.p("Moving " + movingEntity);
 		
 		float delta = Gdx.graphics.getDeltaTime();
 		MovementComponent md = (MovementComponent)movingEntity.getComponent(MovementComponent.class);

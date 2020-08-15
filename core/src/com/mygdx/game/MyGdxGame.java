@@ -68,6 +68,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 	public float screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 	public float screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
+	public float scroll_speed = 20;
 
 	public MyGdxGame() {
 		super(Settings.RELEASE_MODE);
@@ -273,16 +274,18 @@ public final class MyGdxGame extends Generic2DGame {
 	}
 
 
-	// todo - this is not called!
 	public void playerKilled(AbstractEntity avatar) {
-		/*todo		long diff = System.currentTimeMillis() - timeStarted;
+		/*todo		
+		long diff = System.currentTimeMillis() - timeStarted;
 		if (diff < 4000) { // Invincible for 4 seconds
 			return;
 		}
 		 */
-		sfx.play("sfx/Falling.mp3");
-
 		avatar.remove();
+
+		sfx.play("sfx/Falling.mp3");
+		
+		this.scroll_speed += 5f;
 
 		PlayersAvatarComponent uic = (PlayersAvatarComponent)avatar.getComponent(PlayersAvatarComponent.class);
 		PlayerData player = uic.player;

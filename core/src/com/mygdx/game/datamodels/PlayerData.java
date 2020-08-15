@@ -1,5 +1,6 @@
 package com.mygdx.game.datamodels;
 
+import com.mygdx.game.Settings;
 import com.mygdx.game.input.IPlayerInput;
 import com.scs.basicecs.AbstractEntity;
 
@@ -33,7 +34,7 @@ public class PlayerData {
 				}
 			}*/
 			//this.in_game = true;
-			this.lives = 3;
+			this.lives = Settings.START_LIVES;
 			if (imageId <= 0) {
 				imageId = nextImageId++;
 			}

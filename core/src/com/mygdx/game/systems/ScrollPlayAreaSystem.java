@@ -17,7 +17,7 @@ public class ScrollPlayAreaSystem implements ISystem {
 	public void process() {
 		//todo
 		//game.screen_cam_x += 20f * Gdx.graphics.getDeltaTime();
-		game.screen_cam_y += 20f * Gdx.graphics.getDeltaTime();
+		game.screen_cam_y += game.scroll_speed * Gdx.graphics.getDeltaTime();
 	}
 
 

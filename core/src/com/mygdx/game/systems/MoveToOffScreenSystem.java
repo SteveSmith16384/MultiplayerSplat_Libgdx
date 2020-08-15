@@ -2,6 +2,7 @@ package com.mygdx.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Settings;
+import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.MoveOffScreenComponent;
 import com.mygdx.game.components.PositionComponent;
 import com.scs.basicecs.AbstractEntity;
@@ -17,16 +18,23 @@ public class MoveToOffScreenSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
+		ImageComponent imageData = (ImageComponent)entity.getComponent(ImageComponent.class);
+		// Check if off-screen - use sprite pos since the rect is the logical position
+		if (imageData.sprite.getX() < 0 ||imageData.sprite.getY() < 0 || imageData.sprite.getX() > Settings.LOGICAL_WIDTH_PIXELS || imageData.sprite.getY() > Settings.LOGICAL_HEIGHT_PIXELS) {
+			entity.remove();
+			return;
+		}
+
 		MoveOffScreenComponent gic = (MoveOffScreenComponent)entity.getComponent(MoveOffScreenComponent.class);
-		if (gic != null) {
+		//if (gic != null) {
 			PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-			if (pos.rect.right < 0 || pos.rect.top < 0 || pos.rect.left > Settings.LOGICAL_WIDTH_PIXELS || pos.rect.bottom > Settings.LOGICAL_HEIGHT_PIXELS) {
+/*			if (pos.rect.right < 0 || pos.rect.top < 0 || pos.rect.left > Settings.LOGICAL_WIDTH_PIXELS || pos.rect.bottom > Settings.LOGICAL_HEIGHT_PIXELS) {
 				entity.remove();
 				return;
-			}
+			}*/
 			pos.rect.move(gic.offX * Gdx.graphics.getDeltaTime(), gic.offY * Gdx.graphics.getDeltaTime());
 
-		}
+		//}
 	}
 
 }
