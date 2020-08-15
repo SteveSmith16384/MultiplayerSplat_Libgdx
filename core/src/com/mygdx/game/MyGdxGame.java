@@ -7,6 +7,8 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.datamodels.GameData;
@@ -80,8 +82,9 @@ public final class MyGdxGame extends Generic2DGame {
 	public void create() {
 		super.create();
 
-		font = new BitmapFont();
-		font.getData().setScale(2);
+		this.generateFonts();
+		//font = new BitmapFont();
+		//font.getData().setScale(2);
 
 		ecs = new BasicECS();
 		entityFactory = new EntityFactory(this);
@@ -110,6 +113,21 @@ public final class MyGdxGame extends Generic2DGame {
 	}
 
 
+	private void generateFonts() {
+		int height = Gdx.graphics.getBackBufferHeight();
+		//Settings.p("Height: " + height);
+
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
+
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = height/30;
+		//Settings.p("Font size=" + parameter.size);
+		font = generator.generateFont(parameter);
+		
+		generator.dispose();
+	}
+	
+	
 	private void addPlayerForController(IPlayerInput controller) {
 		if (this.players.containsKey(controller) == false) {
 			PlayerData data = new PlayerData(controller);
