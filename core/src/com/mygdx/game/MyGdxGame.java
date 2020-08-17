@@ -149,6 +149,8 @@ public final class MyGdxGame extends Generic2DGame {
 		
 		AbstractEntity multi = TextEntityFactory.createMultiplayer(this);
 		ecs.addEntity(multi);
+		AbstractEntity splat = TextEntityFactory.createSplatText(this);
+		ecs.addEntity(splat);
 	}
 
 

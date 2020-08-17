@@ -12,7 +12,7 @@ import com.scs.basicecs.BasicECS;
 
 public class SineInterpolationSystem extends AbstractSystem {
 
-	private static final int DURATION = 20;
+	//private static final int DURATION = 20;
 	
 	public SineInterpolationSystem(BasicECS ecs) {
 		super(ecs, SineInterpolationComponent.class);
@@ -29,11 +29,11 @@ public class SineInterpolationSystem extends AbstractSystem {
 		}
 		sic.elapsed += Gdx.graphics.getDeltaTime();
 
-		float extraY = Interpolation.bounceOut.apply(0, DURATION, sic.elapsed);
+		float extraY = Interpolation.bounceOut.apply(0, sic.duration, sic.elapsed);
 		//MyGdxGame.p("Y: " + extraY);
-		posData.rect.setBottom(sic.startY - (extraY * Settings.LOGICAL_HEIGHT_PIXELS/(DURATION*2)));
+		posData.rect.setBottom(sic.startY - (extraY * sic.end_y/sic.duration));
 		
-		if (sic.elapsed > DURATION) {
+		if (sic.elapsed > sic.duration) {
 			entity.removeComponent(SineInterpolationComponent.class);
 		}
 
