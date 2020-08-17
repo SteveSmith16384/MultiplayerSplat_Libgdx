@@ -7,6 +7,7 @@ import java.util.List;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.PositionComponent;
 import com.mygdx.game.datamodels.CollisionResults;
+import com.scs.awt.RectF;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -64,6 +65,21 @@ public class CollisionSystem extends AbstractSystem {
 			}
 		}
 		return ret;
+	}
+
+
+	public boolean isAreaClear(RectF rect) {
+		Iterator<AbstractEntity> it = this.entities.iterator();
+		while (it.hasNext()) {
+			AbstractEntity e = it.next();
+			PositionComponent pos = (PositionComponent)e.getComponent(PositionComponent.class);
+			if (pos != null) {
+				if (pos.rect.intersects(rect)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 

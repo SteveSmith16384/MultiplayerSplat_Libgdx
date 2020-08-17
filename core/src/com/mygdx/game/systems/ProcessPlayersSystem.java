@@ -1,11 +1,11 @@
 package com.mygdx.game.systems;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.GridPoint2;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Settings;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.IPlayerInput;
+import com.scs.awt.RectF;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.ISystem;
 
@@ -38,11 +38,22 @@ public class ProcessPlayersSystem implements ISystem {
 
 
 	private void createPlayersAvatar(PlayerData player, IPlayerInput controller) {
-		GridPoint2 start_pos = game.level_data.getStartPosition(player.playerIdx);
+		/*GridPoint2 start_pos = game.level_data.getStartPosition(player.playerIdx);
 		AbstractEntity avatar = game.entityFactory.createPlayersAvatar(player, controller, start_pos.x*Settings.MAP_SQ_SIZE, start_pos.y*Settings.MAP_SQ_SIZE);
-		game.ecs.addEntity(avatar);
+		game.ecs.addEntity(avatar);*/
 
-		player.avatar = avatar;
+		int y = (int)((int)(game.screen_cam_y/Settings.MAP_SQ_SIZE)*Settings.MAP_SQ_SIZE);
+		RectF r = new RectF(0, y+Settings.PLAYER_SIZE, Settings.PLAYER_SIZE, y);
+		for (int x = (int)Settings.MAP_SQ_SIZE ; x<Settings.LOGICAL_WIDTH_PIXELS-(Settings.MAP_SQ_SIZE*2) ; x++) {
+			r.setLeft(x);
+			if (game.collisionSystem.isAreaClear(r)) {
+				AbstractEntity avatar = game.entityFactory.createPlayersAvatar(player, controller, r.left, r.bottom);
+				game.ecs.addEntity(avatar);
+				player.avatar = avatar;
+				break;
+			}
+		}
+		
 	}
 
 }

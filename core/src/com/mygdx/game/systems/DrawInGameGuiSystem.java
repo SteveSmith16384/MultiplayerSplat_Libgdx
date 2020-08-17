@@ -43,7 +43,7 @@ public class DrawInGameGuiSystem implements ISystem {
 		for (PlayerData player : game.players.values()) {
 			int xStart = 20+(num*250);
 			game.drawFont(batch, "Score: " + player.score, xStart, 90);
-			if (player.lives > 0) {
+			if (player.lives > 0 && player.lives < 5) {
 				if (players[num] == null) {
 					Texture tex = game.getTexture("sprites/player" + player.playerIdx + "_right1.png");
 					players[num] = new Sprite(tex);

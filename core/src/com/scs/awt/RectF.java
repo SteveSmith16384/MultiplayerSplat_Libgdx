@@ -56,15 +56,22 @@ public class RectF {
 	}
 
 
+	public void setLeft(float x) {
+		float w = this.width();
+		this.left = x;
+		this.right = x+w;
+	}
+
+
 	public static boolean intersects(RectF a, RectF b) {
 		return a.left < b.right && b.left < a.right
-				&& a.top > b.bottom && b.top > a.bottom; // Switch these if the origin is top-left, not bottom-left!
+				&& a.top > b.bottom && b.top > a.bottom;
 	}
 
 
 	public boolean intersects(RectF b) {
 		return left < b.right && b.left < right
-				&& top > b.bottom && b.top > bottom; // Switch these if the origin is top-left, not bottom-left!
+				&& top > b.bottom && b.top > bottom;
 	}
 
 
