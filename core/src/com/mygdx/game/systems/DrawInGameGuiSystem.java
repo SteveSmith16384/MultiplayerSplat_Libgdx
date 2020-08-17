@@ -53,7 +53,7 @@ public class DrawInGameGuiSystem implements ISystem {
 					players[num].setPosition(xStart+(i*20), 30);
 					players[num].draw(batch);
 				}
-			} else {
+			} else if (player.lives <= 0) {
 				game.drawFont(batch, "GAME OVER!", xStart, 40);
 			}
 			num++;

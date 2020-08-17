@@ -72,6 +72,10 @@ public class CollisionSystem extends AbstractSystem {
 		Iterator<AbstractEntity> it = this.entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
+			CollisionComponent coll = (CollisionComponent)e.getComponent(CollisionComponent.class);
+			if (coll == null || coll.blocksMovement == false) {
+				continue;
+			}
 			PositionComponent pos = (PositionComponent)e.getComponent(PositionComponent.class);
 			if (pos != null) {
 				if (pos.rect.intersects(rect)) {

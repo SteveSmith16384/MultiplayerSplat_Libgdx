@@ -227,13 +227,13 @@ public final class MyGdxGame extends Generic2DGame {
 
 			if (this.gameStage == 0) {
 				// loop through systems
+				this.addAndRemoveMapsquares.process(); // Must be before process player system so we know where we can start the player
 				this.processPlayersSystem.process();
 				this.moveToOffScreenSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
 				this.movementSystem.process();				
 				ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
 				this.scrollPlayAreaSystem.process();
-				this.addAndRemoveMapsquares.process();
 				this.animSystem.process();
 			}
 
@@ -313,6 +313,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 
 	public void playerKilled(AbstractEntity avatar) {
+		p(avatar + " killed");
 		avatar.remove();
 
 		PlayersAvatarComponent uic = (PlayersAvatarComponent)avatar.getComponent(PlayersAvatarComponent.class);
@@ -320,6 +321,7 @@ public final class MyGdxGame extends Generic2DGame {
 		player.avatar = null;
 		player.timeUntilAvatar = Settings.AVATAR_RESPAWN_TIME_SECS;
 		player.lives--;
+		player.score -= 10;
 
 		sfx.play("sfx/Falling.mp3");
 

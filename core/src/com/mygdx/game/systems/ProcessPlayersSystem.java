@@ -42,6 +42,7 @@ public class ProcessPlayersSystem implements ISystem {
 		AbstractEntity avatar = game.entityFactory.createPlayersAvatar(player, controller, start_pos.x*Settings.MAP_SQ_SIZE, start_pos.y*Settings.MAP_SQ_SIZE);
 		game.ecs.addEntity(avatar);*/
 
+		game.ecs.addAndRemoveEntities(); // So any new mapsquares are added
 		int y = (int)((int)(game.screen_cam_y/Settings.MAP_SQ_SIZE)*Settings.MAP_SQ_SIZE);
 		RectF r = new RectF(0, y+Settings.PLAYER_SIZE, Settings.PLAYER_SIZE, y);
 		for (int x = (int)Settings.MAP_SQ_SIZE ; x<Settings.LOGICAL_WIDTH_PIXELS-(Settings.MAP_SQ_SIZE*2) ; x++) {

@@ -19,6 +19,7 @@ public class ScrollPlayAreaSystem implements ISystem {
 
 	@Override
 	public void process() {
+		float delta = Math.min(Gdx.graphics.getDeltaTime(), 1);
 		// Have we reached the top?
 		if (game.screen_cam_y > (Settings.MAP_HEIGHT * Settings.MAP_SQ_SIZE)-(Settings.LOGICAL_HEIGHT_PIXELS/3)) {
 			game.endOfLevel();
@@ -30,7 +31,7 @@ public class ScrollPlayAreaSystem implements ISystem {
 			this.next_Speed_up = System.currentTimeMillis() + SPEED_UP_INTERVAL;
 		}
 		//game.screen_cam_x += 20f * Gdx.graphics.getDeltaTime();
-		game.screen_cam_y += game.scroll_speed * Gdx.graphics.getDeltaTime();
+		game.screen_cam_y += game.scroll_speed * delta;
 	}
 
 
