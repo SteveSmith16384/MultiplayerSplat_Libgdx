@@ -161,7 +161,7 @@ public class EntityFactory {
 
 		AbstractEntity e = new AbstractEntity(game.ecs, "TopPlayerEffect");
 
-		ImageComponent imageData = new ImageComponent("sprites/firecloud.png", 0, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
+		ImageComponent imageData = new ImageComponent("sprites/power_ring.png", 0, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 		e.addComponent(imageData);
 		PositionComponent pos2 = PositionComponent.ByBottomLeft(pos.rect.left, pos.rect.bottom, pos.rect.width(), pos.rect.height());
 		e.addComponent(pos2);

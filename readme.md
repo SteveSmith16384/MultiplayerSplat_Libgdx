@@ -1,5 +1,6 @@
 # MULTIPLAYER SPLAT!
 
+![Screenshot](docs/screenshots/splat.gif)
 
 Written by Stephen Smith (stephen.carlylesmith@googlemail.com)
 
