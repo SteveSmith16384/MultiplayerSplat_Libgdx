@@ -24,7 +24,6 @@ public class CheckIfPlayersAreOffScreenSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		// Check if player off-screen
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		game.getScreenCoords(posData.rect.getX(), posData.rect.getY(), tmpVec2);
 		if (tmpVec2.x < DrawInGameGuiSystem.WALL_WIDTH || tmpVec2.x + posData.rect.width() > Settings.LOGICAL_WIDTH_PIXELS-DrawInGameGuiSystem.WALL_WIDTH) {

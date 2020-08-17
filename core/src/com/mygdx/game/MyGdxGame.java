@@ -27,8 +27,10 @@ import com.mygdx.game.systems.CollisionSystem;
 import com.mygdx.game.systems.DrawInGameGuiSystem;
 import com.mygdx.game.systems.DrawPostGameGuiSystem;
 import com.mygdx.game.systems.DrawPreGameGuiSystem;
+import com.mygdx.game.systems.DrawTopPlayerEffectSystem;
 import com.mygdx.game.systems.DrawingSystem;
 import com.mygdx.game.systems.InputSystem;
+import com.mygdx.game.systems.MakeSpriteSmallerSystem;
 import com.mygdx.game.systems.MoveToOffScreenSystem;
 import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
@@ -71,7 +73,9 @@ public final class MyGdxGame extends Generic2DGame {
 	private AddAndRemoveMapsquares addAndRemoveMapsquares;
 	private ScrollPlayAreaSystem scrollPlayAreaSystem;
 	private SineInterpolationSystem sineInterpolationSystem;
-
+	private MakeSpriteSmallerSystem makeSpriteSmallerSystem;
+	private DrawTopPlayerEffectSystem drawTopPlayerEffectSystem;
+	
 	 // Centre of current point
 	public float screen_cam_x;
 	public float screen_cam_y;
@@ -109,7 +113,9 @@ public final class MyGdxGame extends Generic2DGame {
 		ecs.addSystem(new CheckIfPlayersAreOffScreenSystem(this, ecs));
 		this.addAndRemoveMapsquares = new AddAndRemoveMapsquares(this, ecs);
 		this.sineInterpolationSystem = new SineInterpolationSystem(ecs);
-
+		this.makeSpriteSmallerSystem = new MakeSpriteSmallerSystem(ecs);
+		this.drawTopPlayerEffectSystem = new DrawTopPlayerEffectSystem(this, ecs);
+		
 		startPreGame();
 	}
 
@@ -227,12 +233,14 @@ public final class MyGdxGame extends Generic2DGame {
 
 			if (this.gameStage == 0) {
 				// loop through systems
+				this.makeSpriteSmallerSystem.process();
 				this.addAndRemoveMapsquares.process(); // Must be before process player system so we know where we can start the player
 				this.processPlayersSystem.process();
 				this.moveToOffScreenSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
-				this.movementSystem.process();				
+				this.movementSystem.process();
 				ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
+				this.drawTopPlayerEffectSystem.process();
 				this.scrollPlayAreaSystem.process();
 				this.animSystem.process();
 			}
@@ -322,7 +330,10 @@ public final class MyGdxGame extends Generic2DGame {
 		player.timeUntilAvatar = Settings.AVATAR_RESPAWN_TIME_SECS;
 		player.lives--;
 		player.score -= 10;
-
+		if (player.score < 0) {
+			player.score = 0;
+		}
+		
 		sfx.play("sfx/Falling.mp3");
 
 		// Check for winner

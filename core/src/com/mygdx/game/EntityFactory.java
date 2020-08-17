@@ -8,6 +8,7 @@ import com.mygdx.game.components.CollectableComponent.Type;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.HarmOnContactComponent;
 import com.mygdx.game.components.ImageComponent;
+import com.mygdx.game.components.MakeSpriteSmallerComponent;
 import com.mygdx.game.components.MoveOffScreenComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
@@ -149,6 +150,22 @@ public class EntityFactory {
 		e.addComponent(pos2);
 		MoveOffScreenComponent moc = new MoveOffScreenComponent(Settings.PLAYER_SPEED*2, Settings.PLAYER_SPEED*2);
 		e.addComponent(moc);
+		e.addComponent(new ScrollsAroundComponent());
+
+		return e;
+	}	
+
+
+	public AbstractEntity createTopPlayerEffect(AbstractEntity player) {
+		PositionComponent pos = (PositionComponent)player.getComponent(PositionComponent.class);
+
+		AbstractEntity e = new AbstractEntity(game.ecs, "TopPlayerEffect");
+
+		ImageComponent imageData = new ImageComponent("sprites/firecloud.png", 0, Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
+		e.addComponent(imageData);
+		PositionComponent pos2 = PositionComponent.ByBottomLeft(pos.rect.left, pos.rect.bottom, pos.rect.width(), pos.rect.height());
+		e.addComponent(pos2);
+		e.addComponent(new MakeSpriteSmallerComponent());
 		e.addComponent(new ScrollsAroundComponent());
 
 		return e;

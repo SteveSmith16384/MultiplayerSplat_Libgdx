@@ -17,7 +17,6 @@ Written by Stephen Smith (stephen.carlylesmith@googlemail.com)
 * In-game Music taken from https://opengameart.org/content/retroturnaroundstage-1-remix
 * Intro music taken from https://opengameart.org/content/retro
 
-
 ## Licence
 MIT licence.  See the separate file for details.
 
