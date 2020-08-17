@@ -30,9 +30,9 @@ public class DrawPreGameGuiSystem implements ISystem {
 
 		//game.drawFont(batch, game.con.getControllers().size + " controllers found", 20, Settings.LOGICAL_HEIGHT_PIXELS-40);
 
-		game.drawFont(batch, game.players.size() + " players in the game!", 20, Settings.LOGICAL_HEIGHT_PIXELS-200);
-		game.drawFont(batch, "Press 'Space' for keyboard player", 20, Settings.LOGICAL_HEIGHT_PIXELS-260);
-		game.drawFont(batch, "PRESS 'S' TO START!", 20, Settings.LOGICAL_HEIGHT_PIXELS-320);
+		game.drawFont(batch, game.players.size() + " players in the game!", 20, 140);
+		game.drawFont(batch, "Press 'Space' for keyboard player", 20, 100);
+		game.drawFont(batch, "PRESS 'S' TO START!", 20, 60);
 	}
 
 
