@@ -21,7 +21,7 @@ public class PlayerData {
 	}
 
 
-	public void init() {
+	public void reset() {
 		this.lives = Settings.START_LIVES;
 		this.score = 0;
 		if (playerIdx < 0) {

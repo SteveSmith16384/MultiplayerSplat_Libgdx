@@ -47,6 +47,13 @@ public class RectF {
 		right = r.right;
 		bottom = r.bottom;
 	}
+	
+	
+	public void setBottom(float y) {
+		float h = this.height();
+		this.bottom = y;
+		this.top = y+h;
+	}
 
 
 	public static boolean intersects(RectF a, RectF b) {

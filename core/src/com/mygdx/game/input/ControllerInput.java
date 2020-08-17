@@ -1,7 +1,6 @@
 package com.mygdx.game.input;
 
 import com.badlogic.gdx.controllers.Controller;
-import com.mygdx.game.Settings;
 
 public class ControllerInput implements IPlayerInput {
 

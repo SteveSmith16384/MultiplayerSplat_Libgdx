@@ -34,6 +34,7 @@ import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
 import com.mygdx.game.systems.ProcessPlayersSystem;
 import com.mygdx.game.systems.ScrollPlayAreaSystem;
+import com.mygdx.game.systems.SineInterpolationSystem;
 import com.mygdx.game.systems.WalkingAnimationSystem;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -69,6 +70,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private DrawPostGameGuiSystem drawPostGameGuiSystem;
 	private AddAndRemoveMapsquares addAndRemoveMapsquares;
 	private ScrollPlayAreaSystem scrollPlayAreaSystem;
+	private SineInterpolationSystem sineInterpolationSystem;
 
 	 // Centre of current point
 	public float screen_cam_x;
@@ -104,10 +106,9 @@ public final class MyGdxGame extends Generic2DGame {
 		this.processPlayersSystem = new ProcessPlayersSystem(this);
 		this.drawPreGameGuiSystem = new DrawPreGameGuiSystem(this, batch);
 		this.drawPostGameGuiSystem = new DrawPostGameGuiSystem(this, batch);
-		//ecs.addSystem(new ScrollPlayAreaSystem(this));
 		ecs.addSystem(new CheckIfPlayersAreOffScreenSystem(this, ecs));
 		this.addAndRemoveMapsquares = new AddAndRemoveMapsquares(this, ecs);
-		//ecs.addSystem(this.addAndRemoveMapsquares);
+		this.sineInterpolationSystem = new SineInterpolationSystem(ecs);
 
 		startPreGame();
 	}
@@ -145,6 +146,9 @@ public final class MyGdxGame extends Generic2DGame {
 		this.playMusic("music/retro.mp3");
 
 		this.removeAllEntities();
+		
+		AbstractEntity multi = TextEntityFactory.createMultiplayer(this);
+		ecs.addEntity(multi);
 	}
 
 
@@ -163,9 +167,8 @@ public final class MyGdxGame extends Generic2DGame {
 	private void startGame() {
 		this.playMusic("music/stage 1_remixed_by_cent.ogg");
 
-		// Reset all player data
 		for (PlayerData player : players.values()) {
-			player.init();
+			player.reset();
 		}
 
 		gameData = new GameData();
@@ -183,7 +186,7 @@ public final class MyGdxGame extends Generic2DGame {
 		level_data.createLevel();
 
 		screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
-		screen_cam_y = 0;//Settings.LOGICAL_HEIGHT_PIXELS/2;
+		screen_cam_y = 0;
 		scroll_speed = 15 + (gameData.level*5);
 
 		this.scrollPlayAreaSystem = new ScrollPlayAreaSystem(this);
@@ -218,6 +221,7 @@ public final class MyGdxGame extends Generic2DGame {
 			ecs.addAndRemoveEntities();
 
 			this.inputSystem.process();
+			this.sineInterpolationSystem.process();
 
 			if (this.gameStage == 0) {
 				// loop through systems

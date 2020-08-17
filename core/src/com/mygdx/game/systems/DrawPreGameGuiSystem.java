@@ -21,22 +21,14 @@ public class DrawPreGameGuiSystem implements ISystem {
 		Texture tex = game.getTexture("colours/black.png");
 		background = new Sprite(tex);
 		background.setSize(Settings.LOGICAL_WIDTH_PIXELS,  Settings.LOGICAL_HEIGHT_PIXELS);
-
-		/*		Texture tex2 = game.getTexture("ctc_logo.png");
-		logo = new Sprite(tex2);
-		logo.setSize(Settings.LOGICAL_WIDTH_PIXELS/2, Settings.LOGICAL_HEIGHT_PIXELS/2);
-		logo.setPosition(Settings.LOGICAL_WIDTH_PIXELS/4, Settings.LOGICAL_HEIGHT_PIXELS/2);*/
 	}
 
 
 	@Override
 	public void process() {
-		background.draw(batch);
-		if (logo != null) {
-			logo.draw(batch);
-		}
+		//background.draw(batch);
 
-		//game.drawFont(batch, Controllers.getControllers().size + " controllers found", 20, Settings.LOGICAL_HEIGHT_PIXELS-40);
+		//game.drawFont(batch, game.con.getControllers().size + " controllers found", 20, Settings.LOGICAL_HEIGHT_PIXELS-40);
 
 		game.drawFont(batch, game.players.size() + " players in the game!", 20, Settings.LOGICAL_HEIGHT_PIXELS-200);
 		game.drawFont(batch, "Press 'Space' for keyboard player", 20, Settings.LOGICAL_HEIGHT_PIXELS-260);
