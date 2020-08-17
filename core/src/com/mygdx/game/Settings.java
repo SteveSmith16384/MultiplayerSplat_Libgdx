@@ -25,7 +25,8 @@ public final class Settings {
 	public static final float COLLECTABLE_SIZE = 25;
 	public static final int AVATAR_RESPAWN_TIME_SECS = 3;
 	public static final int MAX_PLAYERS = 4;
-	public static final int START_LIVES = 1;
+	public static final int START_LIVES = 999;
+	public static final int START_SPEED = 17;
 	
 	public static final String TITLE = "SPLAT!";
 	

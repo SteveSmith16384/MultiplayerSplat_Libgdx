@@ -189,7 +189,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 		screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
 		screen_cam_y = 0;
-		scroll_speed = 15 + (gameData.level*5);
+		scroll_speed = Settings.START_SPEED + (gameData.level*5);
 
 		this.scrollPlayAreaSystem = new ScrollPlayAreaSystem(this);
 		this.addAndRemoveMapsquares = new AddAndRemoveMapsquares(this, ecs);
