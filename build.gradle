@@ -12,7 +12,6 @@ buildscript {
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.6'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.5'
-        
 
     }
 }
@@ -71,7 +70,7 @@ project(":html") {
 		compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion:sources"
 		compile "com.badlogicgames.gdx:gdx-controllers-gwt:$gdxVersion"
 		compile "com.badlogicgames.gdx:gdx-controllers-gwt:$gdxVersion:sources"
-        
+		implementation 'com.crashinvaders.vfx:gdx-vfx-gwt:0.5.0'
     }
 }
 
@@ -84,6 +83,8 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        implementation 'com.crashinvaders.vfx:gdx-vfx-core:0.5.0'
+		implementation 'com.crashinvaders.vfx:gdx-vfx-effects:0.5.0' 
     }
 }
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Settings;
 import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.PositionComponent;
 import com.mygdx.game.components.ScrollsAroundComponent;
@@ -21,6 +22,7 @@ import com.scs.basicecs.BasicECS;
 
 public class DrawingSystem extends AbstractSystem implements Comparator<AbstractEntity> {
 
+	private Sprite background;
 	private MyGdxGame game;
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
@@ -34,11 +36,17 @@ public class DrawingSystem extends AbstractSystem implements Comparator<Abstract
 		batch = _batch;
 
 		shapeRenderer = new ShapeRenderer();
+
+		Texture tex = game.getTexture("colours/white.png");
+		background = new Sprite(tex);
+		background.setSize(Settings.LOGICAL_WIDTH_PIXELS,  Settings.LOGICAL_HEIGHT_PIXELS);
 	}
 
 
 	@Override
 	public void process() {
+		background.draw(batch);
+		
 		Collections.sort(this.entities, this);
 		Iterator<AbstractEntity> it = this.entities.iterator();
 		while (it.hasNext()) {

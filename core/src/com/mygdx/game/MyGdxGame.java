@@ -6,11 +6,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
+import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.GaussianBlurEffect;
+import com.crashinvaders.vfx.effects.LevelsEffect;
 import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.datamodels.GameData;
@@ -59,6 +63,7 @@ public final class MyGdxGame extends Generic2DGame {
 	public HashMap<IPlayerInput, PlayerData> players = new HashMap<IPlayerInput, PlayerData>();
 	public boolean keyboard_joined = false;
 	public ILevelData level_data;
+	private VfxManager vfxManager; // todo - resize and dispose
 
 	// Systems
 	public InputSystem inputSystem;
@@ -82,8 +87,8 @@ public final class MyGdxGame extends Generic2DGame {
 	private RemoveIfOffScreenSystem removeIfOffScreenSystem;
 	private MoveWithGravitySystem moveWithGravitySystem;
 	private RemoveEntityAfterTimeSystem removeEntityAfterTimeSystem;
-	
-	 // Centre of current point
+
+	// Centre of current point
 	public float screen_cam_x;
 	public float screen_cam_y;
 	public int scroll_speed;
@@ -96,6 +101,23 @@ public final class MyGdxGame extends Generic2DGame {
 	@Override
 	public void create() {
 		super.create();
+
+		//vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
+		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);//, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
+		//vfxManager.addEffect(new FilmGrainEffect()); // No use
+		//vfxManager.addEffect(new LensFlareEffect()); // Good
+		//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
+		//vfxManager.addEffect(new FxaaEffect()); // No effect?
+		vfxManager.addEffect(new LevelsEffect()); // No effect
+		//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy
+		//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
+		//vfxManager.addEffect(new RadialBlurEffect(2)); // Very blurry
+		//vfxManager.addEffect(new RadialDistortionEffect()); // Puts in a window
+		//vfxManager.addEffect(new VignettingEffect(false)); // Puts a shade around the edge
+		//vfxManager.addEffect(new WaterDistortionEffect(2, 2)); // No use?
+		//vfxManager.addEffect(new ZoomEffect()); // No effect?
 
 		this.generateFonts();
 
@@ -125,7 +147,7 @@ public final class MyGdxGame extends Generic2DGame {
 		this.removeIfOffScreenSystem = new RemoveIfOffScreenSystem(ecs);
 		this.moveWithGravitySystem = new MoveWithGravitySystem(ecs);
 		this.removeEntityAfterTimeSystem = new RemoveEntityAfterTimeSystem(ecs);
-		
+
 		startPreGame();
 	}
 
@@ -140,11 +162,11 @@ public final class MyGdxGame extends Generic2DGame {
 		parameter.size = height/30;
 		//Settings.p("Font size=" + parameter.size);
 		font = generator.generateFont(parameter);
-		
+
 		generator.dispose();
 	}
-	
-	
+
+
 	private void addPlayerForController(IPlayerInput controller) {
 		if (this.players.containsKey(controller) == false) {
 			PlayerData data = new PlayerData(controller);
@@ -162,7 +184,7 @@ public final class MyGdxGame extends Generic2DGame {
 		this.playMusic("music/retro.mp3");
 
 		this.removeAllEntities();
-		
+
 		AbstractEntity multi = TextEntityFactory.createMultiplayer(this);
 		ecs.addEntity(multi);
 		AbstractEntity splat = TextEntityFactory.createSplatText(this);
@@ -193,13 +215,13 @@ public final class MyGdxGame extends Generic2DGame {
 
 		this.startLevel();
 	}
-	
-	
+
+
 	private void startLevel() {
 		this.removeAllEntities();
-		
+
 		this.gameData.level++;
-		
+
 		if (gameData.level > 1) {
 			AbstractEntity multi = TextEntityFactory.createNextLevelText(this);
 			ecs.addEntity(multi);
@@ -263,9 +285,13 @@ public final class MyGdxGame extends Generic2DGame {
 			}
 			this.removeIfOffScreenSystem.process();
 
+
 			// Start actual drawing
-			Gdx.gl.glClearColor(1, 1, 1, 1);
+			Gdx.gl.glClearColor(1, 1, 1, 1);			
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			vfxManager.cleanUpBuffers();
+			vfxManager.beginInputCapture();
 
 			batch.setProjectionMatrix(camera.combined);
 			camera.update();
@@ -284,7 +310,7 @@ public final class MyGdxGame extends Generic2DGame {
 			if (Settings.RELEASE_MODE == false) {
 				drawFont(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 20);
 			}
-			
+
 			batch.end();
 
 			if (Settings.SHOW_OUTLINES) {
@@ -292,6 +318,11 @@ public final class MyGdxGame extends Generic2DGame {
 				this.drawingSystem.drawDebug(batch);
 				batch.end();
 			}
+
+			vfxManager.endInputCapture();
+			vfxManager.applyEffects();
+			vfxManager.renderToScreen();
+
 		}
 	}
 
@@ -310,8 +341,8 @@ public final class MyGdxGame extends Generic2DGame {
 	public void endOfLevel() {
 		startLevel();
 	}
-	
-	
+
+
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -361,7 +392,7 @@ public final class MyGdxGame extends Generic2DGame {
 		if (player.score < 0) {
 			player.score = 0;
 		}
-		
+
 		sfx.play("sfx/Falling.mp3");
 
 		// Check for winner
