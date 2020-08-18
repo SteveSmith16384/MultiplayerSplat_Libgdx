@@ -8,6 +8,7 @@ public final class Settings {
 	public static final boolean RELEASE_MODE = false || new File("../../debug_mode.tmp").exists() == false;
 	
 	// Debug
+	public static final boolean SIMPLE_SCROLLING = !RELEASE_MODE && false;
 	public static final boolean SHOW_OUTLINES = !RELEASE_MODE && false;
 
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1100 : 1100;
@@ -15,7 +16,7 @@ public final class Settings {
 	public static final int LOGICAL_WIDTH_PIXELS = 800;
 	public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
 	
-	public static final int MAP_WIDTH = 21;
+	public static final int MAP_WIDTH = 31;//21;
 	public static final int MAP_HEIGHT = 60;
 	public static final float PLAYER_SPEED = 120;//50;
 	public static final float MAX_MOVEMENT = 20;//50;//150; // After adjusting for FPS

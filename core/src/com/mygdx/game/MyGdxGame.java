@@ -86,7 +86,7 @@ public final class MyGdxGame extends Generic2DGame {
 	 // Centre of current point
 	public float screen_cam_x;
 	public float screen_cam_y;
-	public float scroll_speed;
+	public int scroll_speed;
 
 	public MyGdxGame() {
 		super(Settings.RELEASE_MODE);
@@ -209,7 +209,7 @@ public final class MyGdxGame extends Generic2DGame {
 		level_data.createLevel();
 
 		screen_cam_x = Settings.LOGICAL_WIDTH_PIXELS/2-Settings.MAP_SQ_SIZE; // Centre of current point
-		screen_cam_y = 0;
+		screen_cam_y = Settings.MAP_SQ_SIZE*2;
 		scroll_speed = Settings.START_SPEED + (gameData.level*5);
 
 		this.scrollPlayAreaSystem = new ScrollPlayAreaSystem(this);
