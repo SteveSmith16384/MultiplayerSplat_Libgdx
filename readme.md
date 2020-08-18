@@ -1,8 +1,11 @@
 # MULTIPLAYER SPLAT!
 
+Each player must collect the most coins, but avoid the edges of the maze as it scrolls around.
+
+Here is a gameplay video, probably out of date with the current code:-
+
 ![Screenshot](docs/screenshots/splat.gif)
 
-Written by Stephen Smith (stephen.carlylesmith@googlemail.com)
 
 
 
@@ -12,7 +15,10 @@ Written by Stephen Smith (stephen.carlylesmith@googlemail.com)
 
 
 ## Credits
+* Written by Stephen Smith (stephen.carlylesmith@googlemail.com)
 * LibGDX for the engine
+* Post-processing library: https://github.com/crashinvaders/gdx-vfx
+* Controller code: https://github.com/electronstudio/sdl2gdx/
 * Rotating coin by Master484: https://opengameart.org/content/cute-platformer-sisters
 * Avatars and baddies: https://opengameart.org/content/classic-hero-and-baddies-pack
 * In-game Music taken from https://opengameart.org/content/retroturnaroundstage-1-remix
