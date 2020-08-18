@@ -25,7 +25,11 @@ public class CollisionSystem extends AbstractSystem {
 
 
 	public CollisionResults collided(AbstractEntity mover) {
-		//List<AbstractEntity> ret = new ArrayList<AbstractEntity>();
+		CollisionComponent moverCC = (CollisionComponent)mover.getComponent(CollisionComponent.class);
+		if (moverCC == null) {
+			return null;
+		}
+		
 		AbstractEntity collided_with = null;
 		boolean block_movement = false;
 		

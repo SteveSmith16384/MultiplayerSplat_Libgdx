@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.datamodels.GameData;
 import com.mygdx.game.datamodels.PlayerData;
@@ -32,6 +33,7 @@ import com.mygdx.game.systems.DrawingSystem;
 import com.mygdx.game.systems.InputSystem;
 import com.mygdx.game.systems.MakeSpriteSmallerSystem;
 import com.mygdx.game.systems.MoveToOffScreenSystem;
+import com.mygdx.game.systems.MoveWithGravitySystem;
 import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
 import com.mygdx.game.systems.ProcessPlayersSystem;
@@ -77,6 +79,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private MakeSpriteSmallerSystem makeSpriteSmallerSystem;
 	private DrawTopPlayerEffectSystem drawTopPlayerEffectSystem;
 	private RemoveIfOffScreenSystem removeIfOffScreenSystem;
+	private MoveWithGravitySystem moveWithGravitySystem;
 	
 	 // Centre of current point
 	public float screen_cam_x;
@@ -118,6 +121,7 @@ public final class MyGdxGame extends Generic2DGame {
 		this.makeSpriteSmallerSystem = new MakeSpriteSmallerSystem(ecs);
 		this.drawTopPlayerEffectSystem = new DrawTopPlayerEffectSystem(this, ecs);
 		this.removeIfOffScreenSystem = new RemoveIfOffScreenSystem(ecs);
+		this.moveWithGravitySystem = new MoveWithGravitySystem(ecs);
 		
 		startPreGame();
 	}
@@ -241,6 +245,7 @@ public final class MyGdxGame extends Generic2DGame {
 				this.processPlayersSystem.process();
 				this.moveToOffScreenSystem.process();
 				this.walkingAnimationSystem.process(); // Must be before the movementsystem, as that clears the direction
+				this.moveWithGravitySystem.process();
 				this.movementSystem.process();
 				ecs.processSystem(CheckIfPlayersAreOffScreenSystem.class);
 				this.drawTopPlayerEffectSystem.process();
@@ -326,6 +331,16 @@ public final class MyGdxGame extends Generic2DGame {
 
 	public void playerKilled(AbstractEntity avatar) {
 		p(avatar + " killed");
+
+		// Exploding coins
+		ImageComponent img = (ImageComponent)avatar.getComponent(ImageComponent.class);
+		if (img != null && img.sprite != null) {
+			for (int i=0 ; i<10 ; i++) {
+				AbstractEntity deleteme = entityFactory.createExplodingCoin(img.sprite.getX(), img.sprite.getY());
+				ecs.addEntity(deleteme);
+			}
+		}
+
 		avatar.remove();
 
 		PlayersAvatarComponent uic = (PlayersAvatarComponent)avatar.getComponent(PlayersAvatarComponent.class);

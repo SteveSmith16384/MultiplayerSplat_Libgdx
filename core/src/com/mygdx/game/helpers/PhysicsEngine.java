@@ -3,7 +3,7 @@ package com.mygdx.game.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-public class PhysicsEngine { // todo - make system
+public class PhysicsEngine { // todo - delete
 
 	private Vector2 dir;
 	public Vector2 offset;

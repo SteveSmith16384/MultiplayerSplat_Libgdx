@@ -1,24 +1,23 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.components.AnimationCycleComponent;
 import com.mygdx.game.components.CanCollectComponent;
 import com.mygdx.game.components.CollectableComponent;
 import com.mygdx.game.components.CollectableComponent.Type;
 import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.HarmOnContactComponent;
 import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.MakeSpriteSmallerComponent;
 import com.mygdx.game.components.MoveOffScreenComponent;
+import com.mygdx.game.components.MoveWithGravityComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.components.PositionComponent;
+import com.mygdx.game.components.RemoveIfOffScreenComponent;
 import com.mygdx.game.components.ScrollsAroundComponent;
 import com.mygdx.game.components.WalkingAnimationComponent;
 import com.mygdx.game.datamodels.PlayerData;
 import com.mygdx.game.input.IPlayerInput;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.libgdx.Ninepatch;
 
 public class EntityFactory {
 
@@ -67,39 +66,6 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createHarmfulArea(int x, int y, float w, float h) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "HarmfulArea");
-
-		ImageComponent imageData = new ImageComponent("todo.png", 0, w, h);
-		e.addComponent(imageData);
-		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
-		e.addComponent(pos);
-		CollisionComponent cc = new CollisionComponent(false);
-		e.addComponent(cc);
-		HarmOnContactComponent hoc = new HarmOnContactComponent();
-		e.addComponent(hoc);
-		e.addComponent(new ScrollsAroundComponent());
-		return e;
-	}
-
-
-	public AbstractEntity createTestImage(int x, int y, int w, int h, int zOrder) {
-		AbstractEntity e = new AbstractEntity(game.ecs, "TestImage");
-
-		//Texture tex = game.getTexture("grey_box.png");
-		Ninepatch np = new Ninepatch(null, null);
-		Sprite sprite = np.getImage(w, h);
-		sprite.setSize(w, h);
-
-		ImageComponent imageData = new ImageComponent(sprite, zOrder);
-		e.addComponent(imageData);
-		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, w, h);
-		e.addComponent(pos);
-
-		return e;
-	}
-
-
 	public AbstractEntity createImage(String filename, int x, int y, float w, float h, int zOrder) {
 		AbstractEntity e = new AbstractEntity(game.ecs, "Image_" + filename);
 
@@ -117,9 +83,6 @@ public class EntityFactory {
 
 		AnimationCycleComponent acc = game.animFrameHelper.generateForCoin(Settings.COLLECTABLE_SIZE);
 		e.addComponent(acc);
-		/*if (acc.frames[0] == null) {
-			int dfgf = 456;
-		}*/
 		ImageComponent imageData = new ImageComponent(acc.frames[0], 1);
 		e.addComponent(imageData);
 		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.COLLECTABLE_SIZE, Settings.COLLECTABLE_SIZE);
@@ -171,5 +134,20 @@ public class EntityFactory {
 		return e;
 	}	
 
+
+	public AbstractEntity createExplodingCoin(float x, float y) {
+		AbstractEntity e = new AbstractEntity(game.ecs, "ExplodingCoin");
+
+		AnimationCycleComponent acc = game.animFrameHelper.generateForCoin(Settings.COLLECTABLE_SIZE);
+		e.addComponent(acc);
+		ImageComponent imageData = new ImageComponent(acc.frames[0], 1);
+		e.addComponent(imageData);
+		PositionComponent pos = PositionComponent.ByBottomLeft(x, y, Settings.COLLECTABLE_SIZE, Settings.COLLECTABLE_SIZE);
+		e.addComponent(pos);
+		e.addComponent(new RemoveIfOffScreenComponent());
+		e.addComponent(new MovementComponent());
+		e.addComponent(new MoveWithGravityComponent());
+		return e;
+	}	
 
 }
