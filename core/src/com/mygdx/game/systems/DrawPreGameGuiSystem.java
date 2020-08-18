@@ -10,7 +10,6 @@ import com.scs.basicecs.ISystem;
 public class DrawPreGameGuiSystem implements ISystem {
 
 	private Sprite background;
-	private Sprite logo;
 	private MyGdxGame game;
 	private SpriteBatch batch;
 

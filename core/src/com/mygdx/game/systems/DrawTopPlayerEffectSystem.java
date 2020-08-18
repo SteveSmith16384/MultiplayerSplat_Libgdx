@@ -1,7 +1,6 @@
 package com.mygdx.game.systems;
 
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.datamodels.PlayerData;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -14,7 +13,6 @@ public class DrawTopPlayerEffectSystem implements ISystem {
 	private long next_check_time;
 
 	public DrawTopPlayerEffectSystem(MyGdxGame _game, BasicECS _ecs) {
-		//super(ecs, MakeSpriteSmallerComponent.class);
 		game = _game;
 		ecs = _ecs;
 	}
@@ -26,7 +24,6 @@ public class DrawTopPlayerEffectSystem implements ISystem {
 			return;
 		}
 		this.next_check_time = System.currentTimeMillis() + 500;
-		//	float delta = Gdx.graphics.getDeltaTime();
 
 		PlayerData winner = null;
 		int highestScore = -1;

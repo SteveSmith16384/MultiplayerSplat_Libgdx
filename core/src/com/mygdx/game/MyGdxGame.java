@@ -37,6 +37,7 @@ import com.mygdx.game.systems.MoveWithGravitySystem;
 import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
 import com.mygdx.game.systems.ProcessPlayersSystem;
+import com.mygdx.game.systems.RemoveEntityAfterTimeSystem;
 import com.mygdx.game.systems.RemoveIfOffScreenSystem;
 import com.mygdx.game.systems.ScrollPlayAreaSystem;
 import com.mygdx.game.systems.SineInterpolationSystem;
@@ -80,6 +81,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private DrawTopPlayerEffectSystem drawTopPlayerEffectSystem;
 	private RemoveIfOffScreenSystem removeIfOffScreenSystem;
 	private MoveWithGravitySystem moveWithGravitySystem;
+	private RemoveEntityAfterTimeSystem removeEntityAfterTimeSystem;
 	
 	 // Centre of current point
 	public float screen_cam_x;
@@ -122,6 +124,7 @@ public final class MyGdxGame extends Generic2DGame {
 		this.drawTopPlayerEffectSystem = new DrawTopPlayerEffectSystem(this, ecs);
 		this.removeIfOffScreenSystem = new RemoveIfOffScreenSystem(ecs);
 		this.moveWithGravitySystem = new MoveWithGravitySystem(ecs);
+		this.removeEntityAfterTimeSystem = new RemoveEntityAfterTimeSystem(ecs);
 		
 		startPreGame();
 	}
@@ -196,6 +199,11 @@ public final class MyGdxGame extends Generic2DGame {
 		this.removeAllEntities();
 		
 		this.gameData.level++;
+		
+		if (gameData.level > 1) {
+			AbstractEntity multi = TextEntityFactory.createNextLevelText(this);
+			ecs.addEntity(multi);
+		}
 
 		level_data = new LevelGenerator(ecs);
 		level_data.createLevel();
@@ -237,6 +245,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 			this.inputSystem.process();
 			this.sineInterpolationSystem.process();
+			this.removeEntityAfterTimeSystem.process();
 
 			if (this.gameStage == 0) {
 				// loop through systems
