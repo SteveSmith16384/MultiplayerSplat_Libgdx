@@ -42,14 +42,14 @@ public class DrawInGameGuiSystem implements ISystem {
 		int num = 0;
 		for (PlayerData player : game.players.values()) {
 			int xStart = 20+(num*250);
-			game.drawFont(batch, "Score: " + player.score, xStart, 90);
-			if (player.lives > 0 && player.lives < 5) {
+			game.drawFont(batch, "Score: " + player.score, xStart, 100);
+			if (player.lives > 0) {
 				if (players[num] == null) {
 					Texture tex = game.getTexture("sprites/player" + player.playerIdx + "_right1.png");
 					players[num] = new Sprite(tex);
 					players[num].setSize(Settings.PLAYER_SIZE, Settings.PLAYER_SIZE);
 				}
-				for (int i=0 ; i<player.lives ; i++) {
+				for (int i=0 ; i<Math.min(player.lives, 5) ; i++) {
 					players[num].setPosition(xStart+(i*20), 30);
 					players[num].draw(batch);
 				}
