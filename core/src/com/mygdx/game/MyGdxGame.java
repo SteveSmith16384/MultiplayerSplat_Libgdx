@@ -35,6 +35,7 @@ import com.mygdx.game.systems.MoveToOffScreenSystem;
 import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.ProcessCollisionSystem;
 import com.mygdx.game.systems.ProcessPlayersSystem;
+import com.mygdx.game.systems.RemoveIfOffScreenSystem;
 import com.mygdx.game.systems.ScrollPlayAreaSystem;
 import com.mygdx.game.systems.SineInterpolationSystem;
 import com.mygdx.game.systems.WalkingAnimationSystem;
@@ -75,6 +76,7 @@ public final class MyGdxGame extends Generic2DGame {
 	private SineInterpolationSystem sineInterpolationSystem;
 	private MakeSpriteSmallerSystem makeSpriteSmallerSystem;
 	private DrawTopPlayerEffectSystem drawTopPlayerEffectSystem;
+	private RemoveIfOffScreenSystem removeIfOffScreenSystem;
 	
 	 // Centre of current point
 	public float screen_cam_x;
@@ -115,6 +117,7 @@ public final class MyGdxGame extends Generic2DGame {
 		this.sineInterpolationSystem = new SineInterpolationSystem(ecs);
 		this.makeSpriteSmallerSystem = new MakeSpriteSmallerSystem(ecs);
 		this.drawTopPlayerEffectSystem = new DrawTopPlayerEffectSystem(this, ecs);
+		this.removeIfOffScreenSystem = new RemoveIfOffScreenSystem(ecs);
 		
 		startPreGame();
 	}
@@ -244,6 +247,7 @@ public final class MyGdxGame extends Generic2DGame {
 				this.scrollPlayAreaSystem.process();
 				this.animSystem.process();
 			}
+			this.removeIfOffScreenSystem.process();
 
 			// Start actual drawing
 			Gdx.gl.glClearColor(1, 1, 1, 1);

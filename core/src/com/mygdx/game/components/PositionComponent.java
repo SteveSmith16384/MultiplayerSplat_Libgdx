@@ -4,7 +4,7 @@ import com.scs.awt.RectF;
 
 public class PositionComponent {
 
-	public RectF rect;
+	public RectF rect; // Note that this is NOT the screen co-ords!
 	public RectF prevPos;
 	
 	public static PositionComponent ByBottomLeft(float x, float y, float w, float h) {
