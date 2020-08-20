@@ -1,6 +1,7 @@
 package com.mygdx.game.systems;
 
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.Settings;
 import com.mygdx.game.components.CollectableComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.scs.basicecs.AbstractEntity;
@@ -24,6 +25,9 @@ public class CollectorSystem {
 			game.sfx.play("sfx/Retro_Game_Sounds_SFX_01.ogg");
 			if (uic != null) {
 				uic.player.score += 1;
+				if (uic.player.score >= Settings.WINNING_COINS) {
+					game.setWinner(uic.player.playerIdx);
+				}
 			}
 			game.ecs.addEntity(game.entityFactory.createRisingCoin(coin));
 			break;

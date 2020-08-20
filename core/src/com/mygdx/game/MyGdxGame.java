@@ -57,13 +57,13 @@ public final class MyGdxGame extends Generic2DGame {
 	public EntityFactory entityFactory;
 	public GameData gameData;
 	public AnimationFramesHelper animFrameHelper;
-	public int winnerImageId;
+	public int winnerImageId = -1;
 	public int gameStage = -1; // -1, 0, or 1 for before, during and after game
 	private boolean nextStage = false;
 	public HashMap<IPlayerInput, PlayerData> players = new HashMap<IPlayerInput, PlayerData>();
 	public boolean keyboard_joined = false;
 	public ILevelData level_data;
-	private VfxManager vfxManager; // todo - resize and dispose
+	private VfxManager vfxManager;
 
 	// Systems
 	public InputSystem inputSystem;
@@ -200,7 +200,9 @@ public final class MyGdxGame extends Generic2DGame {
 
 	public void setWinner(int id) {
 		this.nextStage = true;
-		this.winnerImageId = id;
+		if (this.winnerImageId < 0) {
+			this.winnerImageId = id;
+		}
 	}
 
 
@@ -212,7 +214,8 @@ public final class MyGdxGame extends Generic2DGame {
 		}
 
 		gameData = new GameData();
-
+		winnerImageId = -1;
+		
 		this.startLevel();
 	}
 
@@ -354,6 +357,7 @@ public final class MyGdxGame extends Generic2DGame {
 		}
 		this.animFrameHelper.dispose();
 		ecs.dispose();
+		this.vfxManager.dispose();
 	}
 
 
@@ -420,6 +424,14 @@ public final class MyGdxGame extends Generic2DGame {
 	}
 
 
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		
+		this.vfxManager.resize(width, height);
+	}
+	
+	
 	@Override
 	public void connected(Controller controller) {
 		addPlayerForController(new ControllerInput(controller));

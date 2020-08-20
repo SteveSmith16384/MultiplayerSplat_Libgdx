@@ -25,13 +25,10 @@ public class DrawPreGameGuiSystem implements ISystem {
 
 	@Override
 	public void process() {
-		//background.draw(batch);
-
-		//game.drawFont(batch, game.con.getControllers().size + " controllers found", 20, Settings.LOGICAL_HEIGHT_PIXELS-40);
-
+		game.drawFont(batch, "Winner is first player to collect " + Settings.WINNING_COINS + " coins", 20, 180);
 		game.drawFont(batch, game.players.size() + " players in the game!", 20, 140);
-		game.drawFont(batch, "Press 'Space' for keyboard player", 20, 100);
-		game.drawFont(batch, "PRESS 'S' TO START!", 20, 60);
+		game.drawFont(batch, "Press 'Space' for keyboard player or X on gamepad", 20, 100);
+		game.drawFont(batch, "PRESS 'S' TO START GAME!", 20, 60);
 	}
 
 

@@ -28,6 +28,7 @@ public final class Settings {
 	public static final int MAX_PLAYERS = 4;
 	public static final int START_LIVES = 999;
 	public static final int START_SPEED = 17;
+	public static final int WINNING_COINS = 100;
 	
 	public static final String TITLE = "SPLAT!";
 	
