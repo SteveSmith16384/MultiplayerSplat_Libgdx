@@ -13,8 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.crashinvaders.vfx.VfxManager;
-import com.crashinvaders.vfx.effects.GaussianBlurEffect;
-import com.crashinvaders.vfx.effects.LevelsEffect;
+import com.crashinvaders.vfx.effects.CrtEffect;
 import com.mygdx.game.components.ImageComponent;
 import com.mygdx.game.components.PlayersAvatarComponent;
 import com.mygdx.game.datamodels.GameData;
@@ -105,12 +104,15 @@ public final class MyGdxGame extends Generic2DGame {
 		//vfxManager = new VfxManager(Pixmap.Format.RGBA8888, Settings.LOGICAL_SIZE_PIXELS, Settings.LOGICAL_SIZE_PIXELS);//viewports[i].viewPos.width, viewports[i].viewPos.height);
 		vfxManager = new VfxManager(Pixmap.Format.RGBA8888);//, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
+		//vfxManager.addEffect(new ChromaticAberrationEffect(50)); // good but trippy
+		//vfxManager.addEffect(new OldTvEffect());
+		vfxManager.addEffect(new CrtEffect());
+		//vfxManager.addEffect(new GaussianBlurEffect(GaussianBlurEffect.BlurType.Gaussian3x3b)); // No effect?
 		//vfxManager.addEffect(new FilmGrainEffect()); // No use
 		//vfxManager.addEffect(new LensFlareEffect()); // Good
 		//vfxManager.addEffect(new BloomEffect(new BloomEffect.Settings(10, 0.85f, 1f, .85f, 1.1f, .85f))); // Good
 		//vfxManager.addEffect(new FxaaEffect()); // No effect?
-		vfxManager.addEffect(new LevelsEffect()); // No effect
+		//vfxManager.addEffect(new LevelsEffect()); // No effect
 		//vfxManager.addEffect(new MotionBlurEffect(Pixmap.Format.RGBA8888, MixEffect.Method.MAX, .95f)); // A bit trippy
 		//vfxManager.addEffect(new NfaaEffect(true)); // No difference?
 		//vfxManager.addEffect(new RadialBlurEffect(2)); // Very blurry
