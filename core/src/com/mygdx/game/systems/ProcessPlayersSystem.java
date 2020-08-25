@@ -38,10 +38,6 @@ public class ProcessPlayersSystem implements ISystem {
 
 
 	private void createPlayersAvatar(PlayerData player, IPlayerInput controller) {
-		/*GridPoint2 start_pos = game.level_data.getStartPosition(player.playerIdx);
-		AbstractEntity avatar = game.entityFactory.createPlayersAvatar(player, controller, start_pos.x*Settings.MAP_SQ_SIZE, start_pos.y*Settings.MAP_SQ_SIZE);
-		game.ecs.addEntity(avatar);*/
-
 		game.ecs.addAndRemoveEntities(); // So any new mapsquares are added
 		int sx = (int)((int)(game.screen_cam_x/Settings.MAP_SQ_SIZE)*Settings.MAP_SQ_SIZE);
 		int sy = (int)((int)(game.screen_cam_y/Settings.MAP_SQ_SIZE)*Settings.MAP_SQ_SIZE);

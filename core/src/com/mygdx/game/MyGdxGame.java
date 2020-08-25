@@ -173,6 +173,7 @@ public final class MyGdxGame extends Generic2DGame {
 		if (this.players.containsKey(controller) == false) {
 			PlayerData data = new PlayerData(controller);
 			this.players.put(controller, data);
+			sfx.play("sfx/Collect_Point_01.wav");
 		}
 	}
 
@@ -209,7 +210,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 
 	private void startGame() {
-		this.playMusic("music/stage 1_remixed_by_cent.ogg");
+		this.playMusic("music/Boss Battle #2 V1.mp3");
 
 		for (PlayerData player : players.values()) {
 			player.reset();

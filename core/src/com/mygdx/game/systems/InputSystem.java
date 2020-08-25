@@ -44,6 +44,7 @@ public class InputSystem extends AbstractSystem {
 		if (game.gameStage == -1) {
 			if (Gdx.input.isKeyJustPressed(Keys.SPACE)) { // Space for keyboard player to join
 				if (game.keyboard_joined == false) {
+					game.sfx.play("sfx/Collect_Point_01.wav");
 					game.keyboard_joined = true;
 					KeyboardInput ki = new KeyboardInput();
 					game.players.put(ki, new PlayerData(ki)); // Create keyboard player by default (they might not actually join though!)

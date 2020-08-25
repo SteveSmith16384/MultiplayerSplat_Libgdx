@@ -22,7 +22,7 @@ public class CollectorSystem {
 		switch (cc.type) {
 		case Coin:
 			PlayersAvatarComponent uic = (PlayersAvatarComponent)collector.getComponent(PlayersAvatarComponent.class);
-			game.sfx.play("sfx/Collect_Point_02.wav");
+			game.sfx.play("sfx/Collect_Point_00.wav");
 			if (uic != null) {
 				uic.player.score += 1;
 				if (uic.player.score >= Settings.WINNING_COINS) {

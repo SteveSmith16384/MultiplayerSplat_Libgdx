@@ -21,7 +21,7 @@ Here is a gameplay video, probably out of date with the current code:-
 * Controller code: https://github.com/electronstudio/sdl2gdx/
 * Rotating coin by Master484: https://opengameart.org/content/cute-platformer-sisters
 * Avatars and baddies: https://opengameart.org/content/classic-hero-and-baddies-pack
-* In-game Music taken from https://opengameart.org/content/retroturnaroundstage-1-remix
+* In-game Music taken from https://opengameart.org/content/boss-battle-2-8-bit-re-upload
 * Intro music taken from https://opengameart.org/content/retro
 * Retro sfx by Little Robot Sound Factory (www.littlerobotsoundfactory.com) taken from https://opengameart.org/content/8-bit-sound-effects-library
 
