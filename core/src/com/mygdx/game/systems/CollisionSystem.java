@@ -41,7 +41,6 @@ public class CollisionSystem extends AbstractSystem {
 				CollisionComponent cc = (CollisionComponent)e.getComponent(CollisionComponent.class);
 				PositionComponent pos = (PositionComponent)e.getComponent(PositionComponent.class);
 				if (moverPos.rect.intersects(pos.rect)) {
-					//return new CollisionResults(e, cc.blocksMovement);
 					collided_with = e;
 					block_movement = block_movement || cc.blocksMovement;
 				}

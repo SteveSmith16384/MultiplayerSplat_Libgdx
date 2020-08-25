@@ -23,6 +23,7 @@ Here is a gameplay video, probably out of date with the current code:-
 * Avatars and baddies: https://opengameart.org/content/classic-hero-and-baddies-pack
 * In-game Music taken from https://opengameart.org/content/retroturnaroundstage-1-remix
 * Intro music taken from https://opengameart.org/content/retro
+* Retro sfx by Little Robot Sound Factory (www.littlerobotsoundfactory.com) taken from https://opengameart.org/content/8-bit-sound-effects-library
 
 ## Licence
 MIT licence.  See the separate file for details.
