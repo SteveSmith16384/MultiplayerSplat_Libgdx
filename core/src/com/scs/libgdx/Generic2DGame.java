@@ -49,11 +49,6 @@ public abstract class Generic2DGame extends ApplicationAdapter implements Contro
 
 	@Override
 	public void render() {
-		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			Gdx.app.exit();
-			return;
-		}
-		
 		controllerManager.checkForControllers();
 
 		if (this.toggleFullscreen) {

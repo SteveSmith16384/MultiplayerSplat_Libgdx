@@ -3,6 +3,7 @@ package com.mygdx.game;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -218,7 +219,7 @@ public final class MyGdxGame extends Generic2DGame {
 
 		gameData = new GameData();
 		winnerImageId = -1;
-		
+
 		this.startLevel();
 	}
 
@@ -253,6 +254,16 @@ public final class MyGdxGame extends Generic2DGame {
 	@Override
 	public void render() {
 		super.render();
+
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			if (this.gameStage == -1) {
+				Gdx.app.exit();
+				return;
+			} else {
+				this.gameStage = -1;
+				startPreGame();
+			}
+		}
 
 		if (!paused) {
 			if (nextStage) {
@@ -430,11 +441,11 @@ public final class MyGdxGame extends Generic2DGame {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		
+
 		this.vfxManager.resize(width, height);
 	}
-	
-	
+
+
 	@Override
 	public void connected(Controller controller) {
 		addPlayerForController(new ControllerInput(controller));
